@@ -55,27 +55,28 @@
   <script src="https://accounts.google.com/gsi/client" async defer></script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Noto+Serif+TC:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/shared.css">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #1A1614;
-      --bg-card: #242019;
-      --bg-card-hover: #222136;
+      --bg: #f5f4ed;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f0efe8;
       --accent: #D97757;
-      --accent-light: #E89B7A;
-      --accent-glow: rgba(217, 119, 87, 0.15);
-      --accent-purple: #A78BFA;
-      --accent-blue: #60A5FA;
-      --accent-green: #6EE7B7;
-      --text: #FFFFFE;
-      --text-sec: #A7A9BE;
-      --text-muted: #6B6D80;
-      --border: #2A293E;
-      --border-light: #3A394E;
-      --shadow: rgba(0, 0, 0, 0.3);
+      --accent-light: #C15F3C;
+      --accent-glow: rgba(217, 119, 87, 0.10);
+      --accent-purple: #7E6BB5;
+      --accent-blue: #6a9bcc;
+      --accent-green: #788c5d;
+      --text: #141413;
+      --text-sec: #4a4a48;
+      --text-muted: #b0aea5;
+      --border: #e8e6dc;
+      --border-light: #c2c0b6;
+      --shadow: rgba(0, 0, 0, 0.06);
       --radius: 16px;
       --radius-sm: 12px;
       --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -83,12 +84,16 @@
 
     html { font-size: 16px; scroll-behavior: smooth; }
     body {
-      font-family: 'Noto Sans TC', 'Microsoft JhengHei', 'PingFang TC', sans-serif;
+      font-family: 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.7;
       -webkit-font-smoothing: antialiased;
       min-height: 100dvh;
+    }
+    h1, h2, h3 {
+      font-family: 'Noto Serif TC', 'Songti TC', 'PMingLiU', Georgia, serif;
+      font-weight: 700;
     }
 
     /* ── Gate Screen ── */
@@ -177,7 +182,7 @@
     .gate-btn {
       padding: 14px 24px;
       background: var(--accent);
-      color: var(--bg);
+      color: #ffffff;
       border: none;
       border-radius: var(--radius-sm);
       font-size: 1rem;
@@ -223,9 +228,10 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(26, 22, 20, 0.9);
+      background: rgba(245, 244, 237, 0.92);
       backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
+      box-shadow: 0 1px 3px rgba(20, 15, 10, 0.04);
     }
     .nav-inner {
       max-width: 960px;
@@ -407,7 +413,7 @@
       top: 8px;
       left: 8px;
       background: var(--accent);
-      color: var(--bg);
+      color: #ffffff;
       font-size: 0.72rem;
       font-weight: 700;
       padding: 2px 8px;
