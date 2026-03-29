@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO: Primary Meta -->
+  <title>Claude 台中小聚 — 台中第一個 AI 使用者線下交流社群</title>
+  <meta name="description" content="帶著筆電、帶著問題來，帶著解法和朋友走。Claude 台中小聚是台中第一個 Claude AI 使用者線下社群，定期舉辦實戰交流活動。">
+  <meta name="keywords" content="Claude,AI,台中,小聚,meetup,Claude Code,AI工作流,台中活動,線下社群">
+  <meta name="author" content="Lee Vent">
+  <link rel="canonical" href="https://claudetc.leevent.xyz/">
+
+  <!-- SEO: Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Claude 台中小聚 — 台中第一個 AI 使用者線下交流社群">
+  <meta property="og:description" content="帶著筆電、帶著問題來，帶著解法和朋友走。台中定期舉辦 Claude AI 實戰交流活動。">
+  <meta property="og:url" content="https://claudetc.leevent.xyz/">
+  <meta property="og:site_name" content="Claude 台中小聚">
+  <meta property="og:locale" content="zh_TW">
+  <!-- <meta property="og:image" content="https://claudetc.leevent.xyz/assets/og-home.jpg"> -->
+
+  <!-- SEO: Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Claude 台中小聚 — 台中第一個 AI 使用者線下交流社群">
+  <meta name="twitter:description" content="帶著筆電、帶著問題來，帶著解法和朋友走。台中定期舉辦 Claude AI 實戰交流活動。">
+
+  <!-- SEO: JSON-LD Organization -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Claude 台中小聚",
+    "url": "https://claudetc.leevent.xyz",
+    "description": "台中第一個 Claude AI 使用者線下交流社群",
+    "founder": {
+      "@type": "Person",
+      "name": "Lee Vent",
+      "url": "https://leevent.xyz"
+    },
+    "location": {
+      "@type": "Place",
+      "name": "台中",
+      "address": { "@type": "PostalAddress", "addressLocality": "台中市", "addressCountry": "TW" }
+    }
+  }
+  </script>
+
+  <!-- SEO: JSON-LD Event (next event) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    "name": "Claude 台中小聚 第 1 場｜你的 AI 段位是什麼？",
+    "description": "全景式入門。現場 7 級段位 Quiz、辦公室 Demo、生活場景 Demo、進階功能一瞥。",
+    "startDate": "2026-04-02T19:00:00+08:00",
+    "endDate": "2026-04-02T21:30:00+08:00",
+    "eventStatus": "https://schema.org/EventScheduled",
+    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+    "location": {
+      "@type": "Place",
+      "name": "涵軒雅敘共享中心",
+      "address": { "@type": "PostalAddress", "addressLocality": "台中市", "addressCountry": "TW" }
+    },
+    "organizer": {
+      "@type": "Person",
+      "name": "Lee Vent",
+      "url": "https://leevent.xyz"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "600",
+      "priceCurrency": "TWD",
+      "availability": "https://schema.org/SoldOut"
+    }
+  }
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+  <!-- Shared Design System -->
+  <link rel="stylesheet" href="/assets/shared.css">
+
+  <!-- GA4 placeholder -->
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script> -->
+
+  <style>
+    /* ── Hero (homepage specific) ── */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      text-align: center; position: relative; overflow: hidden;
+      padding: 120px 24px 80px;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 600px 400px at 30% 20%, rgba(255,137,6,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 500px 500px at 70% 80%, rgba(167,139,250,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 400px 300px at 50% 50%, rgba(96,165,250,0.06) 0%, transparent 60%);
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 720px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--accent-glow); color: var(--accent);
+      padding: 8px 20px; border-radius: 999px; font-size: 0.85rem; font-weight: 700;
+      margin-bottom: 28px; border: 1px solid rgba(255,137,6,0.2);
+    }
+    .hero-badge .pulse {
+      width: 8px; height: 8px; border-radius: 50%; background: var(--accent);
+      animation: pulse 2s infinite;
+    }
+    .hero h1 {
+      font-size: 3.2rem; font-weight: 900; line-height: 1.25;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #FFFFFE 0%, #FFD8A8 50%, #FF8906 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero .subtitle {
+      font-size: 1.2rem; color: var(--text-sec); margin-bottom: 40px; line-height: 1.8;
+    }
+    .hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+    /* ── Recent Events Grid ── */
+    .events-preview { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+
+    /* ── Quick Links Grid ── */
+    .quick-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .quick-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 28px 24px;
+      text-align: center; transition: var(--transition);
+      text-decoration: none; color: var(--text);
+    }
+    .quick-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+    .quick-icon { font-size: 2rem; margin-bottom: 12px; display: block; }
+    .quick-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+    .quick-card p { font-size: 0.85rem; color: var(--text-sec); }
+
+    /* ── CTA Section ── */
+    .cta-section {
+      text-align: center; padding: 100px 24px;
+      background: radial-gradient(ellipse 500px 300px at 50% 50%, rgba(255,137,6,0.12) 0%, transparent 70%);
+    }
+    .cta-section h2 { font-size: 2.2rem; font-weight: 900; margin-bottom: 16px; }
+    .cta-section p { font-size: 1.1rem; color: var(--text-sec); margin-bottom: 36px; }
+
+    /* ── Testimonial Strip ── */
+    .testimonials {
+      display: flex; gap: 16px; overflow-x: auto;
+      padding: 8px 0; scroll-snap-type: x mandatory;
+      -ms-overflow-style: none; scrollbar-width: none;
+    }
+    .testimonials::-webkit-scrollbar { display: none; }
+    .testimonial-card {
+      flex: 0 0 280px; scroll-snap-align: start;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 20px;
+    }
+    .testimonial-card p { font-size: 0.88rem; color: var(--text-sec); line-height: 1.6; font-style: italic; }
+    .testimonial-card .author { margin-top: 12px; font-size: 0.78rem; color: var(--text-muted); font-style: normal; }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2rem; }
+      .quick-grid { grid-template-columns: 1fr; }
+      .events-preview { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════ Navigation ═══════ -->
+  <nav class="nav" role="navigation" aria-label="main navigation">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand" aria-label="Claude 台中小聚首頁">Claude 台中小聚</a>
+      <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle menu">☰</button>
+      <div class="nav-links">
+        <a href="/events/" class="active">活動</a>
+        <a href="/community/">社群</a>
+        <a href="/quiz/" style="color: var(--accent-purple);">測段位</a>
+        <a href="/members/">核心圈</a>
+        <a href="/about/">關於</a>
+        <a href="/events/#register" class="nav-cta">報名下一場</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══════ Hero ═══════ -->
+  <section class="hero" role="banner">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-content">
+      <div class="hero-badge" aria-label="活動狀態">
+        <span class="pulse" aria-hidden="true"></span>
+        4/2 首場完售 — 第二場籌備中
+      </div>
+      <h1>Claude 台中小聚</h1>
+      <p class="subtitle">
+        帶著筆電、帶著問題來，帶著解法和朋友走。<br>
+        台中第一個 Claude AI 使用者線下交流社群。
+      </p>
+      <div class="stats-bar" aria-label="社群數據">
+        <div class="stat-item">
+          <span class="stat-num">1</span>
+          <span class="stat-label">累計場次</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">32</span>
+          <span class="stat-label">累計參與</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">2hr+</span>
+          <span class="stat-label">深度交流</span>
+        </div>
+      </div>
+      <div class="hero-actions">
+        <a href="/events/" class="btn btn-primary">看活動 →</a>
+        <a href="/quiz/" class="btn btn-secondary">測你的段位</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ Recent Events ═══════ -->
+  <section class="section" id="events" aria-labelledby="events-heading">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="overline">Recent Events</div>
+        <h2 id="events-heading">最近活動</h2>
+        <p>每一場都是台中 Claude 社群的成長紀錄</p>
+      </div>
+      <div class="events-preview fade-in">
+        <a href="/events/001-first-meetup/" class="event-card">
+          <div class="event-card-thumb">
+            🎯
+            <span class="badge badge-orange" style="position: absolute; top: 12px; left: 12px;">即將登場</span>
+          </div>
+          <div class="event-card-info">
+            <h3>第 1 場｜你的 AI 段位是什麼？</h3>
+            <div class="event-card-meta">
+              <span>2026/04/02（四）</span>
+              <span>32 人</span>
+              <span style="color: var(--accent);">已完售</span>
+            </div>
+          </div>
+        </a>
+        <div class="event-card" style="opacity: 0.5; pointer-events: none;">
+          <div class="event-card-thumb" style="background: var(--bg-card);">
+            📅
+            <span class="badge badge-muted" style="position: absolute; top: 12px; left: 12px;">籌備中</span>
+          </div>
+          <div class="event-card-info">
+            <h3>第 2 場｜辦公室即戰力</h3>
+            <div class="event-card-meta">
+              <span>2026/05 預定</span>
+              <span>人數待定</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p style="text-align: center; margin-top: 24px;">
+        <a href="/events/" class="btn btn-ghost">查看所有活動 →</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════ Quick Links ═══════ -->
+  <section class="section" style="background: var(--bg-card);" aria-labelledby="explore-heading">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="overline">Explore</div>
+        <h2 id="explore-heading">探索更多</h2>
+      </div>
+      <div class="quick-grid fade-in">
+        <a href="/quiz/" class="quick-card">
+          <span class="quick-icon">🎮</span>
+          <h3>段位測驗</h3>
+          <p>15 題情境測驗，找出你的 Claude 使用段位（Lv.1 ~ Lv.7）</p>
+        </a>
+        <a href="/community/" class="quick-card">
+          <span class="quick-icon">🌱</span>
+          <h3>認識社群</h3>
+          <p>起源故事、成員旅程、參加者心得</p>
+        </a>
+        <a href="/members/" class="quick-card">
+          <span class="quick-icon">🔑</span>
+          <h3>核心圈</h3>
+          <p>活動回放、資源包、成員目錄（需登入）</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ Testimonials (placeholder for post-event) ═══════ -->
+  <section class="section" aria-labelledby="voice-heading">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="overline">Voices</div>
+        <h2 id="voice-heading">參加者怎麼說</h2>
+        <p>4/2 首場結束後更新</p>
+      </div>
+      <div class="testimonials fade-in">
+        <div class="testimonial-card">
+          <p>「第一次看到有人把 Claude 用到這種程度，太震撼了。」</p>
+          <div class="author">— 首場參加者回饋（活動後更新）</div>
+        </div>
+        <div class="testimonial-card">
+          <p>「帶了筆電來，現場就把自己的工作流改好了。」</p>
+          <div class="author">— 首場參加者回饋（活動後更新）</div>
+        </div>
+        <div class="testimonial-card">
+          <p>「認識了好多台中在地的 AI 同好，這才是最有價值的。」</p>
+          <div class="author">— 首場參加者回饋（活動後更新）</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ CTA ═══════ -->
+  <section class="cta-section" id="register" aria-labelledby="cta-heading">
+    <div class="container">
+      <h2 id="cta-heading">4/2 首場已完售 🔥</h2>
+      <p>錯過這場沒關係，登記搶下一場。</p>
+      <a href="mailto:vent@leevent.co?subject=Claude%20台中小聚%20-%20我想報名下一場&body=Hi%20Vent，我想參加下一場%20Claude%20台中小聚，請通知我報名資訊！" class="btn btn-primary" style="font-size: 1.15rem; padding: 18px 48px;">登記候補 / 通知我 →</a>
+      <p style="margin-top: 20px; font-size: 0.85rem; color: var(--text-muted);">
+        3 人以上團報可私訊洽詢優惠 ｜ <a href="mailto:vent@leevent.co" style="color: var(--accent);">vent@leevent.co</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════ Footer ═══════ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <nav class="footer-nav" aria-label="footer navigation">
+        <a href="/events/">活動</a>
+        <a href="/quiz/">段位測驗</a>
+        <a href="/community/">社群</a>
+        <a href="/members/">核心圈</a>
+        <a href="/about/">關於</a>
+      </nav>
+      <p>Claude 台中小聚 ｜ 台中第一個 Claude AI 使用者線下社群</p>
+      <p class="footer-brand">by Lee Vent · <a href="https://leevent.xyz" style="color: var(--accent);">vent's talk</a> · 2026</p>
+    </div>
+  </footer>
+
+  <!-- ═══════ Scripts ═══════ -->
+  <script>
+    // Fade-in on scroll (Intersection Observer)
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>核心圈後台｜Claude 台中小聚</title>
+  <meta name="description" content="Claude 台中小聚核心圈成員專屬空間。活動回放、資源包、成員目錄。需要 Google 帳號登入。">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="https://claudetc.leevent.xyz/members/">
+
+  <!-- OG Tags -->
+  <meta property="og:title" content="核心圈後台｜Claude 台中小聚">
+  <meta property="og:description" content="Claude 台中小聚核心圈成員專屬空間。活動回放、資源包、成員目錄。需要 Google 帳號登入。">
+  <meta property="og:url" content="https://claudetc.leevent.xyz/members/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Claude 台中小聚">
+  <meta property="og:locale" content="zh_TW">
+
+  <!-- JSON-LD BreadcrumbList -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "首頁",
+        "item": "https://claudetc.leevent.xyz/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "核心圈",
+        "item": "https://claudetc.leevent.xyz/members/"
+      }
+    ]
+  }
+  </script>
+
+  <!-- Google Identity Services -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/shared.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0F0E17;
+      --bg-card: #1A1927;
+      --bg-card-hover: #222136;
+      --accent: #FF8906;
+      --accent-light: #FFAB40;
+      --accent-glow: rgba(255, 137, 6, 0.15);
+      --accent-purple: #A78BFA;
+      --accent-blue: #60A5FA;
+      --accent-green: #6EE7B7;
+      --text: #FFFFFE;
+      --text-sec: #A7A9BE;
+      --text-muted: #6B6D80;
+      --border: #2A293E;
+      --border-light: #3A394E;
+      --shadow: rgba(0, 0, 0, 0.3);
+      --radius: 16px;
+      --radius-sm: 12px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      font-family: 'Noto Sans TC', 'Microsoft JhengHei', 'PingFang TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100dvh;
+    }
+
+    /* ── Gate Screen ── */
+    .gate {
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .gate-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 48px 36px;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+    }
+    .gate-emoji { font-size: 56px; margin-bottom: 16px; }
+    .gate-card h1 {
+      font-size: 1.5rem;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+    .gate-card h1 .accent { color: var(--accent); }
+    .gate-sub {
+      color: var(--text-sec);
+      font-size: 0.92rem;
+      margin-bottom: 28px;
+      line-height: 1.6;
+    }
+
+    /* Google Sign-In area */
+    .google-signin-area {
+      margin-bottom: 20px;
+    }
+    #google-signin-btn {
+      display: flex;
+      justify-content: center;
+      min-height: 44px;
+    }
+    .signin-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+    .signin-divider::before,
+    .signin-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* Password fallback (hidden by default, shown if GIS fails) */
+    .gate-fallback {
+      display: none;
+    }
+    .gate-fallback.show {
+      display: block;
+    }
+    .gate-input-wrap {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .gate-input {
+      flex: 1;
+      padding: 14px 16px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 1rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .gate-input:focus { border-color: var(--accent); }
+    .gate-input::placeholder { color: var(--text-muted); }
+    .gate-input.error { border-color: #d9534f; }
+    .gate-btn {
+      padding: 14px 24px;
+      background: var(--accent);
+      color: var(--bg);
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+    .gate-btn:hover { background: var(--accent-light); }
+    .gate-error {
+      color: #d9534f;
+      font-size: 0.85rem;
+      margin-bottom: 16px;
+      display: none;
+    }
+    .gate-error.show { display: block; }
+    .gate-hint {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      margin-top: 16px;
+    }
+
+    /* ── Breadcrumb ── */
+    .breadcrumb {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 12px 24px 0;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+    .breadcrumb a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb .sep { margin: 0 6px; }
+    .breadcrumb .current { color: var(--text-sec); }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(15, 14, 23, 0.9);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .nav-brand {
+      font-weight: 900;
+      font-size: 0.95rem;
+      color: var(--accent);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .nav-links { display: flex; gap: 4px; align-items: center; }
+    .nav-links a {
+      color: var(--text-sec);
+      text-decoration: none;
+      font-size: 0.85rem;
+      padding: 6px 12px;
+      border-radius: 8px;
+      transition: var(--transition);
+      font-weight: 500;
+    }
+    .nav-links a:hover { color: var(--text); background: var(--bg-card); }
+    .nav-links a.active {
+      color: var(--accent);
+      background: var(--accent-glow);
+    }
+
+    /* Nav user area */
+    .nav-user {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .nav-user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      object-fit: cover;
+    }
+    .nav-user-name {
+      font-size: 0.82rem;
+      color: var(--text-sec);
+      font-weight: 500;
+      max-width: 100px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .nav-logout {
+      color: var(--text-muted) !important;
+      font-size: 0.8rem !important;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: inherit;
+      padding: 6px 10px;
+      border-radius: 8px;
+      transition: var(--transition);
+    }
+    .nav-logout:hover {
+      color: var(--text-sec) !important;
+      background: var(--bg-card);
+    }
+
+    /* ── Main Content ── */
+    .main { display: none; }
+    .main.active { display: block; }
+    .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+    .section { padding: 48px 0; }
+    .section + .section { border-top: 1px solid var(--border); }
+
+    /* ── Welcome Banner ── */
+    .welcome-banner {
+      background: linear-gradient(135deg, rgba(255,137,6,0.08), rgba(167,139,250,0.06));
+      border: 1px solid rgba(255,137,6,0.15);
+      border-radius: var(--radius);
+      padding: 32px;
+      margin-top: 32px;
+      text-align: center;
+    }
+    .welcome-banner h2 {
+      font-size: 1.4rem;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+    .welcome-banner p {
+      color: var(--text-sec);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+    .welcome-banner .stats {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      margin-top: 20px;
+    }
+    .welcome-banner .stat-item { text-align: center; }
+    .welcome-banner .stat-num {
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--accent);
+      display: block;
+    }
+    .welcome-banner .stat-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Section Headers ── */
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+    .section-head h2 {
+      font-size: 1.25rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-head .count {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      background: var(--bg-card);
+      padding: 2px 10px;
+      border-radius: 99px;
+      border: 1px solid var(--border);
+    }
+
+    /* ── Replay Cards ── */
+    .replay-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .replay-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+    .replay-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .replay-thumb {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      position: relative;
+    }
+    .replay-thumb .coming {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      background: rgba(0,0,0,0.7);
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    .replay-thumb .live-badge {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: var(--accent);
+      color: var(--bg);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    .replay-info { padding: 16px; }
+    .replay-info h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 4px; }
+    .replay-info .meta {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      display: flex;
+      gap: 12px;
+    }
+
+    /* ── Resource Cards ── */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 12px;
+    }
+    .resource-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 20px;
+      transition: var(--transition);
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .resource-card:hover { border-color: var(--accent-purple); }
+    .resource-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .resource-card h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 2px; }
+    .resource-card p { font-size: 0.82rem; color: var(--text-muted); }
+    .resource-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      padding: 1px 8px;
+      border-radius: 99px;
+      margin-top: 4px;
+      background: rgba(110,231,183,0.12);
+      color: var(--accent-green);
+    }
+    .resource-tag.coming {
+      background: rgba(107,109,128,0.2);
+      color: var(--text-muted);
+    }
+
+    /* ── Member Directory ── */
+    .member-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+    }
+    .member-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      text-align: center;
+      transition: var(--transition);
+    }
+    .member-card:hover { border-color: var(--accent-blue); }
+    .member-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 8px;
+      font-size: 1.2rem;
+    }
+    .member-card h3 { font-size: 0.9rem; font-weight: 700; }
+    .member-card .role { font-size: 0.78rem; color: var(--text-muted); }
+    .member-card .level {
+      display: inline-block;
+      font-size: 0.7rem;
+      padding: 1px 8px;
+      border-radius: 99px;
+      margin-top: 6px;
+    }
+
+    /* ── Next Event ── */
+    .next-event {
+      background: var(--bg-card);
+      border: 2px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 28px;
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+    .next-event-date {
+      text-align: center;
+      flex-shrink: 0;
+      min-width: 80px;
+    }
+    .next-event-date .month {
+      font-size: 0.78rem;
+      color: var(--accent);
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .next-event-date .day {
+      font-size: 2.2rem;
+      font-weight: 900;
+      line-height: 1.1;
+    }
+    .next-event-date .weekday {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+    .next-event-info h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 4px; }
+    .next-event-info p { font-size: 0.88rem; color: var(--text-sec); }
+    .next-event-info .tags {
+      display: flex;
+      gap: 6px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+    .event-tag {
+      font-size: 0.72rem;
+      padding: 2px 10px;
+      border-radius: 99px;
+      border: 1px solid var(--border-light);
+      color: var(--text-sec);
+    }
+
+    /* ── Empty State ── */
+    .empty-state {
+      text-align: center;
+      padding: 48px 24px;
+      color: var(--text-muted);
+    }
+    .empty-state .icon { font-size: 2.5rem; margin-bottom: 12px; }
+    .empty-state h3 { font-size: 1rem; font-weight: 700; color: var(--text-sec); margin-bottom: 4px; }
+    .empty-state p { font-size: 0.88rem; }
+
+    /* ── Footer ── */
+    .footer {
+      padding: 32px 0;
+      border-top: 1px solid var(--border);
+    }
+    .footer-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .footer-brand {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--text-sec);
+    }
+    .footer-brand span { color: var(--accent); }
+    .footer-links {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.82rem;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--accent); }
+    .footer-copy {
+      width: 100%;
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 8px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .gate-card { padding: 36px 24px; }
+      .gate-input-wrap { flex-direction: column; }
+      .welcome-banner { padding: 24px 16px; }
+      .welcome-banner .stats { gap: 20px; }
+      .next-event { flex-direction: column; text-align: center; }
+      .nav-links { display: none; }
+      .nav-user-name { display: none; }
+      .replay-grid { grid-template-columns: 1fr; }
+      .resource-grid { grid-template-columns: 1fr; }
+      .member-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-inner { justify-content: center; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Gate Screen -->
+  <div id="gate" class="gate">
+    <div class="gate-card">
+      <div class="gate-emoji">🔑</div>
+      <h1>Claude 台中小聚<br><span class="accent">核心圈後台</span></h1>
+      <p class="gate-sub">此頁面僅供核心圈成員使用<br>請使用 Google 帳號登入</p>
+
+      <!-- Google Sign-In Button -->
+      <div class="google-signin-area">
+        <div id="google-signin-btn"></div>
+      </div>
+
+      <!-- Password Fallback (shown if GIS fails to load) -->
+      <div id="gate-fallback" class="gate-fallback">
+        <div class="signin-divider">或輸入通行碼</div>
+        <div class="gate-input-wrap">
+          <input type="password" id="gate-pw" class="gate-input" placeholder="成員通行碼" autocomplete="off">
+          <button class="gate-btn" id="gate-submit">進入</button>
+        </div>
+        <div class="gate-error" id="gate-err">通行碼錯誤，請確認後重試</div>
+      </div>
+
+      <p class="gate-hint">使用你的 Google 帳號即可登入</p>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div id="main" class="main">
+
+    <!-- Nav -->
+    <nav class="nav">
+      <div class="nav-inner">
+        <a href="/" class="nav-brand">Claude 台中小聚</a>
+        <div class="nav-links">
+          <a href="/events/">活動</a>
+          <a href="/">社群</a>
+          <a href="/quiz/">測段位</a>
+          <a href="/members/" class="active">核心圈</a>
+          <a href="/about/">關於</a>
+        </div>
+        <div class="nav-user" id="nav-user">
+          <img id="nav-avatar" class="nav-user-avatar" src="" alt="avatar" style="display:none;">
+          <span id="nav-name" class="nav-user-name"></span>
+          <button class="nav-logout" onclick="logout()">登出</button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <a href="/">首頁</a>
+      <span class="sep">&gt;</span>
+      <span class="current">核心圈</span>
+    </div>
+
+    <!-- Welcome -->
+    <div class="container">
+      <div class="welcome-banner">
+        <h2>歡迎回到核心圈 ✨</h2>
+        <p>這裡是 Claude 台中小聚核心成員的專屬空間。<br>活動回放、資源下載、成員交流，都在這裡。</p>
+        <div class="stats">
+          <div class="stat-item">
+            <span class="stat-num">1</span>
+            <span class="stat-label">累計場次</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-num">32</span>
+            <span class="stat-label">累計參與</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-num">—</span>
+            <span class="stat-label">核心成員</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Replays -->
+    <section class="section" id="replays">
+      <div class="container">
+        <div class="section-head">
+          <h2>📹 活動回放 <span class="count">1 場</span></h2>
+        </div>
+        <div class="replay-grid">
+
+          <div class="replay-card">
+            <div class="replay-thumb">
+              🎬
+              <span class="live-badge">最新</span>
+            </div>
+            <div class="replay-info">
+              <h3>第 1 場｜你的 AI 段位是什麼？</h3>
+              <div class="meta">
+                <span>2026/04/02</span>
+                <span>32 人</span>
+                <span>活動後上傳</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="replay-card" style="opacity: 0.5;">
+            <div class="replay-thumb" style="background: var(--bg-card);">
+              📅
+              <span class="coming">預計 5 月</span>
+            </div>
+            <div class="replay-info">
+              <h3>第 2 場｜辦公室即戰力</h3>
+              <div class="meta">
+                <span>2026/05 預定</span>
+                <span>待定</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="replay-card" style="opacity: 0.35;">
+            <div class="replay-thumb" style="background: var(--bg-card);">
+              📅
+              <span class="coming">預計 6 月</span>
+            </div>
+            <div class="replay-info">
+              <h3>第 3 場｜AI x 日常生活</h3>
+              <div class="meta">
+                <span>2026/06 預定</span>
+                <span>待定</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Resources -->
+    <section class="section" id="resources">
+      <div class="container">
+        <div class="section-head">
+          <h2>📦 資源包</h2>
+        </div>
+        <div class="resource-grid">
+
+          <div class="resource-card">
+            <div class="resource-icon" style="background: rgba(255,137,6,0.12);">📋</div>
+            <div>
+              <h3>第 1 場簡報投影片</h3>
+              <p>活動結束後上傳</p>
+              <span class="resource-tag coming">4/2 後上傳</span>
+            </div>
+          </div>
+
+          <div class="resource-card">
+            <div class="resource-icon" style="background: rgba(167,139,250,0.12);">⚡</div>
+            <div>
+              <h3>Skill 模板包</h3>
+              <p>可直接匯入的 .skill 檔案</p>
+              <span class="resource-tag coming">4/2 後上傳</span>
+            </div>
+          </div>
+
+          <div class="resource-card">
+            <div class="resource-icon" style="background: rgba(96,165,250,0.12);">📝</div>
+            <div>
+              <h3>討論重點摘要</h3>
+              <p>每場精華整理 + 行動清單</p>
+              <span class="resource-tag coming">4/2 後上傳</span>
+            </div>
+          </div>
+
+          <div class="resource-card">
+            <div class="resource-icon" style="background: rgba(110,231,183,0.12);">🎯</div>
+            <div>
+              <h3>7 級學習路徑</h3>
+              <p>根據你的段位推薦學習資源</p>
+              <span class="resource-tag">可使用</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Members -->
+    <section class="section" id="members">
+      <div class="container">
+        <div class="section-head">
+          <h2>👥 成員目錄</h2>
+        </div>
+        <div class="empty-state">
+          <div class="icon">🌱</div>
+          <h3>核心圈正在成形中</h3>
+          <p>累計參加 3 場以上的朋友將自動成為核心圈成員<br>4/2 首場是起點，期待在這裡看到你的名字</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Next Event -->
+    <section class="section" id="next">
+      <div class="container">
+        <div class="section-head">
+          <h2>📅 下一場活動</h2>
+        </div>
+        <div class="next-event">
+          <div class="next-event-date">
+            <div class="month">APR</div>
+            <div class="day">02</div>
+            <div class="weekday">週四</div>
+          </div>
+          <div class="next-event-info">
+            <h3>第 1 場｜你的 AI 段位是什麼？</h3>
+            <p>全景式入門。現場 7 級段位 Quiz、辦公室 Demo、生活場景 Demo、進階功能一瞥。每個人都能找到自己的位置。</p>
+            <div class="tags">
+              <span class="event-tag">🏢 企業主 ★★</span>
+              <span class="event-tag">👔 經理人 ★★★</span>
+              <span class="event-tag">🛠 工作者 ★★★</span>
+              <span class="event-tag">🏠 個人 ★★★</span>
+            </div>
+            <p style="margin-top: 12px; font-size: 0.82rem; color: var(--text-muted);">
+              19:00 - 21:30｜台中 涵軒雅敘共享中心｜$600/人｜已完售 32 張
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="footer-brand"><span>Claude</span> 台中小聚</div>
+        <div class="footer-links">
+          <a href="/events/">活動</a>
+          <a href="/quiz/">測段位</a>
+          <a href="/members/">核心圈</a>
+          <a href="/about/">關於</a>
+        </div>
+        <div class="footer-copy">
+          Claude 台中小聚｜by Lee Vent · vent's talk · 2026
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    // ═══════════════════════════════════════
+    //  Google Sign-In + Password Fallback
+    // ═══════════════════════════════════════
+    const PASSCODE = 'claude-tc-2026';
+    const STORAGE_KEY = 'claude-meetup-user';
+    let gisLoaded = false;
+
+    // ── Google Identity Services ──
+    function initGoogleSignIn() {
+      google.accounts.id.initialize({
+        client_id: 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com',
+        callback: handleCredentialResponse,
+        auto_select: false,
+      });
+
+      // Render the Sign-In button
+      google.accounts.id.renderButton(
+        document.getElementById('google-signin-btn'),
+        { theme: 'filled_black', size: 'large', text: 'signin_with', shape: 'pill', width: 300 }
+      );
+
+      gisLoaded = true;
+    }
+
+    function handleCredentialResponse(response) {
+      // Decode JWT to get user info
+      const payload = JSON.parse(atob(response.credential.split('.')[1]));
+      const user = {
+        name: payload.name,
+        email: payload.email,
+        picture: payload.picture,
+        method: 'google'
+      };
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(user));
+      showMain(user);
+    }
+
+    // Wait for GIS script to load, fallback if it fails
+    window.addEventListener('load', function() {
+      // Check if user is already signed in (session still active)
+      checkAccess();
+
+      // Give GIS 3 seconds to load, then show password fallback
+      setTimeout(function() {
+        if (typeof google !== 'undefined' && google.accounts) {
+          initGoogleSignIn();
+        } else {
+          showPasswordFallback();
+        }
+      }, 1500);
+
+      // Final fallback at 4 seconds
+      setTimeout(function() {
+        if (!gisLoaded) {
+          showPasswordFallback();
+        }
+      }, 4000);
+    });
+
+    function showPasswordFallback() {
+      document.getElementById('gate-fallback').classList.add('show');
+    }
+
+    // ── Access Control ──
+    function checkAccess() {
+      const saved = sessionStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        try {
+          const user = JSON.parse(saved);
+          if (user && (user.email || user.method === 'password')) {
+            showMain(user);
+          }
+        } catch (e) {
+          // Legacy format: simple 'true' string
+          if (saved === 'true') {
+            showMain({ name: '成員', method: 'password' });
+          }
+        }
+      }
+    }
+
+    function showMain(user) {
+      document.getElementById('gate').style.display = 'none';
+      document.getElementById('main').classList.add('active');
+
+      // Update nav user area
+      if (user) {
+        if (user.picture) {
+          var avatarEl = document.getElementById('nav-avatar');
+          avatarEl.src = user.picture;
+          avatarEl.style.display = 'block';
+        }
+        if (user.name) {
+          document.getElementById('nav-name').textContent = user.name;
+        }
+      }
+    }
+
+    function logout() {
+      sessionStorage.removeItem(STORAGE_KEY);
+
+      // Revoke Google session if available
+      if (typeof google !== 'undefined' && google.accounts) {
+        google.accounts.id.disableAutoSelect();
+      }
+
+      document.getElementById('main').classList.remove('active');
+      document.getElementById('gate').style.display = 'flex';
+
+      // Reset nav user area
+      document.getElementById('nav-avatar').style.display = 'none';
+      document.getElementById('nav-name').textContent = '';
+
+      // Reset password field if visible
+      var pwField = document.getElementById('gate-pw');
+      if (pwField) pwField.value = '';
+    }
+
+    // ── Password Fallback Handler ──
+    var gateSubmit = document.getElementById('gate-submit');
+    if (gateSubmit) {
+      gateSubmit.addEventListener('click', function() {
+        var pw = document.getElementById('gate-pw').value.trim();
+        if (pw === PASSCODE) {
+          var user = { name: '成員', method: 'password' };
+          sessionStorage.setItem(STORAGE_KEY, JSON.stringify(user));
+          showMain(user);
+        } else {
+          document.getElementById('gate-pw').classList.add('error');
+          document.getElementById('gate-err').classList.add('show');
+          setTimeout(function() {
+            document.getElementById('gate-pw').classList.remove('error');
+            document.getElementById('gate-err').classList.remove('show');
+          }, 3000);
+        }
+      });
+    }
+
+    var gatePw = document.getElementById('gate-pw');
+    if (gatePw) {
+      gatePw.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') document.getElementById('gate-submit').click();
+      });
+    }
+  </script>
+</body>
+</html>
