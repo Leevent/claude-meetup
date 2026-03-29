@@ -1,9 +1,9 @@
 /* ═══════════════════════════════════════════
-   Claude 台中小聚 — Design System v1.0
+   Claude 台中小聚 — Design System v2.0
    claudetc.leevent.xyz
 
    Based on: /optimize 27-item framework (小圭老師)
-   Design tokens extracted from meetup ecosystem
+   Color palette: Claude brand terracotta + warm dark
    ═══════════════════════════════════════════ */
 
 /* ── CSS Reset ── */
@@ -11,30 +11,31 @@
 
 /* ── Design Tokens ── */
 :root {
-  /* Colors — Dark Theme */
-  --bg: #0F0E17;
-  --bg-card: #1A1927;
-  --bg-card-hover: #222136;
-  --bg-light: #FFF8F0;
+  /* Colors — Warm Dark Theme (Claude-inspired) */
+  --bg: #1A1614;
+  --bg-card: #242019;
+  --bg-card-hover: #2E2921;
+  --bg-light: #FAF5F0;
 
-  /* Accent */
-  --accent: #FF8906;
-  --accent-light: #FFAB40;
-  --accent-glow: rgba(255, 137, 6, 0.15);
+  /* Accent — Claude Terracotta */
+  --accent: #D97757;
+  --accent-light: #E89B7A;
+  --accent-glow: rgba(217, 119, 87, 0.15);
+  --accent-warm: #C4956C;
   --accent-purple: #A78BFA;
-  --accent-blue: #60A5FA;
-  --accent-green: #6EE7B7;
-  --accent-red: #F87171;
+  --accent-blue: #7EB8DA;
+  --accent-green: #7BC4A5;
+  --accent-red: #E87C7C;
 
   /* Text */
-  --text: #FFFFFE;
-  --text-sec: #A7A9BE;
-  --text-muted: #6B6D80;
+  --text: #F5EDE5;
+  --text-sec: #B8AFA5;
+  --text-muted: #7A7268;
 
   /* Borders */
-  --border: #2A293E;
-  --border-light: #3A394E;
-  --shadow: rgba(0, 0, 0, 0.3);
+  --border: #332E28;
+  --border-light: #443D35;
+  --shadow: rgba(20, 15, 10, 0.35);
 
   /* Radius */
   --radius: 16px;
@@ -84,7 +85,7 @@ img { max-width: 100%; display: block; }
 /* ── Navigation (shared across all pages) ── */
 .nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  background: rgba(15, 14, 23, 0.88);
+  background: rgba(26, 22, 20, 0.88);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border);
@@ -147,9 +148,9 @@ img { max-width: 100%; display: block; }
 .btn-primary {
   background: var(--accent); color: var(--bg);
   padding: 16px 40px; font-size: 1.1rem;
-  box-shadow: 0 4px 24px rgba(255,137,6,0.3);
+  box-shadow: 0 4px 24px rgba(217,119,87,0.3);
 }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(255,137,6,0.4); background: var(--accent-light); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(217,119,87,0.4); background: var(--accent-light); }
 .btn-secondary {
   background: transparent; color: var(--text);
   padding: 14px 32px; font-size: 1rem;
@@ -199,7 +200,8 @@ img { max-width: 100%; display: block; }
   display: inline-block; font-size: 0.72rem; font-weight: 700;
   padding: 3px 10px; border-radius: 99px;
 }
-.badge-orange { background: rgba(255,137,6,.15); color: var(--accent); }
+.badge-orange { background: rgba(217,119,87,.15); color: var(--accent); }
+.badge-warm { background: rgba(196,149,108,.15); color: var(--accent-warm); }
 .badge-purple { background: rgba(167,139,250,.15); color: var(--accent-purple); }
 .badge-blue { background: rgba(96,165,250,.15); color: var(--accent-blue); }
 .badge-green { background: rgba(110,231,183,.15); color: var(--accent-green); }

@@ -153,7 +153,7 @@
       justify-content: center;
       gap: 8px;
       background: var(--accent);
-      color: #0F0E17;
+      color: #1A1614;
       border: none;
       border-radius: 999px;
       padding: 16px 40px;
@@ -162,10 +162,10 @@
       font-family: inherit;
       cursor: pointer;
       transition: transform .15s, box-shadow .15s, background .15s;
-      box-shadow: 0 4px 16px rgba(255,137,6,.25);
+      box-shadow: 0 4px 16px rgba(217,119,87,.25);
       text-decoration: none;
     }
-    .quiz-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(255,137,6,.4); }
+    .quiz-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(217,119,87,.4); }
     .quiz-btn-primary:active { transform: translateY(0); }
 
     .quiz-btn-secondary {
@@ -292,7 +292,7 @@
     }
     .option-card.selected {
       border-color: var(--accent);
-      background: rgba(255,137,6,.12);
+      background: rgba(217,119,87,.12);
       transform: scale(1.01);
     }
     .option-card.selected::after {
@@ -425,7 +425,7 @@
     .result-rank[data-level="lv5"] { background: rgba(107,175,123,.15); color: var(--lv-5); }
     .result-rank[data-level="lv4"] { background: rgba(212,165,116,.15); color: var(--lv-4); }
     .result-rank[data-level="lv3"] { background: rgba(232,168,124,.15); color: var(--lv-3); }
-    .result-rank[data-level="lv2"] { background: rgba(255,137,6,.15); color: var(--lv-2); }
+    .result-rank[data-level="lv2"] { background: rgba(217,119,87,.15); color: var(--lv-2); }
     .result-rank[data-level="lv1"] { background: rgba(255,92,92,.15); color: var(--lv-1); }
 
     .score-bar-wrap {
@@ -504,8 +504,8 @@
 
     /* Meetup recommendation */
     .meetup-rec {
-      background: linear-gradient(135deg, rgba(255,137,6,.08), rgba(255,171,64,.06));
-      border: 2px solid rgba(255,137,6,.25);
+      background: linear-gradient(135deg, rgba(217,119,87,.08), rgba(232,155,122,.06));
+      border: 2px solid rgba(217,119,87,.25);
       border-radius: var(--radius);
       padding: 24px;
       margin-bottom: 16px;
@@ -565,7 +565,7 @@
       --lv-5: #6BAF7B;
       --lv-4: #D4A574;
       --lv-3: #E8A87C;
-      --lv-2: #FF8906;
+      --lv-2: #D97757;
       --lv-1: #FF5C5C;
       --success: #6BAF7B;
     }
@@ -943,7 +943,7 @@
     const LEVEL_ORDER = ['lv7','lv6','lv5','lv4','lv3','lv2','lv1'];
     const LEVEL_COLORS = {
       lv7: '#7B8794', lv6: '#7EADD2', lv5: '#6BAF7B',
-      lv4: '#D4A574', lv3: '#E8A87C', lv2: '#FF8906', lv1: '#FF5C5C'
+      lv4: '#D4A574', lv3: '#E8A87C', lv2: '#D97757', lv1: '#FF5C5C'
     };
 
     // ═══════════════════════════════════
