@@ -978,30 +978,40 @@
 
   <script>
     // ═══════════════════════════════════════
-    //  Authentication System
-    //  Primary: Google Sign-In (GIS)
+    //  Authentication System v2.0
+    //  Primary: Google Sign-In (GIS) + SHA-256 Hash Whitelist
     //  Fallback: Hashed Passcode
+    //  Security: No plaintext emails in source code
     // ═══════════════════════════════════════
 
     var CLIENT_ID = '432869420629-cqd6k47f5oimqdcnp81vshbl6kga1mrj.apps.googleusercontent.com';
     var STORAGE_KEY = 'claude-meetup-user';
 
     // SHA-256 hash of passcode (not plaintext in source)
-    // To generate: crypto.subtle.digest('SHA-256', new TextEncoder().encode('your-passcode'))
     var PASSCODE_HASH = '7d10c954b6224b8209db9313ebf1625f6e393da5f5e04845c4188e1c3645ad86';
 
-    // Email allowlist — only these Google accounts can access
-    // Set to null to allow ALL Google accounts (open mode for launch)
-    var ALLOWED_EMAILS = null;
-    // After launch, switch to allowlist mode:
-    // var ALLOWED_EMAILS = ['vent@example.com', 'member1@gmail.com'];
+    // ── Whitelist Mode ──
+    // true  = only hashed emails in ALLOWED_HASHES can log in
+    // false = any Google account can log in (open mode)
+    var WHITELIST_ENABLED = false;
+
+    // SHA-256 hashes of allowed email addresses (lowercase before hashing)
+    // To add a member, run in browser console:
+    //   hashEmail('member@gmail.com').then(h => console.log(h))
+    // Then paste the hash string into this array.
+    var ALLOWED_HASHES = [
+      // 'paste-sha256-hash-here'
+    ];
+
+    // Admin salt for additional security (change this to your own random string)
+    var HASH_SALT = 'claude-tc-meetup-2026';
 
     var gisLoaded = false;
     var loginAttempts = 0;
     var MAX_LOGIN_ATTEMPTS = 5;
     var lockoutUntil = 0;
 
-    // ── SHA-256 Hash Helper ──
+    // ── SHA-256 Hash Helpers ──
     function sha256(str) {
       var encoder = new TextEncoder();
       var data = encoder.encode(str);
@@ -1010,6 +1020,22 @@
           .map(function(b) { return b.toString(16).padStart(2, '0'); })
           .join('');
       });
+    }
+
+    // Hash an email with salt — use this in console to generate hashes for new members
+    // Usage: hashEmail('someone@gmail.com').then(h => console.log(h))
+    function hashEmail(email) {
+      return sha256(HASH_SALT + ':' + email.toLowerCase().trim());
+    }
+
+    // Batch hash helper — paste an array of emails, get back hashes
+    // Usage: hashEmails(['a@gmail.com','b@gmail.com']).then(h => console.log(JSON.stringify(h, null, 2)))
+    function hashEmails(emails) {
+      return Promise.all(emails.map(function(e) {
+        return hashEmail(e).then(function(h) {
+          return { hint: e.charAt(0) + '***' + e.slice(e.indexOf('@')), hash: h };
+        });
+      }));
     }
 
     // ── Google Identity Services ──
@@ -1066,24 +1092,37 @@
           return;
         }
 
-        // Security: Check email allowlist
-        if (ALLOWED_EMAILS !== null) {
-          var emailLower = (payload.email || '').toLowerCase();
-          var isAllowed = ALLOWED_EMAILS.some(function(e) {
-            return e.toLowerCase() === emailLower;
-          });
-          if (!isAllowed) {
-            showGateError('此 Google 帳號未在核心圈名單中');
-            return;
-          }
-        }
-
         // Security: Only accept verified emails
         if (!payload.email_verified) {
           showGateError('請使用已驗證的 Google 帳號');
           return;
         }
 
+        // Security: Hash-based whitelist check (no plaintext emails in source)
+        if (WHITELIST_ENABLED) {
+          var emailLower = (payload.email || '').toLowerCase().trim();
+          hashEmail(emailLower).then(function(emailHash) {
+            var isAllowed = ALLOWED_HASHES.indexOf(emailHash) !== -1;
+            if (!isAllowed) {
+              showGateError('此 Google 帳號未在核心圈名單中');
+              console.log('[Auth] Access denied. If you are the admin, add this hash to ALLOWED_HASHES.');
+              return;
+            }
+            // Hash matched — grant access
+            var user = {
+              name: payload.name || '成員',
+              email: payload.email,
+              picture: payload.picture,
+              method: 'google',
+              ts: Date.now()
+            };
+            sessionStorage.setItem(STORAGE_KEY, JSON.stringify(user));
+            showMain(user);
+          });
+          return; // async — exit here, showMain called in .then()
+        }
+
+        // Open mode — allow all verified Google accounts
         var user = {
           name: payload.name || '成員',
           email: payload.email,
