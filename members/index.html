@@ -993,14 +993,47 @@
     // ── Whitelist Mode ──
     // true  = only hashed emails in ALLOWED_HASHES can log in
     // false = any Google account can log in (open mode)
-    var WHITELIST_ENABLED = false;
+    var WHITELIST_ENABLED = true;
 
-    // SHA-256 hashes of allowed email addresses (lowercase before hashing)
+    // SHA-256 hashes of allowed email addresses (lowercase + salt before hashing)
     // To add a member, run in browser console:
     //   hashEmail('member@gmail.com').then(h => console.log(h))
     // Then paste the hash string into this array.
+    // Current count: 33 members (2026-03-30)
     var ALLOWED_HASHES = [
-      // 'paste-sha256-hash-here'
+      'e54940309ea90b56768667b2ac49d5d027b1e0a7350a6e6c969add6a48e30301',
+      '08a07270b71211c6409a5c596c5477bdebe88590b84e3ef1ad8d652aa70b12b1',
+      'd9f03f1d0233ce07f7c274675eebbe4c210a2c094775ddcbb3567a44585f458e',
+      'b99a106fa187677f5c6864184053860e47616bdccbb64a4573c4d3c2d6535a28',
+      '43dbb944d637ed604c4f309a5699c71ad387ce8abf70e9c314cd025182883b98',
+      'be3097799e630413e432c8235768c73a4c73c029ba79d019ba074e6299f93d97',
+      'a8a9e3d5c185767611b0e9bca471f975d93b08af757cdf5dd0952617959cfaf7',
+      '153c244bf5987cb74da2849638c33f142d95aef959524218f0a32eeb4002ef34',
+      '12bd80a533a8cb889ebe071e97ee44417a0953c16c9ee0efe8de12fcf72fc425',
+      '9a84f97d6d26fd5f210c553f6330083f74799d11b9d69c31718d10e5833f5fb0',
+      'e1377b59257b5a2ff74d13bfacb9ea02ff40275d5de2cda23d8718438183bbe1',
+      'fac2880e42226a61a180f1218cb063d51233dce0c8e657a0631d7cafbea32382',
+      'd41f06b16ad93076ecad79793f0b16f9ff0c33ca4ebf881813d3e84a3d57dcbc',
+      'ba03f84e2938793e018c8f947842264407afe453f1c7a051aa46ece259f07273',
+      '1e715369ac89277e6ca7e2d956caa6f4127a72c0a6f5953fbc21a02271360407',
+      '298d3b019078efedea384830d19e7dfee6e934e308d15419a2ae3bd8c03ad695',
+      'b55984c2a8105e5b4ff8bd74465e5de66369fc2429bdd0be9c75ada0742260cc',
+      '9d4448d64cc3ce330afc9fbc2d606f52e127bfe2c804adfe63a815f5f74fb0ac',
+      '3ad19c6699eb166902ab227f1e7d2a85360a7bbf72e80e059916f3d7bf3f4d3e',
+      'cc8e42583cfcb44826170a02e00d4811920cb0ea31fea6605b34f0997f22570c',
+      'ffc6dc51fe78039fcbf8b8fcfeb9226af8f5fbdb58350ebaeda6e501337afd72',
+      'b41f9b7b319629e6fa8d0cffd9f34cf4bb59f2e4690b078e1a4be08826b63cf9',
+      '74b4274118a479ef26368a2bbfa435bd53069ea8b9c29689f76a18eddf4a98b9',
+      'e5ad01a95ce640eca57d6a8810bb77f44b31ab78b2a9a609ea4230b36861aeb7',
+      '616f69f8516d49bde7aa95d8f5cbf909c99f1402869bb75f25a3d2bddde1318e',
+      '3acee79e61fbcc68656ba946382899e9c076642bd1afee20bdf2b349a9f7edcf',
+      '4312b9e1837a84fb90fa7a1b0c6a52091b6f28385a91264f7b4a338d1d805f73',
+      'e55a1780bd0d2d537f1e728cc516d7c3564ca11841a12cfcb6b03e71f48d0a8d',
+      '5cb323b9bb6a58b02116c3a4fd62198fe96a31542ccd3997ca2d8b16372214f7',
+      'c4e2410312c288809f8691692075e33ee2ff6041e5fc13dd054286d74c052c74',
+      'c0e7254939768e0536328ea05ebbe8096e1421c17edb7536f9cbd92f08ce429f',
+      '380fbca754d27bb97b66dc651bd06bdcacd945a19470efe9c7b58621b5718291',
+      'd30c60374f3800123aff4b7f40a7c34acb7d0be8d067407469c8f6f4abc763d4'
     ];
 
     // Admin salt for additional security (change this to your own random string)
