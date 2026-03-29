@@ -465,6 +465,67 @@
       color: var(--text-muted);
     }
 
+    /* ── GitHub Project Cards ── */
+    .github-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 16px;
+    }
+    .github-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      transition: var(--transition);
+      text-decoration: none;
+      color: var(--text);
+      display: block;
+    }
+    .github-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .github-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .github-card-status {
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .github-card-status.green { color: var(--accent-green); }
+    .github-card-stars {
+      font-size: 0.78rem;
+      color: var(--accent-warm, #C4956C);
+      font-weight: 600;
+    }
+    .github-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .github-card-desc {
+      font-size: 0.85rem;
+      color: var(--text-sec);
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+    .github-card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .github-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 2px 10px;
+      border-radius: 99px;
+    }
+    .github-tag.category { background: rgba(217,119,87,0.12); color: var(--accent); }
+    .github-tag.tech { background: rgba(96,165,250,0.12); color: var(--accent-blue); }
+    .github-tag.difficulty { background: rgba(167,139,250,0.12); color: var(--accent-purple); }
+    .github-tag.license { background: rgba(110,231,183,0.12); color: var(--accent-green); }
+
     /* ── Member Directory ── */
     .member-grid {
       display: grid;
@@ -611,6 +672,7 @@
       .nav-user-name { display: none; }
       .replay-grid { grid-template-columns: 1fr; }
       .resource-grid { grid-template-columns: 1fr; }
+      .github-grid { grid-template-columns: 1fr; }
       .member-grid { grid-template-columns: repeat(2, 1fr); }
       .footer-inner { justify-content: center; text-align: center; }
       .footer-links { justify-content: center; }
@@ -710,7 +772,7 @@
               <span class="live-badge">最新</span>
             </div>
             <div class="replay-info">
-              <h3>第 1 場｜你的 AI 段位是什麼？</h3>
+              <h3>vol.1｜你的 Claude，跟我的一樣嗎？</h3>
               <div class="meta">
                 <span>2026/04/02</span>
                 <span>32 人</span>
@@ -725,9 +787,9 @@
               <span class="coming">預計 5 月</span>
             </div>
             <div class="replay-info">
-              <h3>第 2 場｜辦公室即戰力</h3>
+              <h3>vol.2｜辦公室即戰力：搞定 80% 的文書工作</h3>
               <div class="meta">
-                <span>2026/05 預定</span>
+                <span>2026/05/07（三）</span>
                 <span>待定</span>
               </div>
             </div>
@@ -739,9 +801,9 @@
               <span class="coming">預計 6 月</span>
             </div>
             <div class="replay-info">
-              <h3>第 3 場｜AI x 日常生活</h3>
+              <h3>vol.3｜一個人也能很強：個人生產力工作流</h3>
               <div class="meta">
-                <span>2026/06 預定</span>
+                <span>2026/06/04（三）</span>
                 <span>待定</span>
               </div>
             </div>
@@ -762,7 +824,7 @@
           <div class="resource-card">
             <div class="resource-icon" style="background: rgba(217,119,87,0.12);">📋</div>
             <div>
-              <h3>第 1 場簡報投影片</h3>
+              <h3>vol.1 簡報投影片</h3>
               <p>活動結束後上傳</p>
               <span class="resource-tag coming">4/2 後上傳</span>
             </div>
@@ -789,13 +851,67 @@
           <div class="resource-card">
             <div class="resource-icon" style="background: rgba(110,231,183,0.12);">🎯</div>
             <div>
-              <h3>7 級學習路徑</h3>
-              <p>根據你的段位推薦學習資源</p>
+              <h3>學習路徑指南</h3>
+              <p>根據你的程度推薦學習資源</p>
               <span class="resource-tag">可使用</span>
             </div>
           </div>
 
         </div>
+      </div>
+    </section>
+
+    <!-- GitHub Projects -->
+    <section class="section" id="github-projects">
+      <div class="container">
+        <div class="section-head">
+          <h2>📂 GitHub 專案學習資料庫 <span class="count">2 個專案</span></h2>
+        </div>
+        <p style="color: var(--text-sec); font-size: 0.9rem; margin-bottom: 20px; line-height: 1.7;">
+          小聚主辦人精選的 GitHub 專案，每個都經過深度研究。標示難度與技術棧，方便你挑選適合程度的專案來學習。
+        </p>
+
+        <div class="github-grid">
+
+          <a class="github-card" href="https://github.com/anthropics/financial-services-plugins" target="_blank" rel="noopener noreferrer">
+            <div class="github-card-header">
+              <span class="github-card-status green">🟢 借鏡中</span>
+              <span class="github-card-stars">⭐ 6,900</span>
+            </div>
+            <h3>anthropics/financial-services-plugins</h3>
+            <p class="github-card-desc">Anthropic 官方出品的金融服務 Claude 插件集，示範如何用 MCP + Skill 架構打造專業領域 Agent</p>
+            <div class="github-card-meta">
+              <span class="github-tag category">AI-Agent</span>
+              <span class="github-tag tech">Python</span>
+              <span class="github-tag tech">MCP</span>
+              <span class="github-tag tech">Markdown</span>
+              <span class="github-tag difficulty">難度 ⭐⭐⭐⭐</span>
+              <span class="github-tag license">Apache-2.0</span>
+            </div>
+          </a>
+
+          <a class="github-card" href="https://github.com/Conway-Research/automaton" target="_blank" rel="noopener noreferrer">
+            <div class="github-card-header">
+              <span class="github-card-status green">🟢 借鏡中</span>
+              <span class="github-card-stars">⭐ 3,100</span>
+            </div>
+            <h3>Conway Automaton</h3>
+            <p class="github-card-desc">自我維持、可自我複製的主權 AI Agent 框架，五層記憶架構、Policy Engine 等設計值得借鏡</p>
+            <div class="github-card-meta">
+              <span class="github-tag category">AI-Agent</span>
+              <span class="github-tag tech">TypeScript</span>
+              <span class="github-tag tech">SQLite</span>
+              <span class="github-tag tech">Base (L2)</span>
+              <span class="github-tag difficulty">難度 ⭐⭐⭐⭐</span>
+              <span class="github-tag license">MIT</span>
+            </div>
+          </a>
+
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 16px; text-align: center;">
+          持續更新中 — 隨著小聚場次增加，會加入更多精選專案
+        </p>
       </div>
     </section>
 
@@ -826,8 +942,8 @@
             <div class="weekday">週四</div>
           </div>
           <div class="next-event-info">
-            <h3>第 1 場｜你的 AI 段位是什麼？</h3>
-            <p>全景式入門。現場 7 級段位 Quiz、辦公室 Demo、生活場景 Demo、進階功能一瞥。每個人都能找到自己的位置。</p>
+            <h3>vol.1｜你的 Claude，跟我的一樣嗎？</h3>
+            <p>全景式入門。破冰自介、辦公室場景 Demo、生活場景 Demo、進階一瞥（Projects & Styles）。認識彼此，找到自己的起點。</p>
             <div class="tags">
               <span class="event-tag">🏢 企業主 ★★</span>
               <span class="event-tag">👔 經理人 ★★★</span>
