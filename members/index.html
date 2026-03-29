@@ -8,6 +8,19 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="canonical" href="https://claudetc.leevent.xyz/members/">
 
+  <!-- Security Headers -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self' 'unsafe-inline' https://accounts.google.com https://gsi-client.google.com;
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+    font-src https://fonts.gstatic.com;
+    img-src 'self' data: https://*.googleusercontent.com;
+    connect-src 'self' https://accounts.google.com;
+    frame-src https://accounts.google.com;
+  ">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
   <!-- OG Tags -->
   <meta property="og:title" content="核心圈後台｜Claude 台中小聚">
   <meta property="og:description" content="Claude 台中小聚核心圈成員專屬空間。活動回放、資源包、成員目錄。需要 Google 帳號登入。">
@@ -849,48 +862,140 @@
 
   <script>
     // ═══════════════════════════════════════
-    //  Google Sign-In + Password Fallback
+    //  Authentication System
+    //  Primary: Google Sign-In (GIS)
+    //  Fallback: Hashed Passcode
     // ═══════════════════════════════════════
-    const PASSCODE = 'claude-tc-2026';
-    const STORAGE_KEY = 'claude-meetup-user';
-    let gisLoaded = false;
+
+    var CLIENT_ID = '432869420629-cqd6k47f5oimqdcnp81vshbl6kga1mrj.apps.googleusercontent.com';
+    var STORAGE_KEY = 'claude-meetup-user';
+
+    // SHA-256 hash of passcode (not plaintext in source)
+    // To generate: crypto.subtle.digest('SHA-256', new TextEncoder().encode('your-passcode'))
+    var PASSCODE_HASH = '7d10c954b6224b8209db9313ebf1625f6e393da5f5e04845c4188e1c3645ad86';
+
+    // Email allowlist — only these Google accounts can access
+    // Set to null to allow ALL Google accounts (open mode for launch)
+    var ALLOWED_EMAILS = null;
+    // After launch, switch to allowlist mode:
+    // var ALLOWED_EMAILS = ['vent@example.com', 'member1@gmail.com'];
+
+    var gisLoaded = false;
+    var loginAttempts = 0;
+    var MAX_LOGIN_ATTEMPTS = 5;
+    var lockoutUntil = 0;
+
+    // ── SHA-256 Hash Helper ──
+    function sha256(str) {
+      var encoder = new TextEncoder();
+      var data = encoder.encode(str);
+      return crypto.subtle.digest('SHA-256', data).then(function(buf) {
+        return Array.from(new Uint8Array(buf))
+          .map(function(b) { return b.toString(16).padStart(2, '0'); })
+          .join('');
+      });
+    }
 
     // ── Google Identity Services ──
     function initGoogleSignIn() {
-      google.accounts.id.initialize({
-        client_id: 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com',
-        callback: handleCredentialResponse,
-        auto_select: false,
-      });
+      try {
+        google.accounts.id.initialize({
+          client_id: CLIENT_ID,
+          callback: handleCredentialResponse,
+          auto_select: false,
+          itp_support: true
+        });
 
-      // Render the Sign-In button
-      google.accounts.id.renderButton(
-        document.getElementById('google-signin-btn'),
-        { theme: 'filled_black', size: 'large', text: 'signin_with', shape: 'pill', width: 300 }
-      );
+        google.accounts.id.renderButton(
+          document.getElementById('google-signin-btn'),
+          { theme: 'filled_black', size: 'large', text: 'signin_with', shape: 'pill', width: 300 }
+        );
 
-      gisLoaded = true;
+        gisLoaded = true;
+      } catch (err) {
+        console.error('GIS init failed:', err);
+        showPasswordFallback();
+      }
     }
 
     function handleCredentialResponse(response) {
-      // Decode JWT to get user info
-      const payload = JSON.parse(atob(response.credential.split('.')[1]));
-      const user = {
-        name: payload.name,
-        email: payload.email,
-        picture: payload.picture,
-        method: 'google'
-      };
-      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(user));
-      showMain(user);
+      try {
+        // Decode JWT payload
+        var parts = response.credential.split('.');
+        if (parts.length !== 3) {
+          showGateError('登入驗證失敗，請重試');
+          return;
+        }
+
+        var payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')));
+
+        // Security: Verify audience matches our Client ID
+        if (payload.aud !== CLIENT_ID) {
+          console.error('JWT aud mismatch:', payload.aud);
+          showGateError('登入驗證失敗（Token 不匹配）');
+          return;
+        }
+
+        // Security: Verify token is not expired
+        var now = Math.floor(Date.now() / 1000);
+        if (payload.exp && payload.exp < now) {
+          showGateError('登入已過期，請重新登入');
+          return;
+        }
+
+        // Security: Verify issuer
+        if (payload.iss !== 'https://accounts.google.com' && payload.iss !== 'accounts.google.com') {
+          console.error('JWT iss mismatch:', payload.iss);
+          showGateError('登入驗證失敗（來源不明）');
+          return;
+        }
+
+        // Security: Check email allowlist
+        if (ALLOWED_EMAILS !== null) {
+          var emailLower = (payload.email || '').toLowerCase();
+          var isAllowed = ALLOWED_EMAILS.some(function(e) {
+            return e.toLowerCase() === emailLower;
+          });
+          if (!isAllowed) {
+            showGateError('此 Google 帳號未在核心圈名單中');
+            return;
+          }
+        }
+
+        // Security: Only accept verified emails
+        if (!payload.email_verified) {
+          showGateError('請使用已驗證的 Google 帳號');
+          return;
+        }
+
+        var user = {
+          name: payload.name || '成員',
+          email: payload.email,
+          picture: payload.picture,
+          method: 'google',
+          ts: Date.now()
+        };
+        sessionStorage.setItem(STORAGE_KEY, JSON.stringify(user));
+        showMain(user);
+      } catch (err) {
+        console.error('Auth error:', err);
+        showGateError('登入處理失敗，請重試');
+      }
     }
 
-    // Wait for GIS script to load, fallback if it fails
+    function showGateError(msg) {
+      var errEl = document.getElementById('gate-err');
+      errEl.textContent = msg;
+      errEl.classList.add('show');
+      setTimeout(function() {
+        errEl.classList.remove('show');
+      }, 4000);
+    }
+
+    // Wait for GIS script to load
     window.addEventListener('load', function() {
-      // Check if user is already signed in (session still active)
       checkAccess();
 
-      // Give GIS 3 seconds to load, then show password fallback
       setTimeout(function() {
         if (typeof google !== 'undefined' && google.accounts) {
           initGoogleSignIn();
@@ -899,7 +1004,6 @@
         }
       }, 1500);
 
-      // Final fallback at 4 seconds
       setTimeout(function() {
         if (!gisLoaded) {
           showPasswordFallback();
@@ -911,21 +1015,27 @@
       document.getElementById('gate-fallback').classList.add('show');
     }
 
-    // ── Access Control ──
+    // ── Session Access Check ──
     function checkAccess() {
-      const saved = sessionStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        try {
-          const user = JSON.parse(saved);
-          if (user && (user.email || user.method === 'password')) {
-            showMain(user);
-          }
-        } catch (e) {
-          // Legacy format: simple 'true' string
-          if (saved === 'true') {
-            showMain({ name: '成員', method: 'password' });
-          }
+      var saved = sessionStorage.getItem(STORAGE_KEY);
+      if (!saved) return;
+
+      try {
+        var user = JSON.parse(saved);
+        if (!user) return;
+
+        // Security: Session timeout (4 hours max)
+        var SESSION_MAX = 4 * 60 * 60 * 1000;
+        if (user.ts && (Date.now() - user.ts > SESSION_MAX)) {
+          sessionStorage.removeItem(STORAGE_KEY);
+          return;
         }
+
+        if (user.email || user.method === 'password') {
+          showMain(user);
+        }
+      } catch (e) {
+        sessionStorage.removeItem(STORAGE_KEY);
       }
     }
 
@@ -933,11 +1043,11 @@
       document.getElementById('gate').style.display = 'none';
       document.getElementById('main').classList.add('active');
 
-      // Update nav user area
       if (user) {
         if (user.picture) {
           var avatarEl = document.getElementById('nav-avatar');
           avatarEl.src = user.picture;
+          avatarEl.referrerPolicy = 'no-referrer';
           avatarEl.style.display = 'block';
         }
         if (user.name) {
@@ -949,40 +1059,53 @@
     function logout() {
       sessionStorage.removeItem(STORAGE_KEY);
 
-      // Revoke Google session if available
       if (typeof google !== 'undefined' && google.accounts) {
         google.accounts.id.disableAutoSelect();
       }
 
       document.getElementById('main').classList.remove('active');
       document.getElementById('gate').style.display = 'flex';
-
-      // Reset nav user area
       document.getElementById('nav-avatar').style.display = 'none';
       document.getElementById('nav-name').textContent = '';
 
-      // Reset password field if visible
       var pwField = document.getElementById('gate-pw');
       if (pwField) pwField.value = '';
     }
 
-    // ── Password Fallback Handler ──
+    // ── Password Fallback Handler (with rate limiting) ──
     var gateSubmit = document.getElementById('gate-submit');
     if (gateSubmit) {
       gateSubmit.addEventListener('click', function() {
-        var pw = document.getElementById('gate-pw').value.trim();
-        if (pw === PASSCODE) {
-          var user = { name: '成員', method: 'password' };
-          sessionStorage.setItem(STORAGE_KEY, JSON.stringify(user));
-          showMain(user);
-        } else {
-          document.getElementById('gate-pw').classList.add('error');
-          document.getElementById('gate-err').classList.add('show');
-          setTimeout(function() {
-            document.getElementById('gate-pw').classList.remove('error');
-            document.getElementById('gate-err').classList.remove('show');
-          }, 3000);
+        // Rate limiting
+        if (Date.now() < lockoutUntil) {
+          var secs = Math.ceil((lockoutUntil - Date.now()) / 1000);
+          showGateError('嘗試次數過多，請等 ' + secs + ' 秒後再試');
+          return;
         }
+
+        var pw = document.getElementById('gate-pw').value.trim();
+        if (!pw) return;
+
+        sha256(pw).then(function(hash) {
+          if (hash === PASSCODE_HASH) {
+            loginAttempts = 0;
+            var user = { name: '成員', method: 'password', ts: Date.now() };
+            sessionStorage.setItem(STORAGE_KEY, JSON.stringify(user));
+            showMain(user);
+          } else {
+            loginAttempts++;
+            if (loginAttempts >= MAX_LOGIN_ATTEMPTS) {
+              lockoutUntil = Date.now() + 30000;
+              showGateError('嘗試次數過多，請等 30 秒後再試');
+            } else {
+              document.getElementById('gate-pw').classList.add('error');
+              showGateError('通行碼錯誤，請確認後重試（剩餘 ' + (MAX_LOGIN_ATTEMPTS - loginAttempts) + ' 次）');
+            }
+            setTimeout(function() {
+              document.getElementById('gate-pw').classList.remove('error');
+            }, 3000);
+          }
+        });
       });
     }
 
