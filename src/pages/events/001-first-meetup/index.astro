@@ -1,0 +1,506 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../../components/Breadcrumb.astro';
+import SectionHeader from '../../../components/SectionHeader.astro';
+
+const eventLd = {
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "Claude 台中小聚 vol.1｜你的 Claude，跟我的一樣嗎？",
+  "description": "全景式入門。辦公室場景 Demo、生活場景 Demo、進階功能一瞥。三段現場 Demo + 破冰交流。",
+  "startDate": "2026-04-02T19:00:00+08:00",
+  "endDate": "2026-04-02T21:30:00+08:00",
+  "eventStatus": "https://schema.org/EventScheduled",
+  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+  "location": {
+    "@type": "Place",
+    "name": "涵軒雅敘共享中心",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "台中市",
+      "addressCountry": "TW"
+    }
+  },
+  "organizer": {
+    "@type": "Person",
+    "name": "Lee Vent",
+    "url": "https://leevent.xyz"
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "600",
+    "priceCurrency": "TWD",
+    "availability": "https://schema.org/SoldOut",
+    "url": "https://claudetc.leevent.xyz/events/001-first-meetup/"
+  },
+  "maximumAttendeeCapacity": 32,
+  "image": "https://claudetc.leevent.xyz/og-default.png",
+  "url": "https://claudetc.leevent.xyz/events/001-first-meetup/"
+};
+---
+
+<BaseLayout
+  title="vol.1｜你的 Claude，跟我的一樣嗎？ — Claude 台中小聚"
+  description="Claude 台中小聚 vol.1。全景式入門｜角色：認識彼此。辦公室場景 Demo、生活場景 Demo、進階一瞥。2026/04/02 台中。"
+  canonical="https://claudetc.leevent.xyz/events/001-first-meetup/"
+  ogType="article"
+  active="events"
+  jsonLd={eventLd}
+>
+
+  <Breadcrumb items={[
+    { name: "首頁", href: "/" },
+    { name: "活動中心", href: "/events/" },
+    { name: "第 1 場" }
+  ]} />
+
+  <!-- ====== Section 1: Hero ====== -->
+  <section class="max-w-5xl mx-auto px-6 pb-16 pt-4">
+    <div class="text-center space-y-6 fade-in">
+      <span class="badge badge-primary badge-lg font-bold">即將登場</span>
+
+      <h1 class="text-4xl md:text-5xl font-black leading-tight">
+        <span class="bg-gradient-to-r from-brand via-brand-light to-brand-warm bg-clip-text text-transparent">vol.1｜你的 Claude，跟我的一樣嗎？</span>
+      </h1>
+
+      <p class="text-base-content/60 max-w-2xl mx-auto text-lg leading-relaxed">
+        全景式入門｜角色：認識彼此。辦公室場景 Demo、生活場景 Demo、進階功能一瞥。
+      </p>
+
+      <!-- Quick Info Pills -->
+      <div class="flex flex-wrap justify-center gap-3 pt-2">
+        <span class="badge badge-outline badge-lg">📅 2026/04/02（四）</span>
+        <span class="badge badge-outline badge-lg">🕖 19:00–21:30</span>
+        <span class="badge badge-outline badge-lg">📍 涵軒雅敘</span>
+        <span class="badge badge-outline badge-lg">🎫 $600</span>
+        <span class="badge badge-outline badge-lg border-brand-red text-brand-red">🔥 已完售</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== Section 2: Event Description ====== -->
+  <section class="max-w-5xl mx-auto px-6 pb-20">
+    <SectionHeader
+      overline="What We Do"
+      title="三段 Demo + 交流"
+      id="description"
+    />
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <!-- Item 1 -->
+      <div class="card bg-base-200 shadow-md fade-in">
+        <div class="card-body p-6">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="badge badge-primary badge-lg font-black text-lg w-10 h-10 flex items-center justify-center">1</span>
+            <h3 class="font-bold text-lg">辦公室場景</h3>
+          </div>
+          <p class="text-base-content/60 leading-relaxed">Email 撰寫、會議紀錄整理、報告產出</p>
+        </div>
+      </div>
+
+      <!-- Item 2 -->
+      <div class="card bg-base-200 shadow-md fade-in">
+        <div class="card-body p-6">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="badge badge-primary badge-lg font-black text-lg w-10 h-10 flex items-center justify-center">2</span>
+            <h3 class="font-bold text-lg">生活場景</h3>
+          </div>
+          <p class="text-base-content/60 leading-relaxed">旅行規劃、食譜推薦、學習助手</p>
+        </div>
+      </div>
+
+      <!-- Item 3 -->
+      <div class="card bg-base-200 shadow-md fade-in">
+        <div class="card-body p-6">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="badge badge-primary badge-lg font-black text-lg w-10 h-10 flex items-center justify-center">3</span>
+            <h3 class="font-bold text-lg">進階一瞥：Projects & Styles</h3>
+          </div>
+          <p class="text-base-content/60 leading-relaxed">快速展示進階功能的可能性</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bonus Card -->
+    <div class="border-2 border-dashed border-brand-purple rounded-2xl p-6 text-center fade-in">
+      <p class="text-lg">✨ 破冰 + 分組討論</p>
+    </div>
+  </section>
+
+  <!-- ====== Section 3: Live Demo Showcase ====== -->
+  <section class="bg-base-200 py-20">
+    <div class="max-w-5xl mx-auto px-6">
+      <SectionHeader
+        overline="Live Demo"
+        title="現場展示項目"
+        subtitle="不看投影片、不念教條。開電腦，跑給你看。"
+        id="demos"
+      />
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Demo 01 -->
+        <div class="card bg-base-100 shadow-md border border-base-300 fade-in">
+          <div class="card-body p-6">
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-sm font-bold text-base-content/40 tracking-widest">DEMO 01</span>
+              <span class="badge badge-error">辦公室場景</span>
+            </div>
+            <h3 class="text-xl font-bold mb-3">Email + 會議紀錄 + 報告</h3>
+            <ul class="space-y-2 text-base-content/60">
+              <li class="flex items-start gap-2"><span class="text-brand mt-0.5">&#9656;</span>Email 撰寫與回覆</li>
+              <li class="flex items-start gap-2"><span class="text-brand mt-0.5">&#9656;</span>會議紀錄快速整理</li>
+              <li class="flex items-start gap-2"><span class="text-brand mt-0.5">&#9656;</span>結構化報告產出</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Demo 02 -->
+        <div class="card bg-base-100 shadow-md border border-base-300 fade-in">
+          <div class="card-body p-6">
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-sm font-bold text-base-content/40 tracking-widest">DEMO 02</span>
+              <span class="badge badge-info">生活場景</span>
+            </div>
+            <h3 class="text-xl font-bold mb-3">旅行規劃 + 食譜 + 學習助手</h3>
+            <ul class="space-y-2 text-base-content/60">
+              <li class="flex items-start gap-2"><span class="text-brand mt-0.5">&#9656;</span>行程規劃與比較</li>
+              <li class="flex items-start gap-2"><span class="text-brand mt-0.5">&#9656;</span>食譜推薦與調整</li>
+              <li class="flex items-start gap-2"><span class="text-brand mt-0.5">&#9656;</span>學習計畫與摘要</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Demo 03 (spans full width on md) -->
+        <div class="card bg-base-100 shadow-md border border-base-300 md:col-span-2 fade-in">
+          <div class="card-body p-6">
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-sm font-bold text-base-content/40 tracking-widest">DEMO 03</span>
+              <span class="badge badge-secondary">進階一瞥</span>
+            </div>
+            <h3 class="text-xl font-bold mb-3">Projects + Styles + Showcase</h3>
+            <ul class="space-y-2 text-base-content/60">
+              <li class="flex items-start gap-2"><span class="text-brand mt-0.5">&#9656;</span>Projects 專案管理功能展示</li>
+              <li class="flex items-start gap-2"><span class="text-brand mt-0.5">&#9656;</span>Styles 自訂回覆風格</li>
+              <li class="flex items-start gap-2"><span class="text-brand mt-0.5">&#9656;</span>進階功能的可能性一覽</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== Section 4: Schedule Timeline ====== -->
+  <section class="max-w-5xl mx-auto px-6 py-20">
+    <SectionHeader
+      overline="Schedule"
+      title="活動流程"
+      id="schedule"
+    />
+
+    <ul class="timeline timeline-vertical timeline-snap-icon max-md:timeline-compact fade-in">
+      <!-- 19:00 -->
+      <li>
+        <div class="timeline-middle">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5 text-base-content/40"><circle cx="10" cy="10" r="5" /></svg>
+        </div>
+        <div class="timeline-start md:text-end mb-10">
+          <time class="font-mono text-sm text-brand">19:00</time>
+          <div class="text-lg font-bold">開放入場</div>
+          <p class="text-base-content/60 text-sm">簽到、找位子、連 Wi-Fi</p>
+        </div>
+        <hr />
+      </li>
+
+      <!-- 19:30 -->
+      <li>
+        <hr />
+        <div class="timeline-middle">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5 text-base-content/40"><circle cx="10" cy="10" r="5" /></svg>
+        </div>
+        <div class="timeline-end mb-10">
+          <time class="font-mono text-sm text-brand">19:30</time>
+          <div class="text-lg font-bold">破冰</div>
+          <p class="text-base-content/60 text-sm">快速自介 +「你用 Claude 做過最酷的事？」<span class="badge badge-ghost badge-xs ml-2">10 min</span></p>
+        </div>
+        <hr />
+      </li>
+
+      <!-- 19:40 Demo 1 -->
+      <li>
+        <hr />
+        <div class="timeline-middle">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5 text-primary"><circle cx="10" cy="10" r="5" /></svg>
+        </div>
+        <div class="timeline-start md:text-end mb-10">
+          <time class="font-mono text-sm text-brand">19:40</time>
+          <div class="text-lg font-bold text-primary">Demo 1：辦公室場景</div>
+          <p class="text-base-content/60 text-sm">Email、會議紀錄、報告產出<span class="badge badge-ghost badge-xs ml-2">15 min</span></p>
+        </div>
+        <hr />
+      </li>
+
+      <!-- 19:55 Demo 2 -->
+      <li>
+        <hr />
+        <div class="timeline-middle">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5 text-primary"><circle cx="10" cy="10" r="5" /></svg>
+        </div>
+        <div class="timeline-end mb-10">
+          <time class="font-mono text-sm text-brand">19:55</time>
+          <div class="text-lg font-bold text-primary">Demo 2：生活場景</div>
+          <p class="text-base-content/60 text-sm">旅行規劃、食譜推薦、學習助手<span class="badge badge-ghost badge-xs ml-2">15 min</span></p>
+        </div>
+        <hr />
+      </li>
+
+      <!-- 20:10 Demo 3 -->
+      <li>
+        <hr />
+        <div class="timeline-middle">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5 text-primary"><circle cx="10" cy="10" r="5" /></svg>
+        </div>
+        <div class="timeline-start md:text-end mb-10">
+          <time class="font-mono text-sm text-brand">20:10</time>
+          <div class="text-lg font-bold text-primary">Demo 3：進階一瞥</div>
+          <p class="text-base-content/60 text-sm">Projects、Styles、Showcase<span class="badge badge-ghost badge-xs ml-2">10 min</span></p>
+        </div>
+        <hr />
+      </li>
+
+      <!-- 20:20 分組交流 -->
+      <li>
+        <hr />
+        <div class="timeline-middle">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5 text-base-content/40"><circle cx="10" cy="10" r="5" /></svg>
+        </div>
+        <div class="timeline-end mb-10">
+          <time class="font-mono text-sm text-brand">20:20</time>
+          <div class="text-lg font-bold">分組交流</div>
+          <p class="text-base-content/60 text-sm">小組分享自己的使用情境<span class="badge badge-ghost badge-xs ml-2">10 min</span></p>
+        </div>
+        <hr />
+      </li>
+
+      <!-- 20:30 自由交流 -->
+      <li>
+        <hr />
+        <div class="timeline-middle">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5 text-base-content/40"><circle cx="10" cy="10" r="5" /></svg>
+        </div>
+        <div class="timeline-start md:text-end mb-10">
+          <time class="font-mono text-sm text-brand">20:30</time>
+          <div class="text-lg font-bold">自由交流 + 大合照</div>
+          <p class="text-base-content/60 text-sm">自由聊天、交換聯絡方式<span class="badge badge-ghost badge-xs ml-2">~30 min</span></p>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ====== Section 5: Target Audience ====== -->
+  <section class="bg-base-200 py-20">
+    <div class="max-w-5xl mx-auto px-6">
+      <SectionHeader
+        overline="Who's It For"
+        title="誰適合這場活動？"
+        id="audience"
+      />
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
+        <div class="card bg-base-100 shadow-md fade-in">
+          <div class="card-body p-6 flex-row items-center gap-4">
+            <span class="text-3xl">🏢</span>
+            <div>
+              <h3 class="font-bold">企業主 / 經營者</h3>
+              <p class="text-brand text-sm mt-1">適合度 ★★</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card bg-base-100 shadow-md fade-in">
+          <div class="card-body p-6 flex-row items-center gap-4">
+            <span class="text-3xl">👔</span>
+            <div>
+              <h3 class="font-bold">經理人 / 單位主管</h3>
+              <p class="text-brand text-sm mt-1">適合度 ★★★</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card bg-base-100 shadow-md fade-in">
+          <div class="card-body p-6 flex-row items-center gap-4">
+            <span class="text-3xl">🛠</span>
+            <div>
+              <h3 class="font-bold">技術夥伴 / 工作者</h3>
+              <p class="text-brand text-sm mt-1">適合度 ★★★</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card bg-base-100 shadow-md fade-in">
+          <div class="card-body p-6 flex-row items-center gap-4">
+            <span class="text-3xl">🏠</span>
+            <div>
+              <h3 class="font-bold">家庭 / 學生 / 個人</h3>
+              <p class="text-brand text-sm mt-1">適合度 ★★★</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== Section 6: Event Info ====== -->
+  <section class="max-w-5xl mx-auto px-6 py-20">
+    <SectionHeader
+      overline="Event Info"
+      title="活動資訊"
+      id="info"
+    />
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Card 1: Basic Info -->
+      <div class="card bg-base-200 shadow-md fade-in">
+        <div class="card-body p-6">
+          <h3 class="card-title text-lg mb-4">📋 基本資訊</h3>
+          <table class="table table-sm">
+            <tbody>
+              <tr><td class="text-base-content/60 w-28">活動名稱</td><td>Claude 台中小聚 vol.1</td></tr>
+              <tr><td class="text-base-content/60">定位</td><td>全景式入門｜認識彼此</td></tr>
+              <tr><td class="text-base-content/60">首場日期</td><td>2026/04/02（四）</td></tr>
+              <tr><td class="text-base-content/60">頻率</td><td>每月 1–2 場</td></tr>
+              <tr><td class="text-base-content/60">票價</td><td>NT$600 / 人</td></tr>
+              <tr><td class="text-base-content/60">人數上限</td><td>32 人</td></tr>
+              <tr><td class="text-base-content/60">主辦</td><td>Lee Vent</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Card 2: Venue & Prep -->
+      <div class="card bg-base-200 shadow-md fade-in">
+        <div class="card-body p-6">
+          <h3 class="card-title text-lg mb-4">📍 場地與準備</h3>
+          <table class="table table-sm">
+            <tbody>
+              <tr><td class="text-base-content/60 w-28">場地</td><td>涵軒雅敘共享中心（台中）</td></tr>
+              <tr><td class="text-base-content/60">時間</td><td>19:00–21:30（2.5 小時）</td></tr>
+              <tr><td class="text-base-content/60">攜帶</td><td>筆電或手機（有 Wi-Fi）</td></tr>
+              <tr><td class="text-base-content/60">報名</td><td>線上表單（已完售）</td></tr>
+              <tr><td class="text-base-content/60">錄影</td><td>主題段落錄影，交流不錄</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== Section 7: FAQ ====== -->
+  <section class="bg-base-200 py-20">
+    <div class="max-w-3xl mx-auto px-6">
+      <SectionHeader
+        overline="FAQ"
+        title="常見問題"
+        id="faq"
+      />
+
+      <div class="join join-vertical w-full fade-in">
+        <div class="collapse collapse-arrow join-item border border-base-300 bg-base-100">
+          <input type="radio" name="faq-accordion" />
+          <div class="collapse-title font-bold">需要技術背景嗎？</div>
+          <div class="collapse-content text-base-content/60">
+            <p>完全不需要。這場活動是全景式入門，從零開始帶你認識 Claude。不管你是工程師、行銷人、老師、學生，都能輕鬆參與。</p>
+          </div>
+        </div>
+
+        <div class="collapse collapse-arrow join-item border border-base-300 bg-base-100">
+          <input type="radio" name="faq-accordion" />
+          <div class="collapse-title font-bold">我需要先有 Claude 帳號嗎？</div>
+          <div class="collapse-content text-base-content/60">
+            <p>不一定。現場會用 Demo 方式展示，你只需要看就好。但如果想跟著操作，建議事先註冊免費帳號。</p>
+          </div>
+        </div>
+
+        <div class="collapse collapse-arrow join-item border border-base-300 bg-base-100">
+          <input type="radio" name="faq-accordion" />
+          <div class="collapse-title font-bold">$600 的票價包含什麼？</div>
+          <div class="collapse-content text-base-content/60">
+            <p>包含 2.5 小時完整活動、三段現場 Demo、破冰與分組交流、場地費用。不含餐飲，現場有飲水機。</p>
+          </div>
+        </div>
+
+        <div class="collapse collapse-arrow join-item border border-base-300 bg-base-100">
+          <input type="radio" name="faq-accordion" />
+          <div class="collapse-title font-bold">活動會錄影嗎？</div>
+          <div class="collapse-content text-base-content/60">
+            <p>主題分享段落會錄影，後續可能剪輯為精華片段。破冰與交流環節不會錄影，請放心暢聊。</p>
+          </div>
+        </div>
+
+        <div class="collapse collapse-arrow join-item border border-base-300 bg-base-100">
+          <input type="radio" name="faq-accordion" />
+          <div class="collapse-title font-bold">什麼是「核心圈」？</div>
+          <div class="collapse-content text-base-content/60">
+            <p>核心圈是深度參與者社群，由活動常客與積極貢獻者組成。參加小聚是加入核心圈的第一步，後續會有更多專屬活動與資源。</p>
+          </div>
+        </div>
+
+        <div class="collapse collapse-arrow join-item border border-base-300 bg-base-100">
+          <input type="radio" name="faq-accordion" />
+          <div class="collapse-title font-bold">可以退票嗎？</div>
+          <div class="collapse-content text-base-content/60">
+            <p>活動 3 天前可全額退票，3 天內恕不退費，但可轉讓給朋友參加。</p>
+          </div>
+        </div>
+
+        <div class="collapse collapse-arrow join-item border border-base-300 bg-base-100">
+          <input type="radio" name="faq-accordion" />
+          <div class="collapse-title font-bold">停車方便嗎？</div>
+          <div class="collapse-content text-base-content/60">
+            <p>涵軒雅敘附近有公有停車場，步行約 3 分鐘。也可搭乘大眾運輸前往。</p>
+          </div>
+        </div>
+
+        <div class="collapse collapse-arrow join-item border border-base-300 bg-base-100">
+          <input type="radio" name="faq-accordion" />
+          <div class="collapse-title font-bold">一個人來會不會很尷尬？</div>
+          <div class="collapse-content text-base-content/60">
+            <p>不會，我們設計了破冰環節和分組討論，保證每個人都能自然融入。大部分參加者都是獨自報名。</p>
+          </div>
+        </div>
+
+        <div class="collapse collapse-arrow join-item border border-base-300 bg-base-100">
+          <input type="radio" name="faq-accordion" />
+          <div class="collapse-title font-bold">這場賣完了，下一場什麼時候？</div>
+          <div class="collapse-content text-base-content/60">
+            <p>預計每月 1–2 場，下一場主題與日期會在活動結束後公布。歡迎登記候補通知，第一時間收到開賣資訊。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== Section 8: CTA ====== -->
+  <section class="relative py-24 overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+      <div class="absolute w-[500px] h-[500px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-primary/10 rounded-full blur-3xl"></div>
+    </div>
+    <div class="relative max-w-2xl mx-auto px-6 text-center fade-in">
+      <h2 class="text-3xl font-black mb-4">4/2 首場已完售 🔥</h2>
+      <p class="text-base-content/60 mb-8 leading-relaxed">想參加下一場？留下你的資料，開賣第一時間通知你。</p>
+      <a href="mailto:hi@leevent.xyz?subject=候補登記｜Claude 台中小聚&body=Hi，我想登記候補，請通知我下一場活動資訊！" class="btn btn-primary btn-lg">
+        登記候補通知
+      </a>
+      <p class="text-xs text-base-content/40 mt-4">📬 hi@leevent.xyz</p>
+    </div>
+  </section>
+
+  <!-- ====== Section 9: Post-event Placeholder ====== -->
+  <section class="max-w-5xl mx-auto px-6 pb-20">
+    <div class="border-2 border-dashed border-base-300 rounded-2xl p-12 text-center fade-in">
+      <p class="text-2xl mb-2">📸</p>
+      <p class="text-lg font-bold text-base-content/60">活動回顧 — 即將更新</p>
+      <p class="text-sm text-base-content/40 mt-2">活動結束後，這裡會放上照片與精華紀錄。</p>
+    </div>
+  </section>
+
+</BaseLayout>

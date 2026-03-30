@@ -1,0 +1,277 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+
+/* ── JSON-LD: FAQPage ── */
+const faqItems = [
+  {
+    q: "我是初學者適合來嗎？",
+    a: "非常適合。每場活動都會涵蓋不同段位的內容，從基礎操作到進階技巧都有。而且現場有人可以直接問，比自己摸索快很多。我們也會根據參加者的程度分組，讓每個人都能在適合自己的節奏中學習。"
+  },
+  {
+    q: "需要自備什麼？",
+    a: "帶你的筆電就好。如果你已經有 Claude 帳號（免費版也可以），可以先登入。現場會有 Wi-Fi 和插座，我們會確保你可以舒服地邊聽邊操作。"
+  },
+  {
+    q: "活動會錄影嗎？",
+    a: "活動以現場互動為主，不提供錄影回放。核心圈成員可以取得活動精華摘要和重點整理，但最有價值的部分——現場的即興討論和問題解決——只有到場才能體驗。"
+  },
+  {
+    q: "和 Claude 線上講座有什麼不同？",
+    a: "線上講座是單向輸出，小聚是雙向交流。你可以帶著自己的問題來，現場就開始解題。而且面對面的交流品質和線上完全不同——你會認識一群在台中的 Claude 使用者，這個人脈本身就很有價值。"
+  },
+  {
+    q: "之後還會辦嗎？",
+    a: "會。目前規劃每月至少一場，依社群需求可能加場。建議加入核心圈，可以優先報名並參與活動主題的規劃。"
+  },
+  {
+    q: "場地在哪裡？",
+    a: "在台中市區。確切地址會在報名後通知。我們選擇有桌椅、有插座、適合帶筆電的場地，讓你可以舒服地邊聽邊操作。"
+  },
+  {
+    q: "已經用很熟了還值得來嗎？",
+    a: "越熟越值得。每個人的使用場景不同，高手之間的交流往往能碰撞出最有價值的火花。你可能會發現別人用 Claude 做了你從沒想過的事，這種跨領域的啟發是自己閉門研究得不到的。"
+  },
+  {
+    q: "不是工程師看得懂嗎？",
+    a: "完全看得懂。小聚的核心是「AI 怎麼用在你的工作和生活裡」，不是寫程式。參加者包括行銷人、設計師、自由工作者、主管、創業者等各種背景。我們用的語言是「這個功能可以幫你做什麼」，不是「這段 code 怎麼寫」。"
+  },
+  {
+    q: "可以帶朋友一起來嗎？",
+    a: "當然可以，非常歡迎。每個人都需要自己買票入場，但一起來的好處是活動結束後可以馬上討論、互相練習。很多最好的學習都發生在活動結束之後。"
+  }
+];
+
+const faqLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqItems.map(item => ({
+    "@type": "Question",
+    "name": item.q,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": item.a
+    }
+  }))
+};
+
+const personLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Lee Vent",
+  "url": "https://leevent.xyz",
+  "email": "vent@leevent.co",
+  "jobTitle": "AI 工作流專家",
+  "knowsAbout": ["SEO", "HR", "AI", "Claude", "工作流自動化"],
+  "brand": {
+    "@type": "Brand",
+    "name": "vent's talk"
+  }
+};
+
+/* ── About meetup cards data ── */
+const aboutCards = [
+  {
+    emoji: "💡",
+    title: "What — 這是什麼活動？",
+    text: "台中第一個 Claude AI 使用者在地 Mastermind 社群。不是演講、不是課程，是一場邊聊邊做的實戰交流活動。"
+  },
+  {
+    emoji: "🎯",
+    title: "Why — 為什麼要辦？",
+    text: "台灣的 Claude 使用者正在快速成長，但一直缺少在地的深度交流場域。我們想在台中建立一個 Mastermind 等級的 AI 使用者社群，面對面交流、互相提升。"
+  },
+  {
+    emoji: "🔧",
+    title: "How — 怎麼進行？",
+    text: "定期舉辦，每場 10-30 人，深度交流為主。帶著筆電和問題來，現場就開始解題，邊做邊聊。"
+  },
+  {
+    emoji: "📍",
+    title: "Where — 在哪裡？",
+    text: "台中市。我們選擇有桌椅、有插座、適合帶筆電的場地，讓你可以舒服地邊聽邊操作。"
+  }
+];
+
+/* ── Cross-link cards ── */
+const crossLinks = [
+  { emoji: "📅", title: "活動資訊", desc: "查看場次與報名", href: "/events/" },
+  { emoji: "🎮", title: "段位測驗", desc: "看看你是什麼等級", href: "/quiz/" },
+  { emoji: "🌱", title: "社群", desc: "加入交流空間", href: "/community/" },
+  { emoji: "🔑", title: "核心圈", desc: "深度參與", href: "/members/" }
+];
+---
+
+<BaseLayout
+  title="關於｜Claude 台中小聚"
+  description="關於 Claude 台中小聚與主辦人 Lee Vent。常見問題、聯繫方式、品牌故事。"
+  canonical="https://claudetc.leevent.xyz/about/"
+  active="about"
+  jsonLd={[faqLd, personLd]}
+>
+  <Breadcrumb items={[
+    { name: "首頁", href: "/" },
+    { name: "關於" }
+  ]} />
+
+  <!-- ═══ Section 1: Hero ═══ -->
+  <section class="relative overflow-hidden pt-8 pb-20 px-6 text-center" role="banner">
+    <!-- Background radials -->
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+      <div class="absolute w-[500px] h-[400px] top-[30%] left-[40%] -translate-x-1/2 -translate-y-1/2 bg-brand-blue/10 rounded-full blur-3xl"></div>
+      <div class="absolute w-[400px] h-[350px] top-[40%] right-[30%] translate-x-1/4 bg-brand/8 rounded-full blur-3xl"></div>
+    </div>
+
+    <div class="relative z-10 max-w-3xl mx-auto fade-in">
+      <h1 class="text-5xl md:text-6xl font-black leading-tight mb-5 bg-gradient-to-r from-brand-blue via-accent to-primary bg-clip-text text-transparent">
+        關於我們
+      </h1>
+      <p class="text-xl md:text-2xl text-base-content/60 leading-relaxed italic">
+        一個人開始，一群人繼續。
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══ Section 2: The Host ═══ -->
+  <section class="py-16 px-6">
+    <div class="max-w-4xl mx-auto">
+      <SectionHeader
+        overline="HOST"
+        title="主辦人"
+        subtitle="認識活動背後的推動者"
+      />
+
+      <div class="grid md:grid-cols-[200px_1fr] gap-10 items-start fade-in">
+        <!-- Avatar -->
+        <div class="flex justify-center md:justify-start">
+          <div class="w-[200px] h-[200px] rounded-2xl bg-base-200 flex items-center justify-center text-8xl select-none shadow-lg">
+            🧑‍💻
+          </div>
+        </div>
+
+        <!-- Info -->
+        <div>
+          <h3 class="text-2xl font-black mb-1">Lee Vent</h3>
+          <p class="text-base-content/50 text-sm mb-4">vent's talk</p>
+
+          <!-- Tagline -->
+          <p class="italic text-base-content/70 border-l-4 border-accent pl-4 mb-6 leading-relaxed">
+            帶你看我怎麼用 AI 建系統
+          </p>
+
+          <!-- Details list -->
+          <dl class="space-y-3 text-sm">
+            <div class="flex gap-3">
+              <dt class="text-base-content/40 min-w-[4rem] shrink-0">定位</dt>
+              <dd class="text-base-content/80">SEO &times; HR &times; AI 三重交叉定位</dd>
+            </div>
+            <div class="flex gap-3">
+              <dt class="text-base-content/40 min-w-[4rem] shrink-0">Blog</dt>
+              <dd>
+                <a href="https://leevent.xyz" target="_blank" rel="noopener noreferrer" class="link link-primary">leevent.xyz</a>
+              </dd>
+            </div>
+            <div class="flex gap-3">
+              <dt class="text-base-content/40 min-w-[4rem] shrink-0">Email</dt>
+              <dd>
+                <a href="mailto:vent@leevent.co" class="link link-primary">vent@leevent.co</a>
+              </dd>
+            </div>
+            <div class="flex gap-3">
+              <dt class="text-base-content/40 min-w-[4rem] shrink-0">風格</dt>
+              <dd class="text-base-content/80">實戰派。不講理論空話，直接打開螢幕給你看。</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Section 3: About the Meetup ═══ -->
+  <section class="py-16 px-6 bg-base-200">
+    <div class="max-w-5xl mx-auto">
+      <SectionHeader
+        overline="ABOUT"
+        title="關於小聚"
+        subtitle="一場邊聊邊做的實戰交流活動"
+        id="about-meetup"
+      />
+
+      <div class="grid sm:grid-cols-2 gap-6">
+        {aboutCards.map(card => (
+          <div class="card bg-base-100 shadow-md hover:shadow-lg transition-shadow fade-in">
+            <div class="card-body">
+              <div class="text-3xl mb-2">{card.emoji}</div>
+              <h3 class="card-title text-lg">{card.title}</h3>
+              <p class="text-base-content/60 leading-relaxed">{card.text}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Section 4: FAQ ═══ -->
+  <section class="py-16 px-6">
+    <div class="max-w-5xl mx-auto">
+      <SectionHeader
+        overline="FAQ"
+        title="常見問題"
+        subtitle="報名前你可能想知道的事"
+        id="faq"
+      />
+
+      <div class="join join-vertical w-full max-w-3xl mx-auto">
+        {faqItems.map((item, i) => (
+          <div class="collapse collapse-arrow join-item border border-base-300 bg-base-100">
+            <input type="radio" name="faq-accordion" checked={i === 0} />
+            <div class="collapse-title font-bold text-base">{item.q}</div>
+            <div class="collapse-content text-base-content/60 leading-relaxed">
+              <p>{item.a}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Section 5: Contact ═══ -->
+  <section class="py-16 px-6 bg-base-200">
+    <div class="max-w-5xl mx-auto">
+      <div class="card bg-base-100 shadow-md max-w-lg mx-auto text-center fade-in">
+        <div class="card-body items-center py-12">
+          <div class="text-5xl mb-4">✉️</div>
+          <h2 class="card-title text-xl mb-2">有任何問題？</h2>
+          <p class="text-base-content/60 mb-6">歡迎來信，我們會盡快回覆。</p>
+          <a href="mailto:vent@leevent.co" class="btn btn-primary btn-wide">
+            vent@leevent.co
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Section 6: Cross Links ═══ -->
+  <section class="py-16 px-6">
+    <div class="max-w-5xl mx-auto">
+      <SectionHeader
+        overline="EXPLORE"
+        title="探索更多"
+        subtitle="了解活動的其他面向"
+      />
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {crossLinks.map(link => (
+          <a href={link.href} class="card bg-base-200 hover:bg-base-300 transition-colors text-center group fade-in">
+            <div class="card-body items-center py-8">
+              <div class="text-4xl mb-3 group-hover:scale-110 transition-transform">{link.emoji}</div>
+              <h3 class="font-bold text-sm">{link.title}</h3>
+              <p class="text-xs text-base-content/50">{link.desc}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,621 @@
+---
+import SEO from '../../components/SEO.astro';
+import '../../styles/global.css';
+---
+
+<html lang="zh-Hant" data-theme="claude-tc">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <SEO
+    title="核心圈後台｜Claude 台中小聚"
+    description="Claude 台中小聚核心圈成員專屬空間。活動精華、資源包、成員目錄。需要 Google 帳號登入。"
+    canonical="https://claudetc.leevent.xyz/members/"
+  />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' 'unsafe-eval' https://accounts.google.com https://gsi.google.com; frame-src https://accounts.google.com;" />
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body class="min-h-screen bg-base-100 text-base-content">
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- GATE SCREEN                                    -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div id="gate" class="gate-screen">
+    <div class="gate-card">
+      <div class="text-6xl mb-4">🔑</div>
+      <h1 class="text-2xl font-bold mb-2">Claude 台中小聚 核心圈後台</h1>
+      <p class="text-base-content/60 mb-6">此頁面僅供核心圈成員使用<br />請使用 Google 帳號登入</p>
+
+      <!-- Google Sign-In button -->
+      <div id="google-signin-btn" class="flex justify-center mb-4"></div>
+
+      <!-- Password fallback (hidden by default) -->
+      <div id="password-fallback" style="display:none;">
+        <div class="divider text-sm text-base-content/40">或輸入通行碼</div>
+        <div class="flex gap-2 justify-center">
+          <input id="passcode-input" type="password" placeholder="通行碼" class="input input-bordered input-sm w-48" />
+          <button id="passcode-btn" class="btn btn-sm btn-primary">進入</button>
+        </div>
+      </div>
+
+      <!-- Error message -->
+      <p id="gate-err" class="text-error text-sm mt-4" style="display:none;"></p>
+
+      <!-- Hint -->
+      <p class="text-xs text-base-content/30 mt-6">如果登入按鈕沒有出現，請檢查瀏覽器是否封鎖了 Google 的第三方 Cookie</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- MAIN CONTENT (hidden until authenticated)      -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div id="main" style="display:none;">
+
+    <!-- Custom Nav -->
+    <nav class="members-nav">
+      <div class="max-w-6xl mx-auto px-4 flex items-center justify-between h-16">
+        <a href="/" class="font-bold text-lg">Claude 台中小聚</a>
+        <div class="hidden md:flex items-center gap-4 text-sm">
+          <a href="/events/" class="hover:text-primary transition-colors">活動</a>
+          <a href="/community/" class="hover:text-primary transition-colors">社群</a>
+          <a href="/quiz/" class="hover:text-primary transition-colors">測段位</a>
+          <a href="/members/" class="text-primary font-semibold">核心圈</a>
+          <a href="/about/" class="hover:text-primary transition-colors">關於</a>
+        </div>
+        <div class="nav-user" id="nav-user">
+          <img id="nav-avatar" src="" alt="avatar" class="nav-avatar" />
+          <span id="nav-name" class="text-sm font-medium hidden sm:inline"></span>
+          <button onclick="logout()" class="btn btn-ghost btn-xs">登出</button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="max-w-6xl mx-auto px-4 py-3 text-sm breadcrumbs">
+      <ul>
+        <li><a href="/">首頁</a></li>
+        <li>核心圈</li>
+      </ul>
+    </div>
+
+    <!-- Welcome Banner -->
+    <section class="max-w-6xl mx-auto px-4 py-8">
+      <div class="welcome-banner">
+        <h2 class="text-3xl font-bold mb-2">歡迎回來，<span id="welcome-name">成員</span> 👋</h2>
+        <p class="text-base-content/60 mb-6">這裡是核心圈成員專屬空間</p>
+        <div class="grid grid-cols-3 gap-4 max-w-md">
+          <div class="text-center">
+            <div class="text-2xl font-bold text-primary">1</div>
+            <div class="text-xs text-base-content/50">累計場次</div>
+          </div>
+          <div class="text-center">
+            <div class="text-2xl font-bold text-primary">32</div>
+            <div class="text-xs text-base-content/50">累計參與</div>
+          </div>
+          <div class="text-center">
+            <div class="text-2xl font-bold text-primary">&mdash;</div>
+            <div class="text-xs text-base-content/50">核心成員</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 📋 活動精華 -->
+    <section class="max-w-6xl mx-auto px-4 py-6">
+      <h3 class="text-xl font-bold mb-4">📋 活動精華</h3>
+      <div class="grid gap-4 md:grid-cols-3">
+        <!-- vol.1 — active -->
+        <div class="replay-card replay-card--active">
+          <div class="replay-badge">vol.1</div>
+          <h4 class="font-semibold mb-1">你的 Claude，跟我的一樣嗎？</h4>
+          <p class="text-sm text-base-content/60 mb-3">全景式入門。破冰自介、辦公室場景 Demo、生活場景 Demo、進階功能一瞥、分組交流。</p>
+          <span class="text-xs text-primary">查看精華 &rarr;</span>
+        </div>
+        <!-- vol.2 — dimmed -->
+        <div class="replay-card replay-card--dimmed">
+          <div class="replay-badge replay-badge--soon">vol.2</div>
+          <h4 class="font-semibold mb-1 opacity-40">敬請期待</h4>
+          <p class="text-sm text-base-content/30">即將推出</p>
+        </div>
+        <!-- vol.3 — very dimmed -->
+        <div class="replay-card replay-card--very-dimmed">
+          <div class="replay-badge replay-badge--soon">vol.3</div>
+          <h4 class="font-semibold mb-1 opacity-20">敬請期待</h4>
+          <p class="text-sm text-base-content/20">即將推出</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 📦 資源包 -->
+    <section class="max-w-6xl mx-auto px-4 py-6">
+      <h3 class="text-xl font-bold mb-4">📦 資源包</h3>
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="resource-card">
+          <div class="text-2xl mb-2">📊</div>
+          <h4 class="font-semibold text-sm">簡報</h4>
+          <p class="text-xs text-base-content/50">活動簡報 PDF 下載</p>
+        </div>
+        <div class="resource-card">
+          <div class="text-2xl mb-2">🧩</div>
+          <h4 class="font-semibold text-sm">Skill 模板包</h4>
+          <p class="text-xs text-base-content/50">Claude Code Skill 範本</p>
+        </div>
+        <div class="resource-card">
+          <div class="text-2xl mb-2">💬</div>
+          <h4 class="font-semibold text-sm">討論摘要</h4>
+          <p class="text-xs text-base-content/50">分組討論精華紀錄</p>
+        </div>
+        <div class="resource-card">
+          <div class="text-2xl mb-2">🗺️</div>
+          <h4 class="font-semibold text-sm">學習路徑</h4>
+          <p class="text-xs text-base-content/50">Claude 學習建議路線</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 📂 GitHub 專案學習資料庫 -->
+    <section class="max-w-6xl mx-auto px-4 py-6">
+      <h3 class="text-xl font-bold mb-4">📂 GitHub 專案學習資料庫</h3>
+      <div class="grid gap-4 md:grid-cols-2">
+        <a href="https://github.com/anthropics/financial-services-plugins" target="_blank" rel="noopener" class="github-card">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="text-xl">📦</span>
+            <span class="font-semibold">anthropics/financial-services-plugins</span>
+          </div>
+          <p class="text-sm text-base-content/60 mb-2">Anthropic 官方金融服務插件範例。MCP server 實作參考。</p>
+          <span class="text-xs text-warning">⭐ 6,900</span>
+        </a>
+        <a href="https://github.com/cjoke/conway-automaton" target="_blank" rel="noopener" class="github-card">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="text-xl">🤖</span>
+            <span class="font-semibold">Conway Automaton</span>
+          </div>
+          <p class="text-sm text-base-content/60 mb-2">五層記憶架構 AI Agent 系統。本社群系統設計參考來源。</p>
+          <span class="text-xs text-warning">⭐ 3,100</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- 👥 成員目錄 -->
+    <section class="max-w-6xl mx-auto px-4 py-6">
+      <h3 class="text-xl font-bold mb-4">👥 成員目錄</h3>
+      <div class="member-card">
+        <p class="text-base-content/40 text-center py-8">核心圈正在成形中</p>
+      </div>
+    </section>
+
+    <!-- 📅 下一場活動 -->
+    <section class="max-w-6xl mx-auto px-4 py-6 pb-12">
+      <h3 class="text-xl font-bold mb-4">📅 下一場活動</h3>
+      <div class="next-event-card">
+        <div class="next-event-badge">2026/04/02</div>
+        <h4 class="font-semibold text-lg mb-1">Claude 台中小聚 vol.1｜你的 Claude，跟我的一樣嗎？</h4>
+        <p class="text-sm text-base-content/60 mb-2">全景式入門。破冰自介、辦公室場景 Demo、生活場景 Demo、進階功能一瞥、分組交流。</p>
+        <div class="flex flex-wrap gap-3 text-xs text-base-content/50">
+          <span>📍 台中市西區</span>
+          <span>🕖 19:00–21:30</span>
+          <span>👥 30 人</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-base-300 py-6 text-center text-sm text-base-content/40">
+      <p>&copy; 2026 Claude 台中小聚 &mdash; 核心圈成員專屬頁面</p>
+    </footer>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- AUTHENTICATION JAVASCRIPT                      -->
+  <!-- ══════════════════════════════════════════════ -->
+  <script is:inline>
+    // ── Config ──
+    var CLIENT_ID = '432869420629-cqd6k47f5oimqdcnp81vshbl6kga1mrj.apps.googleusercontent.com';
+    var STORAGE_KEY = 'claude-meetup-user';
+    var PASSCODE_HASH = '7d10c954b6224b8209db9313ebf1625f6e393da5f5e04845c4188e1c3645ad86';
+    var WHITELIST_ENABLED = true;
+    var HASH_SALT = 'claude-tc-meetup-2026';
+
+    var ALLOWED_HASHES = [
+      '0dc33991b8879ba861b9fd476e7c7365679df39fb8990f7d2018e79e44c9a70e',
+      'e54940309ea90b56768667b2ac49d5d027b1e0a7350a6e6c969add6a48e30301',
+      '08a07270b71211c6409a5c596c5477bdebe88590b84e3ef1ad8d652aa70b12b1',
+      'd9f03f1d0233ce07f7c274675eebbe4c210a2c094775ddcbb3567a44585f458e',
+      'b99a106fa187677f5c6864184053860e47616bdccbb64a4573c4d3c2d6535a28',
+      '43dbb944d637ed604c4f309a5699c71ad387ce8abf70e9c314cd025182883b98',
+      'be3097799e630413e432c8235768c73a4c73c029ba79d019ba074e6299f93d97',
+      'a8a9e3d5c185767611b0e9bca471f975d93b08af757cdf5dd0952617959cfaf7',
+      '153c244bf5987cb74da2849638c33f142d95aef959524218f0a32eeb4002ef34',
+      '12bd80a533a8cb889ebe071e97ee44417a0953c16c9ee0efe8de12fcf72fc425',
+      '9a84f97d6d26fd5f210c553f6330083f74799d11b9d69c31718d10e5833f5fb0',
+      'e1377b59257b5a2ff74d13bfacb9ea02ff40275d5de2cda23d8718438183bbe1',
+      'fac2880e42226a61a180f1218cb063d51233dce0c8e657a0631d7cafbea32382',
+      'd41f06b16ad93076ecad79793f0b16f9ff0c33ca4ebf881813d3e84a3d57dcbc',
+      'ba03f84e2938793e018c8f947842264407afe453f1c7a051aa46ece259f07273',
+      '1e715369ac89277e6ca7e2d956caa6f4127a72c0a6f5953fbc21a02271360407',
+      '298d3b019078efedea384830d19e7dfee6e934e308d15419a2ae3bd8c03ad695',
+      'b55984c2a8105e5b4ff8bd74465e5de66369fc2429bdd0be9c75ada0742260cc',
+      '9d4448d64cc3ce330afc9fbc2d606f52e127bfe2c804adfe63a815f5f74fb0ac',
+      '3ad19c6699eb166902ab227f1e7d2a85360a7bbf72e80e059916f3d7bf3f4d3e',
+      'cc8e42583cfcb44826170a02e00d4811920cb0ea31fea6605b34f0997f22570c',
+      'ffc6dc51fe78039fcbf8b8fcfeb9226af8f5fbdb58350ebaeda6e501337afd72',
+      'b41f9b7b319629e6fa8d0cffd9f34cf4bb59f2e4690b078e1a4be08826b63cf9',
+      '74b4274118a479ef26368a2bbfa435bd53069ea8b9c29689f76a18eddf4a98b9',
+      'e5ad01a95ce640eca57d6a8810bb77f44b31ab78b2a9a609ea4230b36861aeb7',
+      '616f69f8516d49bde7aa95d8f5cbf909c99f1402869bb75f25a3d2bddde1318e',
+      '3acee79e61fbcc68656ba946382899e9c076642bd1afee20bdf2b349a9f7edcf',
+      '4312b9e1837a84fb90fa7a1b0c6a52091b6f28385a91264f7b4a338d1d805f73',
+      'e55a1780bd0d2d537f1e728cc516d7c3564ca11841a12cfcb6b03e71f48d0a8d',
+      '5cb323b9bb6a58b02116c3a4fd62198fe96a31542ccd3997ca2d8b16372214f7',
+      'c4e2410312c288809f8691692075e33ee2ff6041e5fc13dd054286d74c052c74',
+      'c0e7254939768e0536328ea05ebbe8096e1421c17edb7536f9cbd92f08ce429f',
+      '380fbca754d27bb97b66dc651bd06bdcacd945a19470efe9c7b58621b5718291',
+      'd30c60374f3800123aff4b7f40a7c34acb7d0be8d067407469c8f6f4abc763d4'
+    ];
+
+    // ── Crypto Helpers ──
+    function sha256(str) {
+      var encoder = new TextEncoder();
+      var data = encoder.encode(str);
+      return crypto.subtle.digest('SHA-256', data).then(function(buf) {
+        var arr = Array.from(new Uint8Array(buf));
+        return arr.map(function(b) { return b.toString(16).padStart(2, '0'); }).join('');
+      });
+    }
+
+    function hashEmail(email) {
+      return sha256(HASH_SALT + email.toLowerCase().trim());
+    }
+
+    function hashEmails(emails) {
+      return Promise.all(emails.map(function(e) { return hashEmail(e); }));
+    }
+
+    // ── Google Sign-In ──
+    function initGoogleSignIn() {
+      if (typeof google === 'undefined' || !google.accounts) {
+        setTimeout(function() {
+          if (typeof google === 'undefined' || !google.accounts) {
+            showPasswordFallback();
+          } else {
+            initGoogleSignIn();
+          }
+        }, 2000);
+        return;
+      }
+      google.accounts.id.initialize({
+        client_id: CLIENT_ID,
+        callback: handleCredentialResponse,
+        auto_select: false,
+        cancel_on_tap_outside: true
+      });
+      google.accounts.id.renderButton(
+        document.getElementById('google-signin-btn'),
+        {
+          theme: 'outline',
+          size: 'large',
+          type: 'standard',
+          shape: 'rectangular',
+          text: 'signin_with',
+          locale: 'zh-TW',
+          width: 280
+        }
+      );
+    }
+
+    function handleCredentialResponse(response) {
+      try {
+        var parts = response.credential.split('.');
+        var payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')));
+
+        // Verify token
+        if (payload.aud !== CLIENT_ID) {
+          showGateError('驗證失敗：Token audience 不符');
+          return;
+        }
+        if (payload.exp * 1000 < Date.now()) {
+          showGateError('驗證失敗：Token 已過期');
+          return;
+        }
+        if (payload.iss !== 'https://accounts.google.com' && payload.iss !== 'accounts.google.com') {
+          showGateError('驗證失敗：Token issuer 不符');
+          return;
+        }
+        if (!payload.email_verified) {
+          showGateError('請使用已驗證的 Google 帳號');
+          return;
+        }
+
+        var email = payload.email;
+        var user = {
+          name: payload.name || email.split('@')[0],
+          email: email,
+          picture: payload.picture || '',
+          loginAt: Date.now()
+        };
+
+        // Whitelist check
+        if (WHITELIST_ENABLED) {
+          hashEmail(email).then(function(hash) {
+            if (ALLOWED_HASHES.indexOf(hash) === -1) {
+              showGateError('抱歉，此帳號不在核心圈名單中。如需加入請聯繫主辦人。');
+              return;
+            }
+            sessionStorage.setItem(STORAGE_KEY, JSON.stringify(user));
+            showMain(user);
+          });
+        } else {
+          sessionStorage.setItem(STORAGE_KEY, JSON.stringify(user));
+          showMain(user);
+        }
+      } catch (e) {
+        showGateError('登入處理失敗，請重試。');
+        console.error('Auth error:', e);
+      }
+    }
+
+    // ── UI Helpers ──
+    function showGateError(msg) {
+      var el = document.getElementById('gate-err');
+      el.textContent = msg;
+      el.style.display = 'block';
+    }
+
+    function showPasswordFallback() {
+      var el = document.getElementById('password-fallback');
+      if (el) el.style.display = 'block';
+    }
+
+    function checkAccess() {
+      try {
+        var raw = sessionStorage.getItem(STORAGE_KEY);
+        if (!raw) return null;
+        var user = JSON.parse(raw);
+        // 4-hour timeout
+        if (Date.now() - user.loginAt > 4 * 60 * 60 * 1000) {
+          sessionStorage.removeItem(STORAGE_KEY);
+          return null;
+        }
+        return user;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function showMain(user) {
+      document.getElementById('gate').style.display = 'none';
+      document.getElementById('main').style.display = 'block';
+
+      // Set user info in nav
+      var avatar = document.getElementById('nav-avatar');
+      if (user.picture) {
+        avatar.src = user.picture;
+        avatar.style.display = 'inline-block';
+      } else {
+        avatar.style.display = 'none';
+      }
+
+      var displayName = user.name || user.email.split('@')[0];
+      document.getElementById('nav-name').textContent = displayName;
+      document.getElementById('welcome-name').textContent = displayName;
+    }
+
+    function logout() {
+      sessionStorage.removeItem(STORAGE_KEY);
+      document.getElementById('main').style.display = 'none';
+      document.getElementById('gate').style.display = 'flex';
+      document.getElementById('gate-err').style.display = 'none';
+      // Reset nav
+      document.getElementById('nav-avatar').src = '';
+      document.getElementById('nav-name').textContent = '';
+      // Revoke Google session if available
+      if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
+        google.accounts.id.disableAutoSelect();
+      }
+    }
+
+    // ── Password Fallback ──
+    var _passcodeAttempts = 0;
+    var _passcodeLocked = false;
+
+    (function() {
+      var btn = document.getElementById('passcode-btn');
+      var input = document.getElementById('passcode-input');
+
+      if (btn) {
+        btn.addEventListener('click', function() {
+          if (_passcodeLocked) {
+            showGateError('嘗試次數過多，請 30 秒後再試');
+            return;
+          }
+          var val = input.value.trim();
+          if (!val) return;
+
+          sha256(val).then(function(hash) {
+            if (hash === PASSCODE_HASH) {
+              var user = {
+                name: '核心成員',
+                email: 'passcode@local',
+                picture: '',
+                loginAt: Date.now()
+              };
+              sessionStorage.setItem(STORAGE_KEY, JSON.stringify(user));
+              showMain(user);
+            } else {
+              _passcodeAttempts++;
+              if (_passcodeAttempts >= 5) {
+                _passcodeLocked = true;
+                showGateError('嘗試次數過多，請 30 秒後再試');
+                setTimeout(function() {
+                  _passcodeLocked = false;
+                  _passcodeAttempts = 0;
+                }, 30000);
+              } else {
+                showGateError('通行碼錯誤（' + _passcodeAttempts + '/5）');
+              }
+            }
+          });
+        });
+      }
+
+      if (input) {
+        input.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') {
+            btn.click();
+          }
+        });
+      }
+    })();
+
+    // ── Init ──
+    (function() {
+      var existingUser = checkAccess();
+      if (existingUser) {
+        showMain(existingUser);
+      } else {
+        initGoogleSignIn();
+      }
+    })();
+  </script>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- PAGE-SPECIFIC STYLES                           -->
+  <!-- ══════════════════════════════════════════════ -->
+  <style is:inline>
+    /* ── Gate Screen ── */
+    .gate-screen {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+    .gate-card {
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+    }
+
+    /* ── Nav ── */
+    .members-nav {
+      background: oklch(var(--b2));
+      border-bottom: 1px solid oklch(var(--b3));
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .nav-user {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .nav-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    /* ── Welcome Banner ── */
+    .welcome-banner {
+      background: oklch(var(--b2));
+      border-radius: 1rem;
+      padding: 2rem;
+      border: 1px solid oklch(var(--b3));
+    }
+
+    /* ── Replay Cards ── */
+    .replay-card {
+      background: oklch(var(--b2));
+      border: 1px solid oklch(var(--b3));
+      border-radius: 0.75rem;
+      padding: 1.25rem;
+      position: relative;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .replay-card--active:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px oklch(var(--p) / 0.15);
+      cursor: pointer;
+    }
+    .replay-card--dimmed {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+    .replay-card--very-dimmed {
+      opacity: 0.25;
+      pointer-events: none;
+    }
+    .replay-badge {
+      display: inline-block;
+      background: oklch(var(--p));
+      color: oklch(var(--pc));
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      margin-bottom: 0.5rem;
+    }
+    .replay-badge--soon {
+      background: oklch(var(--b3));
+      color: oklch(var(--bc) / 0.5);
+    }
+
+    /* ── Resource Cards ── */
+    .resource-card {
+      background: oklch(var(--b2));
+      border: 1px solid oklch(var(--b3));
+      border-radius: 0.75rem;
+      padding: 1.25rem;
+      text-align: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .resource-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px oklch(var(--p) / 0.1);
+    }
+
+    /* ── GitHub Cards ── */
+    .github-card {
+      display: block;
+      background: oklch(var(--b2));
+      border: 1px solid oklch(var(--b3));
+      border-radius: 0.75rem;
+      padding: 1.25rem;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .github-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px oklch(var(--p) / 0.1);
+    }
+
+    /* ── Member Card ── */
+    .member-card {
+      background: oklch(var(--b2));
+      border: 1px solid oklch(var(--b3));
+      border-radius: 0.75rem;
+    }
+
+    /* ── Next Event Card ── */
+    .next-event-card {
+      background: oklch(var(--b2));
+      border: 1px solid oklch(var(--b3));
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+    }
+    .next-event-badge {
+      display: inline-block;
+      background: oklch(var(--p));
+      color: oklch(var(--pc));
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      margin-bottom: 0.75rem;
+    }
+  </style>
+</body>
+</html>

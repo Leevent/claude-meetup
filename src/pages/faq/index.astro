@@ -1,0 +1,186 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+const faqCategories = [
+  {
+    id: 'beginner', icon: '🌱', title: '入門疑問', count: 4,
+    items: [
+      { q: 'Claude 是什麼？', a: 'Claude 是由 Anthropic 公司開發的 AI 助手。它擅長長文理解、邏輯推理、程式碼撰寫，以及各種創意和分析任務。你可以把它想成一個非常聰明的工作夥伴，隨時待命幫你處理大小事。' },
+      { q: 'Claude 跟 ChatGPT 差在哪裡？', a: '兩者都是頂尖的 AI 助手，但風格不同。Claude 在長文理解、指令遵循和安全性上表現突出；ChatGPT 在即時搜尋和外掛生態系上更豐富。很多人兩個都用，依場景選擇。小聚裡會分享實際比較案例。' },
+      { q: '完全沒用過 AI，適合來小聚嗎？', a: '非常適合。每場活動都涵蓋不同段位的內容，從入門到進階都有。現場最大的價值是看別人怎麼用、直接問問題，這對初學者幫助最大。而且我們特別歡迎非工程師背景的朋友。' },
+      { q: '不是工程師也聽得懂嗎？', a: '完全聽得懂。小聚的核心是「AI 怎麼用在你的工作和生活裡」，不是寫程式。行銷、HR、設計、業務、自由工作者都是我們的主要對象。技術的部分，現場會用大家聽得懂的方式說明。' },
+    ]
+  },
+  {
+    id: 'pricing', icon: '💰', title: '付費方案', count: 3,
+    items: [
+      { q: 'Claude 值得付錢嗎？免費版夠用嗎？', a: '免費版可以體驗基本功能，但有對話次數限制。如果你每天都在用，Pro 方案（US$20/月）非常值得 — 可以用更強的模型、更長的對話、上傳更多檔案。建議先用免費版試試，覺得不夠再升級。' },
+      { q: 'Pro、Max、Team 方案有什麼差別？', a: 'Pro（US$20/月）適合個人重度使用者，Max（US$100/月）適合需要大量 API 使用和更多對話的專業用戶，Team（US$30/人/月）適合團隊協作。多數人從 Pro 開始就夠了。' },
+      { q: 'API 怎麼算錢？需要用到嗎？', a: 'API 是用量計費（按 token 計算），適合想要把 Claude 串接到自己工具或程式裡的人。一般使用者不需要碰 API，用網頁版或桌面版就夠了。' },
+    ]
+  },
+  {
+    id: 'tips', icon: '💡', title: '使用技巧', count: 3,
+    items: [
+      { q: '怎麼讓 Claude 回答更好？', a: '關鍵在於給它足夠的背景和具體要求。比起「幫我寫一封信」，試試「我是行銷主管，要寫一封給客戶的合作提案信，語氣要專業但不冰冷，500字以內」。越具體，回答越精準。' },
+      { q: '可以上傳檔案給 Claude 嗎？', a: '可以。Claude 支援上傳 PDF、Word、Excel、圖片、CSV 等檔案。你可以讓它幫你分析報表、整理文件、翻譯文檔。這是它最實用的功能之一。' },
+      { q: 'Claude 會記住之前的對話嗎？', a: '在同一個對話串裡會記住。新開一個對話就會從頭開始。如果你需要 Claude 長期記住某些偏好，可以使用 Projects 功能把常用指令和背景資料存起來。' },
+    ]
+  },
+  {
+    id: 'advanced', icon: '🔧', title: '進階功能', count: 3,
+    items: [
+      { q: 'Claude Code 是什麼？', a: 'Claude Code 是 Anthropic 推出的命令列工具，讓 Claude 可以直接操作你的電腦 — 讀寫檔案、執行程式、管理專案。不只是寫程式，它也能幫你整理檔案、自動化工作流程。小聚會有實際 Demo。' },
+      { q: 'MCP 是什麼？跟我有什麼關係？', a: 'MCP（Model Context Protocol）是讓 AI 跟各種外部工具溝通的標準協議。簡單說，它讓 Claude 可以讀你的 Google Calendar、操作 Notion、查資料庫。如果你想讓 AI 幫你做更多事，MCP 是關鍵。' },
+      { q: 'Skill 是什麼？怎麼用？', a: 'Skill 是你幫 Claude 寫的「工作手冊」。你把步驟、格式、規則寫好，Claude 就能按照你的方式重複執行。像是固定格式的日報、社群貼文、資料整理，都可以用 Skill 自動化。' },
+    ]
+  },
+  {
+    id: 'meetup', icon: '🤝', title: '小聚相關', count: 5,
+    items: [
+      { q: '需要自備什麼？', a: '帶你的筆電就好。如果你已經有 Claude 帳號（免費版也可以），現場會更有參與感。沒有帳號也沒關係，現場會協助你。' },
+      { q: '活動會錄影嗎？', a: '活動以現場互動為主，不提供錄影。核心圈成員可以取得活動精華摘要和重點整理。我們重視的是面對面交流的化學反應，這些是錄影無法傳達的。' },
+      { q: '場地在哪裡？', a: '在台中市區。確切地址會在報名後通知。我們選擇有桌椅、有插座、適合帶筆電的場地。' },
+      { q: '已經用很熟了還值得來嗎？', a: '越熟越值得。每個人的使用場景不同，你會看到完全不同領域的人怎麼用 Claude。而且高手之間的交流，往往一句話就值回票價。' },
+      { q: '可以帶朋友一起來嗎？', a: '當然可以，非常歡迎。每個人都需要自己買票入場，一起來交流效果更好。' },
+    ]
+  },
+];
+
+// Build FAQPage JSON-LD from all categories
+const allQuestions = faqCategories.flatMap(cat => cat.items);
+const faqPageLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": allQuestions.map(item => ({
+    "@type": "Question",
+    "name": item.q,
+    "acceptedAnswer": { "@type": "Answer", "text": item.a }
+  }))
+};
+
+const tabs = [
+  { id: 'all', label: '全部' },
+  ...faqCategories.map(c => ({ id: c.id, label: c.title }))
+];
+---
+
+<BaseLayout
+  title="常見問答 FAQ｜Claude 台中小聚"
+  description="Claude 是什麼？跟 ChatGPT 差在哪？值得付錢嗎？Claude 台中小聚整理最常被問的問題，從入門到進階一次解答。"
+  canonical="https://claudetc.leevent.xyz/faq/"
+  active="faq"
+  jsonLd={[faqPageLd]}
+>
+  <Breadcrumb items={[{ name: '首頁', href: '/' }, { name: '常見問答' }]} />
+
+  <!-- Hero -->
+  <section class="pt-8 pb-12 text-center relative overflow-hidden px-6">
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+      <div class="absolute w-[500px] h-[350px] top-[40%] left-[30%] -translate-x-1/2 -translate-y-1/2 bg-primary/8 rounded-full blur-3xl"></div>
+      <div class="absolute w-[400px] h-[300px] top-[60%] right-[30%] translate-x-1/2 -translate-y-1/2 bg-secondary/6 rounded-full blur-3xl"></div>
+    </div>
+    <div class="relative z-10 max-w-2xl mx-auto fade-in">
+      <h1 class="text-4xl font-black mb-4">你想問的，這裡都有</h1>
+      <p class="text-base-content/60 leading-relaxed">從「Claude 是什麼」到「小聚要帶什麼」，我們整理了最常被問的問題。<br />找不到答案？直接到 LINE 群發問，或寄信給我們。</p>
+    </div>
+  </section>
+
+  <!-- Category Tabs + FAQ -->
+  <section class="pb-20 px-6">
+    <div class="max-w-3xl mx-auto">
+
+      <!-- Filter Tabs -->
+      <div class="flex gap-2 justify-center flex-wrap mb-10 fade-in">
+        {tabs.map((tab, i) => (
+          <button
+            class:list={['btn btn-sm', i === 0 ? 'btn-primary' : 'btn-ghost border border-base-300']}
+            data-category={tab.id}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
+      <!-- FAQ Categories -->
+      {faqCategories.map(cat => (
+        <div class="mb-12 fade-in" data-group={cat.id}>
+          <div class="flex items-center gap-3 mb-5 pb-3 border-b-2 border-base-300">
+            <span class="text-xl">{cat.icon}</span>
+            <span class="text-lg font-black">{cat.title}</span>
+            <span class="badge badge-primary badge-sm">{cat.count} 題</span>
+          </div>
+          <div class="join join-vertical w-full">
+            {cat.items.map((item, i) => (
+              <div class="collapse collapse-arrow join-item border border-base-300">
+                <input type="radio" name={`faq-${cat.id}`} checked={i === 0} />
+                <div class="collapse-title font-bold">{item.q}</div>
+                <div class="collapse-content text-base-content/60 leading-relaxed">
+                  <p>{item.a}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Suggest -->
+  <section class="pb-16 px-6">
+    <div class="max-w-3xl mx-auto">
+      <div class="card bg-base-200 border border-base-300 p-10 text-center fade-in">
+        <h3 class="text-lg font-black mb-2">沒找到你的問題？</h3>
+        <p class="text-sm text-base-content/60 mb-5">歡迎到 LINE 群直接發問，或寄信給我們。<br />你的問題也會幫助到其他人。</p>
+        <a href="mailto:vent@leevent.co" class="btn btn-ghost btn-sm text-primary border-primary">寄信問我們</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cross Links -->
+  <section class="py-16 border-t border-base-300 px-6">
+    <div class="max-w-3xl mx-auto">
+      <div class="text-center mb-8 fade-in">
+        <div class="text-xs font-bold text-primary uppercase tracking-widest mb-3">Explore</div>
+        <h2 class="text-2xl font-black">繼續探索</h2>
+      </div>
+      <div class="grid md:grid-cols-3 gap-3 fade-in">
+        <a href="/quiz/" class="card bg-base-200 border border-base-300 hover:border-primary hover:-translate-y-0.5 transition-all p-6 text-center no-underline">
+          <span class="text-2xl block mb-2">🎯</span>
+          <h3 class="font-bold text-sm mb-1">段位測驗</h3>
+          <p class="text-xs text-base-content/50">測測你的 Claude 使用段位</p>
+        </a>
+        <a href="/events/" class="card bg-base-200 border border-base-300 hover:border-primary hover:-translate-y-0.5 transition-all p-6 text-center no-underline">
+          <span class="text-2xl block mb-2">📅</span>
+          <h3 class="font-bold text-sm mb-1">活動</h3>
+          <p class="text-xs text-base-content/50">查看下一場小聚時間</p>
+        </a>
+        <a href="/about/" class="card bg-base-200 border border-base-300 hover:border-primary hover:-translate-y-0.5 transition-all p-6 text-center no-underline">
+          <span class="text-2xl block mb-2">👋</span>
+          <h3 class="font-bold text-sm mb-1">關於</h3>
+          <p class="text-xs text-base-content/50">認識主辦人與社群理念</p>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  // Category filter
+  document.querySelectorAll('[data-category]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('[data-category]').forEach(b => {
+        b.classList.remove('btn-primary');
+        b.classList.add('btn-ghost', 'border', 'border-base-300');
+      });
+      btn.classList.add('btn-primary');
+      btn.classList.remove('btn-ghost', 'border', 'border-base-300');
+
+      const cat = btn.dataset.category;
+      document.querySelectorAll('[data-group]').forEach(group => {
+        group.style.display = (cat === 'all' || group.dataset.group === cat) ? '' : 'none';
+      });
+    });
+  });
+</script>
