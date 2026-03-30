@@ -3,42 +3,47 @@
   themes: claude-tc --default;
 }
 
-/* ── Custom DaisyUI Theme: Claude TC ── */
+/* ── Custom DaisyUI Theme: Claude TC (Light) ── */
+/* 參考 Claude 官方配色：白底 + 黑字 + 淺橘紅點綴 */
 @plugin "daisyui/theme" {
   name: "claude-tc";
   default: true;
-  prefersdark: true;
-  color-scheme: dark;
+  prefersdark: false;
+  color-scheme: light;
 
-  /* Primary = Terracotta */
-  --color-base-100: #1A1614;
-  --color-base-200: #242019;
-  --color-base-300: #2E2921;
-  --color-base-content: #F5EDE5;
+  /* Base: 白底系 */
+  --color-base-100: #FFFFFF;
+  --color-base-200: #F7F5F2;
+  --color-base-300: #EDE9E3;
+  --color-base-content: #1A1614;
 
+  /* Primary = Claude 淺橘紅 */
   --color-primary: #D97757;
-  --color-primary-content: #1A1614;
+  --color-primary-content: #FFFFFF;
 
-  --color-secondary: #A78BFA;
-  --color-secondary-content: #1A1614;
+  /* Secondary = 深色（黑系輔助） */
+  --color-secondary: #1A1614;
+  --color-secondary-content: #FFFFFF;
 
-  --color-accent: #C4956C;
+  /* Accent = 暖橘（比 primary 柔和） */
+  --color-accent: #E89B7A;
   --color-accent-content: #1A1614;
 
-  --color-neutral: #332E28;
-  --color-neutral-content: #B8AFA5;
+  /* Neutral = 灰階 */
+  --color-neutral: #3D3833;
+  --color-neutral-content: #F7F5F2;
 
-  --color-info: #7EB8DA;
-  --color-info-content: #1A1614;
+  --color-info: #5B8FB9;
+  --color-info-content: #FFFFFF;
 
-  --color-success: #7BC4A5;
-  --color-success-content: #1A1614;
+  --color-success: #5A9E7F;
+  --color-success-content: #FFFFFF;
 
-  --color-warning: #E8C468;
+  --color-warning: #D4A645;
   --color-warning-content: #1A1614;
 
-  --color-error: #E87C7C;
-  --color-error-content: #1A1614;
+  --color-error: #C9544D;
+  --color-error-content: #FFFFFF;
 
   --rounded-box: 1rem;
   --rounded-btn: 9999px;
@@ -56,26 +61,26 @@
   --font-family-rounded: 'GenJyuuGothicPX', 'GenSekiGothicTC', sans-serif;
   --font-family-pixel: 'FusionPixelFont12px', monospace;
 
-  /* Brand colors as Tailwind utilities */
+  /* Brand colors */
   --color-brand: #D97757;
   --color-brand-light: #E89B7A;
-  --color-brand-glow: rgba(217, 119, 87, 0.15);
+  --color-brand-glow: rgba(217, 119, 87, 0.08);
   --color-brand-warm: #C4956C;
-  --color-brand-purple: #A78BFA;
-  --color-brand-blue: #7EB8DA;
-  --color-brand-green: #7BC4A5;
-  --color-brand-red: #E87C7C;
+  --color-brand-purple: #8B6FC0;
+  --color-brand-blue: #5B8FB9;
+  --color-brand-green: #5A9E7F;
+  --color-brand-red: #C9544D;
 
-  --color-bg: #1A1614;
-  --color-bg-card: #242019;
-  --color-bg-card-hover: #2E2921;
+  --color-bg: #FFFFFF;
+  --color-bg-card: #F7F5F2;
+  --color-bg-card-hover: #EDE9E3;
 
-  --color-text-main: #F5EDE5;
-  --color-text-sec: #B8AFA5;
-  --color-text-muted: #7A7268;
+  --color-text-main: #1A1614;
+  --color-text-sec: #5C5550;
+  --color-text-muted: #9B9490;
 
-  --color-border-main: #332E28;
-  --color-border-light: #443D35;
+  --color-border-main: #E0DCD6;
+  --color-border-light: #EDE9E3;
 }
 
 /* ── emfont CJK Webfonts ── */
@@ -119,5 +124,4 @@ h1, h2, h3 { font-family: var(--font-family-serif); }
 /* ── Print ── */
 @media print {
   .navbar, footer, .btn { display: none; }
-  body { background: white; color: black; }
 }
