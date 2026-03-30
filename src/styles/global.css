@@ -51,7 +51,10 @@
 
 /* ── Custom Tailwind theme extensions ── */
 @theme {
-  --font-family-sans: 'Noto Sans TC', 'Microsoft JhengHei', 'PingFang TC', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-family-sans: 'GenSekiGothicTC', 'Noto Sans TC', 'Microsoft JhengHei', 'PingFang TC', sans-serif;
+  --font-family-serif: 'GenKiMinJP', 'Noto Serif TC', serif;
+  --font-family-rounded: 'GenJyuuGothicPX', 'GenSekiGothicTC', sans-serif;
+  --font-family-pixel: 'FusionPixelFont12px', monospace;
 
   /* Brand colors as Tailwind utilities */
   --color-brand: #D97757;
@@ -75,13 +78,30 @@
   --color-border-light: #443D35;
 }
 
+/* ── emfont CJK Webfonts ── */
+@import url("https://font.emtech.cc/css/GenSekiGothicTC/300");
+@import url("https://font.emtech.cc/css/GenSekiGothicTC/400");
+@import url("https://font.emtech.cc/css/GenSekiGothicTC/500");
+@import url("https://font.emtech.cc/css/GenSekiGothicTC/700");
+@import url("https://font.emtech.cc/css/GenKiMinJP/400");
+@import url("https://font.emtech.cc/css/GenKiMinJP/700");
+@import url("https://font.emtech.cc/css/GenKiMinJP/900");
+@import url("https://font.emtech.cc/css/GenJyuuGothicPX/400");
+@import url("https://font.emtech.cc/css/GenJyuuGothicPX/700");
+@import url("https://font.emtech.cc/css/FusionPixelFont12px/400");
+
 /* ── Base Styles ── */
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; font-size: 13px; }
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
+
+/* ── Font Roles ── */
+h1, h2, h3 { font-family: var(--font-family-serif); }
+.btn, .badge, .navbar { font-family: var(--font-family-rounded); }
+.overline, code, .font-mono { font-family: var(--font-family-pixel); }
 
 /* ── Fade-in animation ── */
 @keyframes pulse-dot {
