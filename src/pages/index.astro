@@ -1,0 +1,215 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const organizationLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Claude 台中小聚",
+  "url": "https://claudetc.leevent.xyz",
+  "description": "台中第一個 Claude AI 使用者線下交流社群",
+  "founder": {
+    "@type": "Person",
+    "name": "Lee Vent",
+    "url": "https://leevent.xyz"
+  },
+  "location": {
+    "@type": "Place",
+    "name": "台中",
+    "address": { "@type": "PostalAddress", "addressLocality": "台中市", "addressCountry": "TW" }
+  }
+};
+
+const eventLd = {
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "Claude 台中小聚 vol.1｜你的 Claude，跟我的一樣嗎？",
+  "description": "全景式入門。破冰自介、辦公室場景 Demo、生活場景 Demo、進階功能一瞥、分組交流。",
+  "startDate": "2026-04-02T19:00:00+08:00",
+  "endDate": "2026-04-02T21:30:00+08:00",
+  "eventStatus": "https://schema.org/EventScheduled",
+  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+  "location": {
+    "@type": "Place",
+    "name": "涵軒雅敘共享中心",
+    "address": { "@type": "PostalAddress", "addressLocality": "台中市", "addressCountry": "TW" }
+  },
+  "organizer": { "@type": "Person", "name": "Lee Vent", "url": "https://leevent.xyz" },
+  "offers": {
+    "@type": "Offer",
+    "price": "600",
+    "priceCurrency": "TWD",
+    "availability": "https://schema.org/SoldOut"
+  }
+};
+---
+
+<BaseLayout
+  title="Claude 台中小聚 — 台中第一個 AI 使用者線下交流社群"
+  description="帶著筆電、帶著問題來，帶著解法和朋友走。Claude 台中小聚是台中第一個 Claude AI 使用者線下社群，定期舉辦實戰交流活動。"
+  canonical="https://claudetc.leevent.xyz/"
+  active="home"
+  jsonLd={[organizationLd, eventLd]}
+>
+  <!-- Hero -->
+  <section class="min-h-screen flex items-center justify-center text-center relative overflow-hidden pt-28 pb-20 px-6" role="banner">
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+      <div class="absolute w-[600px] h-[400px] top-[20%] left-[30%] -translate-x-1/2 -translate-y-1/2 bg-primary/12 rounded-full blur-3xl"></div>
+      <div class="absolute w-[500px] h-[500px] bottom-[20%] right-[30%] translate-x-1/2 translate-y-1/2 bg-secondary/8 rounded-full blur-3xl"></div>
+      <div class="absolute w-[400px] h-[300px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-accent/6 rounded-full blur-3xl"></div>
+    </div>
+
+    <div class="relative z-10 max-w-3xl">
+      <div class="badge badge-outline border-primary/20 bg-brand-glow text-primary font-bold gap-2 px-5 py-3 mb-7" aria-label="活動狀態">
+        <span class="w-2 h-2 rounded-full bg-primary animate-pulse-dot" aria-hidden="true"></span>
+        4/2 首場完售 — 第二場籌備中
+      </div>
+
+      <h1 class="text-5xl md:text-6xl font-black leading-tight mb-5 bg-gradient-to-br from-base-content via-accent to-primary bg-clip-text text-transparent">
+        Claude 台中小聚
+      </h1>
+
+      <p class="text-lg text-base-content/60 mb-10 leading-relaxed">
+        帶著筆電、帶著問題來，帶著解法和朋友走。<br />
+        台中第一個 Claude AI 使用者在地 Mastermind 社群。
+      </p>
+
+      <div class="stats stats-horizontal bg-transparent border-none shadow-none mb-10">
+        <div class="stat place-items-center px-8">
+          <div class="stat-value text-primary text-3xl font-black">1</div>
+          <div class="stat-desc text-base-content/50">累計場次</div>
+        </div>
+        <div class="stat place-items-center px-8">
+          <div class="stat-value text-primary text-3xl font-black">32</div>
+          <div class="stat-desc text-base-content/50">累計參與</div>
+        </div>
+        <div class="stat place-items-center px-8">
+          <div class="stat-value text-primary text-3xl font-black">2hr+</div>
+          <div class="stat-desc text-base-content/50">深度交流</div>
+        </div>
+      </div>
+
+      <div class="flex gap-3 justify-center flex-wrap">
+        <a href="/events/" class="btn btn-primary btn-lg shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 hover:-translate-y-0.5 transition-all">看活動 →</a>
+        <a href="/quiz/" class="btn btn-outline btn-lg border-base-300 hover:border-primary hover:text-primary">測你的段位</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recent Events -->
+  <section class="py-20 border-t border-base-300" id="events" aria-labelledby="events-heading">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="text-center mb-12 fade-in">
+        <div class="text-xs font-bold text-primary uppercase tracking-widest mb-3">Recent Events</div>
+        <h2 id="events-heading" class="text-3xl font-black mb-3">最近活動</h2>
+        <p class="text-base-content/60 max-w-lg mx-auto">每一場都是台中 Claude 社群的成長紀錄</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-5 fade-in">
+        <a href="/events/001-first-meetup/" class="card bg-base-200 border border-base-300 hover:border-primary hover:-translate-y-1 transition-all shadow-lg group">
+          <figure class="relative bg-base-100 aspect-video flex items-center justify-center text-5xl">
+            🎯
+            <span class="badge badge-primary absolute top-3 left-3 text-xs">即將登場</span>
+          </figure>
+          <div class="card-body p-5">
+            <h3 class="card-title text-base">vol.1｜你的 Claude，跟我的一樣嗎？</h3>
+            <div class="flex gap-3 text-xs text-base-content/50">
+              <span>2026/04/02（四）</span>
+              <span>32 人</span>
+              <span class="text-primary font-bold">已完售</span>
+            </div>
+          </div>
+        </a>
+
+        <div class="card bg-base-200 border border-base-300 opacity-50 cursor-not-allowed">
+          <figure class="relative bg-base-100 aspect-video flex items-center justify-center text-5xl">
+            📅
+            <span class="badge badge-neutral absolute top-3 left-3 text-xs">籌備中</span>
+          </figure>
+          <div class="card-body p-5">
+            <h3 class="card-title text-base">vol.2｜辦公室即戰力：搞定 80% 的文書工作</h3>
+            <div class="flex gap-3 text-xs text-base-content/50">
+              <span>2026/05/07（三）</span>
+              <span>$600/人</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-6">
+        <a href="/events/" class="btn btn-ghost btn-sm text-primary border-primary">查看所有活動 →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Links -->
+  <section class="py-20 bg-base-200 border-t border-base-300" aria-labelledby="explore-heading">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="text-center mb-12 fade-in">
+        <div class="text-xs font-bold text-primary uppercase tracking-widest mb-3">Explore</div>
+        <h2 id="explore-heading" class="text-3xl font-black">探索更多</h2>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-4 fade-in">
+        <a href="/quiz/" class="card bg-base-100 border border-base-300 hover:border-primary hover:-translate-y-1 transition-all text-center p-7">
+          <span class="text-4xl mb-3 block">🎮</span>
+          <h3 class="font-bold mb-1">段位測驗</h3>
+          <p class="text-sm text-base-content/60">15 題情境測驗，找出你的 Claude 使用段位（Lv.1 ~ Lv.7）</p>
+        </a>
+        <a href="/community/" class="card bg-base-100 border border-base-300 hover:border-primary hover:-translate-y-1 transition-all text-center p-7">
+          <span class="text-4xl mb-3 block">🌱</span>
+          <h3 class="font-bold mb-1">認識社群</h3>
+          <p class="text-sm text-base-content/60">起源故事、成員旅程、參加者心得</p>
+        </a>
+        <a href="/members/" class="card bg-base-100 border border-base-300 hover:border-primary hover:-translate-y-1 transition-all text-center p-7">
+          <span class="text-4xl mb-3 block">🔑</span>
+          <h3 class="font-bold mb-1">核心圈</h3>
+          <p class="text-sm text-base-content/60">活動精華、資源包、成員目錄（需登入）</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="py-20 border-t border-base-300" aria-labelledby="voice-heading">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="text-center mb-12 fade-in">
+        <div class="text-xs font-bold text-primary uppercase tracking-widest mb-3">Voices</div>
+        <h2 id="voice-heading" class="text-3xl font-black mb-3">參加者怎麼說</h2>
+        <p class="text-base-content/60">4/2 首場結束後更新</p>
+      </div>
+
+      <div class="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-2 fade-in" style="scrollbar-width: none;">
+        <div class="card bg-base-200 border border-base-300 min-w-[280px] snap-start p-5 shrink-0">
+          <p class="text-sm text-base-content/60 italic leading-relaxed">「第一次看到有人把 Claude 用到這種程度，太震撼了。」</p>
+          <p class="mt-3 text-xs text-base-content/40">— 首場參加者回饋（活動後更新）</p>
+        </div>
+        <div class="card bg-base-200 border border-base-300 min-w-[280px] snap-start p-5 shrink-0">
+          <p class="text-sm text-base-content/60 italic leading-relaxed">「帶了筆電來，現場就把自己的工作流改好了。」</p>
+          <p class="mt-3 text-xs text-base-content/40">— 首場參加者回饋（活動後更新）</p>
+        </div>
+        <div class="card bg-base-200 border border-base-300 min-w-[280px] snap-start p-5 shrink-0">
+          <p class="text-sm text-base-content/60 italic leading-relaxed">「認識了好多台中在地的 AI 同好，這才是最有價值的。」</p>
+          <p class="mt-3 text-xs text-base-content/40">— 首場參加者回饋（活動後更新）</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-24 text-center relative" id="register" aria-labelledby="cta-heading">
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+      <div class="absolute w-[500px] h-[300px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-primary/12 rounded-full blur-3xl"></div>
+    </div>
+    <div class="max-w-5xl mx-auto px-6 relative z-10">
+      <h2 id="cta-heading" class="text-3xl md:text-4xl font-black mb-4">vol.1 已完售 — vol.2 籌備中</h2>
+      <p class="text-lg text-base-content/60 mb-9">每月一場，台中固定聚會。留下資料，第一時間通知你。</p>
+      <a href="mailto:vent@leevent.co?subject=Claude%20台中小聚%20-%20我想報名下一場&body=Hi%20Vent，我想參加下一場%20Claude%20台中小聚，請通知我報名資訊！"
+         class="btn btn-primary btn-lg text-lg shadow-lg shadow-primary/30">
+        登記候補 / 通知我 →
+      </a>
+      <p class="mt-5 text-sm text-base-content/40">
+        <a href="mailto:vent@leevent.co" class="text-primary hover:underline">vent@leevent.co</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>

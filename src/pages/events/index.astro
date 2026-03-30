@@ -1,0 +1,259 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+
+const itemListLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Claude 台中小聚活動列表",
+  "numberOfItems": 1,
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "item": {
+        "@type": "Event",
+        "name": "Claude 台中小聚 vol.1｜你的 Claude，跟我的一樣嗎？",
+        "description": "全景式入門。破冰自介、辦公室場景 Demo、生活場景 Demo、進階功能一瞥、分組交流。",
+        "startDate": "2026-04-02T19:00:00+08:00",
+        "endDate": "2026-04-02T21:30:00+08:00",
+        "eventStatus": "https://schema.org/EventScheduled",
+        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+        "location": {
+          "@type": "Place",
+          "name": "涵軒雅敘共享中心",
+          "address": { "@type": "PostalAddress", "addressLocality": "台中市", "addressCountry": "TW" }
+        },
+        "organizer": { "@type": "Person", "name": "Lee Vent", "url": "https://leevent.xyz" },
+        "offers": {
+          "@type": "Offer",
+          "price": "600",
+          "priceCurrency": "TWD",
+          "availability": "https://schema.org/SoldOut"
+        },
+        "url": "https://claudetc.leevent.xyz/events/001-first-meetup/"
+      }
+    }
+  ]
+};
+
+const breadcrumbLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "首頁", "item": "https://claudetc.leevent.xyz/" },
+    { "@type": "ListItem", "position": 2, "name": "活動中心" }
+  ]
+};
+---
+
+<BaseLayout
+  title="活動中心｜Claude 台中小聚"
+  description="Claude 台中小聚活動列表。查看過往活動回顧與即將登場的活動資訊。台中定期舉辦。"
+  canonical="https://claudetc.leevent.xyz/events/"
+  active="events"
+  jsonLd={[itemListLd, breadcrumbLd]}
+>
+
+  <Breadcrumb items={[
+    { name: "首頁", href: "/" },
+    { name: "活動中心" }
+  ]} />
+
+  <!-- ====== Section 1: Hero + Featured Next Event ====== -->
+  <section class="max-w-5xl mx-auto px-6 pb-20 pt-4">
+    <SectionHeader
+      overline="Events Center"
+      title="活動中心"
+      subtitle="每月一場，台中固定聚會。查看即將登場的活動，或回顧過往精彩內容。"
+    />
+
+    <!-- Featured Next Event Card -->
+    <div class="relative border-2 border-primary rounded-2xl p-8 md:p-10 bg-base-100 shadow-lg fade-in">
+      <!-- Badge: 下一場活動 -->
+      <div class="absolute -top-3.5 left-6 flex items-center gap-2 bg-primary text-primary-content px-4 py-1.5 rounded-full text-sm font-bold">
+        <span class="relative flex h-2.5 w-2.5">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-content opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary-content"></span>
+        </span>
+        下一場活動
+      </div>
+
+      <div class="flex flex-col md:flex-row gap-8 mt-2">
+        <!-- Left: Event Info -->
+        <div class="flex-1 space-y-4">
+          <div class="text-xs font-bold text-primary uppercase tracking-widest">EVENT #001</div>
+          <h2 class="text-2xl md:text-3xl font-black leading-tight">你的 Claude，跟我的一樣嗎？</h2>
+          <div class="space-y-2 text-base-content/70">
+            <p>📅 2026/04/02（四）19:00 - 21:30</p>
+            <p>📍 台中 涵軒雅敘共享中心</p>
+            <p>🎟 NT$600 / 人</p>
+            <p class="flex items-center gap-2">👥 已完售 32 張 <span class="badge badge-error badge-sm text-error-content">SOLD OUT</span></p>
+          </div>
+          <div class="flex flex-wrap gap-3 pt-2">
+            <a href="/events/001-first-meetup/" class="btn btn-primary">查看活動詳情 →</a>
+            <a href="mailto:hi@leevent.xyz?subject=候補登記｜Claude 台中小聚 vol.2" class="btn btn-ghost">登記下一場候補</a>
+          </div>
+        </div>
+
+        <!-- Right: Emoji + Date Badge -->
+        <div class="hidden md:flex flex-col items-center justify-center gap-4">
+          <div class="text-7xl">🎯</div>
+          <div class="bg-base-200 rounded-xl px-6 py-4 text-center shadow-sm">
+            <div class="text-xs font-bold text-primary uppercase tracking-wider">Apr</div>
+            <div class="text-4xl font-black leading-none mt-1">02</div>
+            <div class="text-sm text-base-content/60 mt-1">星期四</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== Section 2: All Events Listing ====== -->
+  <section class="max-w-5xl mx-auto px-6 pb-20">
+    <SectionHeader
+      overline="All Events"
+      title="所有活動"
+      id="all-events"
+    />
+
+    <!-- Filter Bar -->
+    <div class="flex justify-center gap-2 mb-10 fade-in">
+      <button data-filter="all" class="btn btn-sm btn-active">全部</button>
+      <button data-filter="upcoming" class="btn btn-sm">即將登場</button>
+      <button data-filter="ended" class="btn btn-sm">已結束</button>
+    </div>
+
+    <!-- Event Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+      <!-- Card 1: vol.1 (upcoming) -->
+      <a href="/events/001-first-meetup/" data-status="upcoming" class="card bg-base-100 shadow-md border border-base-300 hover:border-primary hover:shadow-lg transition-all duration-300 fade-in group">
+        <div class="card-body p-6">
+          <!-- Thumb -->
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-4xl">🎯</span>
+            <span class="badge badge-primary badge-sm">即將登場</span>
+          </div>
+          <!-- Title -->
+          <h3 class="card-title text-base font-bold leading-snug group-hover:text-primary transition-colors">vol.1｜你的 Claude，跟我的一樣嗎？</h3>
+          <!-- Meta -->
+          <div class="text-sm text-base-content/60 space-y-0.5 mt-1">
+            <p>📅 2026/04/02（四）</p>
+            <p>📍 涵軒雅敘</p>
+          </div>
+          <!-- Desc -->
+          <p class="text-sm text-base-content/50 mt-2 line-clamp-3">全景式入門 — 破冰自介、辦公室 Demo、生活場景 Demo、進階功能一瞥、分組交流</p>
+          <!-- Footer -->
+          <div class="flex items-center justify-between mt-4 pt-3 border-t border-base-200">
+            <span class="text-xs text-base-content/50">👥 32 人報名</span>
+            <span class="badge badge-error badge-xs">已完售</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 2: vol.2 (planning) -->
+      <div data-status="upcoming" class="card bg-base-100 shadow-md border border-base-300 opacity-50 fade-in">
+        <div class="card-body p-6">
+          <!-- Thumb -->
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-4xl">💼</span>
+            <span class="badge badge-neutral badge-sm">籌備中</span>
+          </div>
+          <!-- Title -->
+          <h3 class="card-title text-base font-bold leading-snug">vol.2｜辦公室即戰力：搞定 80% 的文書工作</h3>
+          <!-- Meta -->
+          <div class="text-sm text-base-content/60 space-y-0.5 mt-1">
+            <p>📅 2026/05/07（三）</p>
+            <p>📍 台中（地點待定）</p>
+          </div>
+          <!-- Desc -->
+          <p class="text-sm text-base-content/50 mt-2 line-clamp-3">痛點調查、Email 戰場、大型報告處理、會議紀錄、現場實作</p>
+          <!-- Footer -->
+          <div class="flex items-center justify-between mt-4 pt-3 border-t border-base-200">
+            <span class="text-xs text-base-content/50">👥 人數待定</span>
+            <span class="badge badge-neutral badge-xs">籌備中</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: vol.3 (planning) -->
+      <div data-status="upcoming" class="card bg-base-100 shadow-md border border-base-300 opacity-50 fade-in">
+        <div class="card-body p-6">
+          <!-- Thumb -->
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-4xl">🚀</span>
+            <span class="badge badge-neutral badge-sm">規劃中</span>
+          </div>
+          <!-- Title -->
+          <h3 class="card-title text-base font-bold leading-snug">vol.3｜一個人也能很強：個人生產力工作流</h3>
+          <!-- Meta -->
+          <div class="text-sm text-base-content/60 space-y-0.5 mt-1">
+            <p>📅 2026/06/04（三）</p>
+            <p>📍 台中（地點待定）</p>
+          </div>
+          <!-- Desc -->
+          <p class="text-sm text-base-content/50 mt-2 line-clamp-3">個人系統建置 — Obsidian + Claude、AI 工具差異、學習路徑</p>
+          <!-- Footer -->
+          <div class="flex items-center justify-between mt-4 pt-3 border-t border-base-200">
+            <span class="text-xs text-base-content/50">👥 —</span>
+            <span class="badge badge-neutral badge-xs">規劃中</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====== Section 3: Stats ====== -->
+  <section class="bg-base-200 py-16">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="flex flex-col md:flex-row items-center justify-center gap-12 md:gap-20 text-center fade-in">
+        <div>
+          <div class="text-4xl font-black text-primary">1</div>
+          <div class="text-sm text-base-content/60 mt-1">累計場次</div>
+        </div>
+        <div>
+          <div class="text-4xl font-black text-primary">32</div>
+          <div class="text-sm text-base-content/60 mt-1">累計參與人次</div>
+        </div>
+        <div>
+          <div class="text-4xl font-black text-primary">4/2</div>
+          <div class="text-sm text-base-content/60 mt-1">下一場日期</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== Section 4: Waitlist CTA ====== -->
+  <section class="relative py-24 overflow-hidden">
+    <!-- Radial glow -->
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+      <div class="absolute w-[500px] h-[500px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-primary/10 rounded-full blur-3xl"></div>
+    </div>
+    <div class="relative max-w-2xl mx-auto px-6 text-center fade-in">
+      <h2 class="text-3xl font-black mb-4">不想錯過下一場？</h2>
+      <p class="text-base-content/60 mb-8 leading-relaxed">每月一場，台中固定聚會。留下資料，第一時間通知你。</p>
+      <a href="mailto:hi@leevent.xyz?subject=我想參加下一場 Claude 台中小聚&body=Hi，我想登記候補，請通知我下一場活動資訊！" class="btn btn-primary btn-lg">
+        登記候補通知
+      </a>
+      <p class="text-xs text-base-content/40 mt-4">📬 hi@leevent.xyz</p>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<script>
+  document.querySelectorAll('[data-filter]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('[data-filter]').forEach(b => b.classList.remove('btn-active'));
+      btn.classList.add('btn-active');
+      const filter = btn.dataset.filter;
+      document.querySelectorAll('[data-status]').forEach(card => {
+        const status = card.dataset.status;
+        card.style.display = (filter === 'all' || filter === status) ? '' : 'none';
+      });
+    });
+  });
+</script>

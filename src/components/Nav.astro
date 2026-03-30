@@ -1,0 +1,39 @@
+---
+interface Props {
+  active?: string;
+}
+const { active = '' } = Astro.props;
+---
+
+<nav class="navbar fixed top-0 left-0 right-0 z-50 bg-base-100/88 backdrop-blur-lg border-b border-base-300" role="navigation" aria-label="main navigation">
+  <div class="navbar-start">
+    <a href="/" class="btn btn-ghost text-primary font-black text-base tracking-wide normal-case">Claude 台中小聚</a>
+  </div>
+
+  <!-- Mobile dropdown -->
+  <div class="navbar-end lg:hidden">
+    <div class="dropdown dropdown-end">
+      <div tabindex="0" role="button" class="btn btn-ghost text-xl" aria-label="Toggle menu">☰</div>
+      <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-10 w-52 p-2 shadow-lg border border-base-300 mt-2">
+        <li><a href="/events/" class:list={[{ 'text-primary': active === 'events' }]}>活動</a></li>
+        <li><a href="/community/" class:list={[{ 'text-primary': active === 'community' }]}>社群</a></li>
+        <li><a href="/quiz/" class="text-secondary">測段位</a></li>
+        <li><a href="/members/" class:list={[{ 'text-primary': active === 'members' }]}>核心圈</a></li>
+        <li><a href="/about/" class:list={[{ 'text-primary': active === 'about' }]}>關於</a></li>
+        <li><a href="/events/#register" class="btn btn-primary btn-sm mt-2 text-primary-content">報名下一場</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Desktop nav -->
+  <div class="navbar-end hidden lg:flex">
+    <ul class="menu menu-horizontal px-1 gap-1 items-center">
+      <li><a href="/events/" class:list={['text-sm font-medium', { 'text-primary': active === 'events' }]}>活動</a></li>
+      <li><a href="/community/" class:list={['text-sm font-medium', { 'text-primary': active === 'community' }]}>社群</a></li>
+      <li><a href="/quiz/" class="text-sm font-medium text-secondary">測段位</a></li>
+      <li><a href="/members/" class:list={['text-sm font-medium', { 'text-primary': active === 'members' }]}>核心圈</a></li>
+      <li><a href="/about/" class:list={['text-sm font-medium', { 'text-primary': active === 'about' }]}>關於</a></li>
+      <li><a href="/events/#register" class="btn btn-primary btn-sm text-primary-content">報名下一場</a></li>
+    </ul>
+  </div>
+</nav>

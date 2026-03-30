@@ -1,0 +1,678 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "你是 Claude 幾段高手？｜段位測驗",
+  "description": "15 題情境測驗，7 級段位評估。從 AI 小白到系統架構師，找出你的 Claude 使用段位。免費線上測驗。",
+  "url": "https://claudetc.leevent.xyz/quiz/",
+  "interactionStatistic": {
+    "@type": "InteractionCounter",
+    "interactionType": "https://schema.org/TakeAction",
+    "userInteractionCount": 0
+  }
+};
+---
+
+<BaseLayout
+  title="你是 Claude 幾段高手？｜段位測驗｜Claude 台中小聚"
+  description="15 題情境測驗，7 級段位評估。從 AI 小白到系統架構師，找出你的 Claude 使用段位。免費線上測驗。"
+  canonical="https://claudetc.leevent.xyz/quiz/"
+  active="quiz"
+  jsonLd={jsonLd}
+>
+
+<Breadcrumb items={[{ name: '首頁', href: '/' }, { name: '段位測驗' }]} />
+<div class="max-w-xl mx-auto px-4 pb-12">
+  <div id="app"></div>
+</div>
+
+<style is:inline>
+:root {
+  --lv7-color: #9ca3af;
+  --lv6-color: #60a5fa;
+  --lv5-color: #34d399;
+  --lv4-color: #a78bfa;
+  --lv3-color: #f59e0b;
+  --lv2-color: #f97316;
+  --lv1-color: #ef4444;
+}
+
+/* Welcome screen */
+.welcome {
+  text-align: center;
+  padding: 2rem 0;
+}
+.welcome h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.welcome .subtitle {
+  color: oklch(var(--bc) / 0.6);
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+.welcome .start-btn {
+  display: inline-block;
+  padding: 0.75rem 2.5rem;
+  background: oklch(var(--p));
+  color: oklch(var(--pc));
+  border-radius: 0.75rem;
+  font-weight: 600;
+  font-size: 1.05rem;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.2s;
+}
+.welcome .start-btn:hover {
+  opacity: 0.85;
+}
+
+/* Progress bar */
+.progress-wrap {
+  margin-bottom: 1.5rem;
+}
+.progress-bar {
+  width: 100%;
+  height: 6px;
+  background: oklch(var(--b2));
+  border-radius: 999px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: oklch(var(--p));
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: oklch(var(--bc) / 0.5);
+  margin-top: 0.35rem;
+}
+
+/* Question */
+.question-card {
+  animation: fadeUp 0.3s ease;
+}
+.question-card h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+/* Options */
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.option-btn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 0.85rem 1rem;
+  border: 1.5px solid oklch(var(--bc) / 0.12);
+  border-radius: 0.65rem;
+  background: oklch(var(--b1));
+  cursor: pointer;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  transition: border-color 0.15s, background 0.15s;
+}
+.option-btn:hover {
+  border-color: oklch(var(--p));
+  background: oklch(var(--p) / 0.06);
+}
+
+/* Form */
+.form-section {
+  animation: fadeUp 0.3s ease;
+}
+.form-section h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.form-section .form-desc {
+  color: oklch(var(--bc) / 0.6);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+.form-section label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 0.3rem;
+  color: oklch(var(--bc) / 0.7);
+}
+.form-section input {
+  display: block;
+  width: 100%;
+  padding: 0.7rem 0.85rem;
+  border: 1.5px solid oklch(var(--bc) / 0.12);
+  border-radius: 0.5rem;
+  background: oklch(var(--b1));
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+  color: oklch(var(--bc));
+  box-sizing: border-box;
+}
+.form-section input:focus {
+  outline: none;
+  border-color: oklch(var(--p));
+}
+.form-section .submit-btn {
+  display: block;
+  width: 100%;
+  padding: 0.75rem;
+  background: oklch(var(--p));
+  color: oklch(var(--pc));
+  border-radius: 0.65rem;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.2s;
+}
+.form-section .submit-btn:hover {
+  opacity: 0.85;
+}
+.form-section .skip-link {
+  display: block;
+  text-align: center;
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  color: oklch(var(--bc) / 0.4);
+  cursor: pointer;
+  text-decoration: underline;
+}
+.form-section .skip-link:hover {
+  color: oklch(var(--bc) / 0.6);
+}
+
+/* Result card */
+.result-card {
+  animation: fadeUp 0.4s ease;
+  text-align: center;
+  padding: 1.5rem 0;
+}
+.result-card .level-emoji {
+  font-size: 3.5rem;
+  margin-bottom: 0.5rem;
+}
+.result-card .level-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+.result-card .level-desc {
+  color: oklch(var(--bc) / 0.6);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+/* Level gauge */
+.level-gauge {
+  display: flex;
+  justify-content: center;
+  gap: 0.35rem;
+  margin-bottom: 1.5rem;
+}
+.level-gauge .gauge-dot {
+  width: 2rem;
+  height: 0.45rem;
+  border-radius: 999px;
+  opacity: 0.2;
+  transition: opacity 0.3s;
+}
+.level-gauge .gauge-dot.active {
+  opacity: 1;
+}
+
+/* Score bar */
+.score-bar-wrap {
+  background: oklch(var(--b2));
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+.score-bar-wrap .score-label {
+  font-size: 0.85rem;
+  color: oklch(var(--bc) / 0.6);
+  margin-bottom: 0.5rem;
+}
+.score-bar {
+  width: 100%;
+  height: 10px;
+  background: oklch(var(--bc) / 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.score-bar .score-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.6s ease;
+}
+.score-bar-wrap .score-num {
+  font-size: 0.8rem;
+  color: oklch(var(--bc) / 0.5);
+  margin-top: 0.35rem;
+  text-align: right;
+}
+
+/* Strengths & Next */
+.result-section {
+  text-align: left;
+  margin-bottom: 1.25rem;
+}
+.result-section h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.result-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.result-section ul li {
+  font-size: 0.9rem;
+  color: oklch(var(--bc) / 0.7);
+  padding: 0.3rem 0;
+  padding-left: 1.2rem;
+  position: relative;
+}
+.result-section ul li::before {
+  content: '✦';
+  position: absolute;
+  left: 0;
+  opacity: 0.4;
+}
+
+/* Meetup rec */
+.meetup-rec {
+  background: oklch(var(--p) / 0.08);
+  border: 1.5px solid oklch(var(--p) / 0.2);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+.meetup-rec .rec-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: oklch(var(--p));
+  margin-bottom: 0.35rem;
+}
+.meetup-rec .rec-desc {
+  font-size: 0.9rem;
+  color: oklch(var(--bc) / 0.7);
+  line-height: 1.5;
+}
+
+/* Result actions */
+.result-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+.result-actions a,
+.result-actions button {
+  flex: 1;
+  padding: 0.7rem;
+  border-radius: 0.65rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  transition: opacity 0.2s;
+}
+.result-actions .btn-primary {
+  background: oklch(var(--p));
+  color: oklch(var(--pc));
+}
+.result-actions .btn-secondary {
+  background: oklch(var(--b2));
+  color: oklch(var(--bc));
+}
+.result-actions a:hover,
+.result-actions button:hover {
+  opacity: 0.85;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
+
+<script is:inline>
+(function() {
+  var QUESTIONS = [
+    { id: 1, q: '你目前使用 AI 工具（Claude / ChatGPT 等）的頻率是？', opts: [
+      { text: '幾乎沒用過，或只聽人提過', score: 0 },
+      { text: '偶爾用一下，想到才開', score: 1 },
+      { text: '每週固定在用，已融入部分工作', score: 2 },
+      { text: '每天都用，它已經是我的工作核心工具', score: 3 },
+    ]},
+    { id: 2, q: '你知道 Claude 跟 ChatGPT 最大的差別在哪嗎？', opts: [
+      { text: '不就都是 AI 聊天嗎？有差嗎', score: 0 },
+      { text: '好像介面不一樣，但功能差不多吧', score: 1 },
+      { text: '知道 Claude 是 Anthropic 做的，各有擅長的任務類型', score: 2 },
+      { text: '清楚兩者的模型架構差異，會根據任務特性選擇使用', score: 3 },
+    ]},
+    { id: 3, q: 'Claude 回答品質不好的時候，你會怎麼做？', opts: [
+      { text: '就⋯算了，或者去 Google', score: 0 },
+      { text: '重新問一次，換個說法', score: 1 },
+      { text: '給更多脈絡、限定格式、指定角色來引導它', score: 2 },
+      { text: '分析哪個環節偏了，調整 prompt 結構或拆解任務重跑', score: 3 },
+    ]},
+    { id: 4, q: '「Projects（專案）」功能你用到什麼程度？', opts: [
+      { text: '沒聽過這個功能', score: 0 },
+      { text: '知道有，但還沒設過', score: 1 },
+      { text: '有建幾個 Project，上傳過文件、寫過 Custom Instructions', score: 2 },
+      { text: '每個工作場景都有專屬 Project，搭配知識庫和指令模板在跑', score: 3 },
+    ]},
+    { id: 5, q: '你平常寫 prompt 的方式最接近哪個？', opts: [
+      { text: '直接打字問問題，想到什麼說什麼', score: 0 },
+      { text: '會稍微整理一下問題，盡量講清楚', score: 1 },
+      { text: '有結構：給角色、脈絡、目標、格式要求', score: 2 },
+      { text: '組合 CoT + Few-shot + 分段指令，還會要求 Claude 自我檢驗', score: 3 },
+    ]},
+    { id: 6, q: '你怎麼處理重複性的工作任務？', opts: [
+      { text: '每次都手動處理，還沒想過用 AI', score: 0 },
+      { text: '偶爾會把上次的 prompt 複製來用', score: 1 },
+      { text: '在 Project 裡設好指令模板，每次貼新資料就能跑', score: 2 },
+      { text: '建了完整工作流：模板 + 知識庫 + 品質檢查，幾乎全自動化', score: 3 },
+    ]},
+    { id: 7, q: '模型選擇（Haiku / Sonnet / Opus）你怎麼處理？', opts: [
+      { text: '有分型號？我都用預設的', score: 0 },
+      { text: '知道有分，但不確定怎麼選', score: 1 },
+      { text: '會根據任務選：簡單的用 Haiku、複雜的用 Opus', score: 2 },
+      { text: '了解各模型的成本/速度/能力差異，會策略性混搭使用', score: 3 },
+    ]},
+    { id: 8, q: 'MCP（Model Context Protocol）工具，你碰過嗎？', opts: [
+      { text: '完全沒聽過', score: 0 },
+      { text: '聽過這個詞，好像是擴充功能？', score: 1 },
+      { text: '裝過一兩個 MCP 工具，讓 Claude 能操作外部服務', score: 2 },
+      { text: '已串接多個 MCP 服務，Claude 能直接操作我的檔案、日曆、專案管理', score: 3 },
+    ]},
+    { id: 9, q: '你用 Claude 做過最複雜的事是什麼等級？', opts: [
+      { text: '問問題、聊天', score: 0 },
+      { text: '寫文案、翻譯、整理資料', score: 1 },
+      { text: '分析報告、建立內容模板、規劃策略', score: 2 },
+      { text: '搭建自動化系統、開發工具、串接多個 AI 工作流', score: 3 },
+    ]},
+    { id: 10, q: '你有教過別人用 Claude 嗎？', opts: [
+      { text: '自己都還在摸索，沒教過', score: 0 },
+      { text: '推薦朋友用過，但沒深入教', score: 1 },
+      { text: '有帶同事上手，分享過實用技巧', score: 2 },
+      { text: '有系統性地教過團隊或社群，有自己的教學方法論', score: 3 },
+    ]},
+    { id: 11, q: '「Context Window（上下文窗口）」你怎麼管？', opts: [
+      { text: '沒聽過這個概念', score: 0 },
+      { text: '知道對話太長 Claude 會忘記前面的內容', score: 1 },
+      { text: '會分段任務、在關鍵處重申指令來管理', score: 2 },
+      { text: '精確控制上下文：壓縮歷史、結構化記憶、搭配外部知識庫', score: 3 },
+    ]},
+    { id: 12, q: 'Claude Code（命令列版）或 API 你碰過嗎？', opts: [
+      { text: '那是什麼？只用過網頁版', score: 0 },
+      { text: '聽過 Claude Code，知道它是給工程師用的', score: 1 },
+      { text: '裝過 Claude Code 或用過 API 串接做一些自動化', score: 2 },
+      { text: '深度使用：Claude Code 日常開發、API 串接多系統、寫過 Agent', score: 3 },
+    ]},
+    { id: 13, q: '你有建立自己的「AI 工作系統」嗎？', opts: [
+      { text: '什麼意思？我就開 Claude 問問題而已', score: 0 },
+      { text: '有幾個常用的 prompt 會存起來重複用', score: 1 },
+      { text: '有一套做法：特定任務用特定 Project + 指令 + 參考資料', score: 2 },
+      { text: '完整系統：多個 AI 協作、自動化排程、知識庫自動更新、品質控管', score: 3 },
+    ]},
+    { id: 14, q: '你有在用 Skill、Styles、或 Custom Instructions 嗎？', opts: [
+      { text: '都沒聽過', score: 0 },
+      { text: '知道有，但還沒設定過', score: 1 },
+      { text: '有設過 Custom Instructions 或 Styles，讓回覆更符合需求', score: 2 },
+      { text: '三個都在用，還會自己封裝 Skill 來標準化重複工作', score: 3 },
+    ]},
+    { id: 15, q: '你怎麼看 AI 在你工作中的角色？', opts: [
+      { text: '還沒把 AI 融入工作，觀望中', score: 0 },
+      { text: '好用的工具，能省一些時間', score: 1 },
+      { text: '核心協作夥伴，改變了我的工作方式', score: 2 },
+      { text: '戰略基礎設施，我的產出和系統都建構在 AI 之上', score: 3 },
+    ]},
+  ];
+
+  var LEVELS = {
+    lv7: { emoji: '🌱', label: 'Lv.7 AI 小白', color: 'var(--lv7-color)', desc: '你才剛接觸 AI 的世界，一切都是新鮮的。別擔心，每個高手都是從這裡開始的。', strengths: ['對新事物保持開放心態', '沒有錯誤習慣要矯正'], next: ['從每天問 Claude 一個問題開始', '試試用 Claude 整理會議紀錄或寫 email'], meetupRec: '非常推薦來小聚！現場有手把手教學，從零開始也不怕。' },
+    lv6: { emoji: '🔰', label: 'Lv.6 初心者', color: 'var(--lv6-color)', desc: '你已經開始用 AI 了，但還在摸索怎麼用得更好。你處在進步最快的階段！', strengths: ['已經踏出第一步', '知道 AI 能幫忙，但還在找最佳用法'], next: ['學會寫結構化 prompt（角色 + 目標 + 格式）', '試試建立一個 Claude Project'], meetupRec: '小聚會讓你一次學到實用技巧，少走很多彎路。' },
+    lv5: { emoji: '⚡', label: 'Lv.5 實踐者', color: 'var(--lv5-color)', desc: '你已經把 Claude 融入工作流程，開始看到效率提升。接下來要突破的是系統化思維。', strengths: ['能寫出有效的 prompt', '已建立基本的 AI 工作習慣'], next: ['深入學習 Project + Custom Instructions', '嘗試用 Claude 做策略分析和決策輔助'], meetupRec: '來跟同好交流，看看別人怎麼用 Claude 解決問題。' },
+    lv4: { emoji: '🔥', label: 'Lv.4 好手', color: 'var(--lv4-color)', desc: '你對 Claude 有深入理解，能駕馭進階功能。你已經是身邊朋友的 AI 顧問了。', strengths: ['熟悉 Project、Prompt 工程', '能根據任務選擇策略'], next: ['探索 MCP 工具串接外部服務', '建立可複用的工作流模板'], meetupRec: '小聚的進階工作坊很適合你，能學到 MCP 和自動化技巧。' },
+    lv3: { emoji: '💎', label: 'Lv.3 高手', color: 'var(--lv3-color)', desc: '你已經建立了自己的 AI 工作系統，生產力遠超同儕。你知道 AI 不只是工具，是基礎設施。', strengths: ['有完整的 AI 工作系統', '會管理 Context Window 和知識庫'], next: ['嘗試 Claude Code 或 API 開發', '設計 Agent 工作流做更複雜的自動化'], meetupRec: '來當分享者吧！你的經驗能幫助很多人，也能認識同級高手。' },
+    lv2: { emoji: '🏆', label: 'Lv.2 專家', color: 'var(--lv2-color)', desc: '你不只是使用者，你是建造者。AI 是你的戰略工具，你用它打造系統和產品。', strengths: ['深度使用 Claude Code / API', '能設計多 Agent 協作系統'], next: ['將經驗系統化，形成可教學的方法論', '探索 AI 在商業模式中的戰略定位'], meetupRec: '歡迎來當導師或講者，你的實戰經驗是社群最需要的。' },
+    lv1: { emoji: '👑', label: 'Lv.1 大神', color: 'var(--lv1-color)', desc: '你是 AI 架構師等級的存在。你的工作和系統完全建構在 AI 之上，不斷推進邊界。', strengths: ['完整的 AI 原生工作系統', '能教學、能佈道、能帶團隊'], next: ['持續探索前沿，保持領先', '建立社群影響力，推動產業進步'], meetupRec: '你就是我們想找的人。一起來建設台中的 AI 社群吧！' },
+  };
+
+  var LEVEL_ORDER = ['lv7', 'lv6', 'lv5', 'lv4', 'lv3', 'lv2', 'lv1'];
+  var LEVEL_COLORS = {
+    lv7: 'var(--lv7-color)', lv6: 'var(--lv6-color)', lv5: 'var(--lv5-color)',
+    lv4: 'var(--lv4-color)', lv3: 'var(--lv3-color)', lv2: 'var(--lv2-color)', lv1: 'var(--lv1-color)',
+  };
+
+  // State
+  var screen = 'welcome';
+  var qi = 0;
+  var answers = [];
+  var name = '';
+  var email = '';
+  var result = null;
+
+  function calcResult() {
+    var total = 0;
+    for (var i = 0; i < answers.length; i++) { total += answers[i]; }
+    var lv;
+    if (total <= 5) lv = 'lv7';
+    else if (total <= 12) lv = 'lv6';
+    else if (total <= 20) lv = 'lv5';
+    else if (total <= 28) lv = 'lv4';
+    else if (total <= 34) lv = 'lv3';
+    else if (total <= 40) lv = 'lv2';
+    else lv = 'lv1';
+    result = { level: lv, score: total, max: 45, data: LEVELS[lv] };
+  }
+
+  function esc(s) {
+    var d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+  }
+
+  function htmlWelcome() {
+    return '<div class="welcome">' +
+      '<h1>你是 Claude 幾段高手？</h1>' +
+      '<p class="subtitle">15 道情境題，測出你的 Claude 使用段位<br>從 AI 小白到系統架構師，找到你的位置</p>' +
+      '<button class="start-btn" data-action="start">開始測驗</button>' +
+    '</div>';
+  }
+
+  function htmlQuiz() {
+    var q = QUESTIONS[qi];
+    var pct = ((qi) / QUESTIONS.length * 100).toFixed(0);
+    var h = '<div class="progress-wrap">' +
+      '<div class="progress-bar"><div class="progress-fill" style="width:' + pct + '%"></div></div>' +
+      '<div class="progress-label"><span>第 ' + (qi + 1) + ' / ' + QUESTIONS.length + ' 題</span><span>' + pct + '%</span></div>' +
+    '</div>';
+    h += '<div class="question-card">';
+    h += '<h2>' + esc(q.q) + '</h2>';
+    h += '<div class="options">';
+    for (var i = 0; i < q.opts.length; i++) {
+      h += '<button class="option-btn" data-action="answer" data-score="' + q.opts[i].score + '">' + esc(q.opts[i].text) + '</button>';
+    }
+    h += '</div></div>';
+    return h;
+  }
+
+  function htmlForm() {
+    return '<div class="form-section">' +
+      '<h2>測驗完成！🎉</h2>' +
+      '<p class="form-desc">留下資訊，獲得你的段位報告<br>（也會收到小聚活動通知）</p>' +
+      '<label for="quiz-name">暱稱</label>' +
+      '<input type="text" id="quiz-name" placeholder="你希望怎麼稱呼？" />' +
+      '<label for="quiz-email">Email</label>' +
+      '<input type="email" id="quiz-email" placeholder="your@email.com" />' +
+      '<button class="submit-btn" data-action="submit">查看我的段位</button>' +
+      '<span class="skip-link" data-action="skip">跳過，直接看結果</span>' +
+    '</div>';
+  }
+
+  function htmlResult() {
+    var r = result;
+    var d = r.data;
+    var lvIdx = LEVEL_ORDER.indexOf(r.level);
+
+    var h = '<div class="result-card">';
+    h += '<div class="level-emoji">' + d.emoji + '</div>';
+    h += '<div class="level-title" style="color:' + d.color + '">' + esc(d.label) + '</div>';
+    h += '<div class="level-desc">' + esc(d.desc) + '</div>';
+
+    // Gauge
+    h += '<div class="level-gauge">';
+    for (var i = 0; i < LEVEL_ORDER.length; i++) {
+      var active = i <= lvIdx ? ' active' : '';
+      h += '<div class="gauge-dot' + active + '" style="background:' + LEVEL_COLORS[LEVEL_ORDER[i]] + '"></div>';
+    }
+    h += '</div>';
+
+    // Score bar
+    h += '<div class="score-bar-wrap">';
+    h += '<div class="score-label">你的分數</div>';
+    h += '<div class="score-bar"><div class="score-fill" style="width:' + (r.score / r.max * 100).toFixed(0) + '%;background:' + d.color + '"></div></div>';
+    h += '<div class="score-num">' + r.score + ' / ' + r.max + '</div>';
+    h += '</div>';
+
+    // Strengths
+    h += '<div class="result-section"><h3>🎯 你的優勢</h3><ul>';
+    for (var i = 0; i < d.strengths.length; i++) {
+      h += '<li>' + esc(d.strengths[i]) + '</li>';
+    }
+    h += '</ul></div>';
+
+    // Next steps
+    h += '<div class="result-section"><h3>🚀 下一步建議</h3><ul>';
+    for (var i = 0; i < d.next.length; i++) {
+      h += '<li>' + esc(d.next[i]) + '</li>';
+    }
+    h += '</ul></div>';
+
+    // Meetup rec
+    h += '<div class="meetup-rec">';
+    h += '<div class="rec-title">📍 台中小聚推薦</div>';
+    h += '<div class="rec-desc">' + esc(d.meetupRec) + '</div>';
+    h += '</div>';
+
+    // Actions
+    h += '<div class="result-actions">';
+    h += '<a href="/events/" class="btn-primary">查看近期小聚</a>';
+    h += '<button class="btn-secondary" data-action="restart">重新測驗</button>';
+    h += '</div>';
+
+    h += '</div>';
+    return h;
+  }
+
+  function render() {
+    var app = document.getElementById('app');
+    if (!app) return;
+    if (screen === 'welcome') app.innerHTML = htmlWelcome();
+    else if (screen === 'quiz') app.innerHTML = htmlQuiz();
+    else if (screen === 'form') app.innerHTML = htmlForm();
+    else if (screen === 'result') app.innerHTML = htmlResult();
+    bind();
+  }
+
+  function handleAction(action, el) {
+    if (action === 'start') {
+      screen = 'quiz';
+      qi = 0;
+      answers = [];
+      render();
+    } else if (action === 'answer') {
+      var score = parseInt(el.getAttribute('data-score'), 10);
+      answers.push(score);
+      qi++;
+      if (qi >= QUESTIONS.length) {
+        screen = 'form';
+      }
+      render();
+    } else if (action === 'submit') {
+      var nameEl = document.getElementById('quiz-name');
+      var emailEl = document.getElementById('quiz-email');
+      if (nameEl) name = nameEl.value.trim();
+      if (emailEl) email = emailEl.value.trim();
+      calcResult();
+      screen = 'result';
+      render();
+    } else if (action === 'skip') {
+      calcResult();
+      screen = 'result';
+      render();
+    } else if (action === 'restart') {
+      screen = 'welcome';
+      qi = 0;
+      answers = [];
+      name = '';
+      email = '';
+      result = null;
+      render();
+    }
+  }
+
+  function bind() {
+    var app = document.getElementById('app');
+    if (!app) return;
+    app.addEventListener('click', function(e) {
+      var target = e.target;
+      while (target && target !== app) {
+        var action = target.getAttribute('data-action');
+        if (action) {
+          e.preventDefault();
+          handleAction(action, target);
+          return;
+        }
+        target = target.parentElement;
+      }
+    });
+  }
+
+  // Handle Enter key in form inputs
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && screen === 'form') {
+      var active = document.activeElement;
+      if (active && (active.id === 'quiz-name' || active.id === 'quiz-email')) {
+        e.preventDefault();
+        handleAction('submit', active);
+      }
+    }
+  });
+
+  render();
+})();
+</script>
+
+</BaseLayout>

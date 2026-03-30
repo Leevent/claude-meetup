@@ -1,0 +1,15 @@
+---
+interface Props {
+  overline: string;
+  title: string;
+  subtitle?: string;
+  id?: string;
+}
+const { overline, title, subtitle, id } = Astro.props;
+---
+
+<div class="text-center mb-12 fade-in">
+  <div class="text-xs font-bold text-primary uppercase tracking-widest mb-3">{overline}</div>
+  <h2 id={id} class="text-3xl font-black mb-3">{title}</h2>
+  {subtitle && <p class="text-base-content/60 max-w-lg mx-auto leading-relaxed">{subtitle}</p>}
+</div>

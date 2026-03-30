@@ -1,0 +1,307 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+const howToLd = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "Claude 新手入門指南",
+  "description": "從零開始學會使用 Claude AI 助手的完整圖文教學",
+  "step": [
+    { "@type": "HowToStep", "name": "認識 Claude", "text": "了解 Claude 是什麼、它能幫你做什麼" },
+    { "@type": "HowToStep", "name": "註冊帳號", "text": "到 claude.ai 註冊免費帳號" },
+    { "@type": "HowToStep", "name": "了解方案", "text": "比較免費版與付費版的差異" },
+    { "@type": "HowToStep", "name": "開始對話", "text": "試試你的第一次 AI 對話" },
+    { "@type": "HowToStep", "name": "探索進階", "text": "了解 Claude Code、MCP、Skill 等進階功能" }
+  ]
+};
+
+const chapters = [
+  { id: 'ch1', num: 1, title: 'Claude 是什麼？', audience: '好奇觀望者' },
+  { id: 'ch2', num: 2, title: '註冊與開始', audience: '完全新手' },
+  { id: 'ch3', num: 3, title: '免費 vs 付費', audience: '所有人' },
+  { id: 'ch4', num: 4, title: '第一次對話', audience: '入門者' },
+  { id: 'ch5', num: 5, title: '進階功能預覽', audience: '想了解更多的人' },
+  { id: 'ch6', num: 6, title: '下一步', audience: '所有人' },
+];
+---
+
+<BaseLayout
+  title="新手入門指南｜Claude 台中小聚"
+  description="第一次用 Claude 就上手。從註冊到進階，用最白話的方式帶你認識這個改變工作方式的 AI 助手。"
+  canonical="https://claudetc.leevent.xyz/guide/"
+  ogType="article"
+  active="guide"
+  jsonLd={[howToLd]}
+>
+  <Breadcrumb items={[{ name: '首頁', href: '/' }, { name: '新手指南' }]} />
+
+  <!-- Hero -->
+  <section class="pt-8 pb-16 text-center relative overflow-hidden px-6">
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+      <div class="absolute w-[500px] h-[350px] top-[40%] left-[30%] -translate-x-1/2 -translate-y-1/2 bg-success/8 rounded-full blur-3xl"></div>
+      <div class="absolute w-[400px] h-[300px] top-[60%] right-[30%] translate-x-1/2 -translate-y-1/2 bg-primary/8 rounded-full blur-3xl"></div>
+    </div>
+    <div class="relative z-10 max-w-2xl mx-auto fade-in">
+      <h1 class="text-4xl md:text-5xl font-black mb-4">第一次用 Claude 就上手</h1>
+      <p class="text-base-content/60 text-lg leading-relaxed">不用會寫程式、不用英文很好。<br />用最白話的方式，帶你認識這個正在改變許多人工作方式的 AI 助手。</p>
+    </div>
+  </section>
+
+  <!-- Table of Contents -->
+  <section class="pb-20 px-6">
+    <div class="max-w-3xl mx-auto">
+      <div class="card bg-base-200 border border-base-300 p-7 fade-in">
+        <h3 class="text-xs font-bold text-base-content/50 uppercase tracking-widest mb-4">目錄</h3>
+        <ol class="grid md:grid-cols-2 gap-2 list-none p-0">
+          {chapters.map(ch => (
+            <li>
+              <a href={`#${ch.id}`} class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-base-content/60 hover:bg-base-300 hover:text-primary transition-all">
+                <span class="w-6 h-6 rounded-full bg-brand-glow text-primary flex items-center justify-center text-xs font-bold shrink-0">{ch.num}</span>
+                {ch.title}
+              </a>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- Chapters -->
+  <section class="px-6">
+    <div class="max-w-3xl mx-auto">
+
+      <!-- Ch1: Claude 是什麼 -->
+      <div id="ch1" class="scroll-mt-20 py-16 border-t border-base-300">
+        <div class="flex items-center gap-4 mb-6 fade-in">
+          <div class="w-12 h-12 rounded-full bg-primary text-primary-content flex items-center justify-center text-xl font-black shrink-0">1</div>
+          <div>
+            <h2 class="text-2xl font-black">Claude 是什麼？</h2>
+            <span class="text-xs text-base-content/40">適合：好奇觀望者</span>
+          </div>
+        </div>
+        <div class="md:pl-16 fade-in">
+          <p class="text-base-content/60 leading-relaxed mb-4"><strong class="text-base-content">一句話版本：</strong>Claude 是由 Anthropic 公司開發的 AI 助手，你可以把它想成一個超級聰明的工作夥伴，什麼都能聊、什麼都能幫。</p>
+          <p class="text-base-content/60 leading-relaxed mb-4">它擅長的事情很多：幫你寫文案、整理會議紀錄、分析資料、翻譯文件、規劃旅遊行程、甚至幫你寫程式。跟搜尋引擎不同，它不是給你一堆連結，而是直接給你答案。</p>
+          <p class="text-base-content/60 leading-relaxed mb-4">跟其他 AI 助手（像 ChatGPT、Gemini）比起來，Claude 特別擅長：</p>
+          <ul class="space-y-2 mb-4">
+            <li class="text-base-content/60">📖 <strong class="text-base-content">長文理解</strong> — 可以讀完整本書、整份報告再回答你</li>
+            <li class="text-base-content/60">🎯 <strong class="text-base-content">精準遵循指令</strong> — 你說什麼格式，它就照什麼格式</li>
+            <li class="text-base-content/60">🛡 <strong class="text-base-content">安全可靠</strong> — 不確定的事會說「我不確定」而不是亂掰</li>
+          </ul>
+          <div class="alert bg-brand-glow border-l-4 border-primary rounded-none rounded-r-lg">
+            <div>
+              <span class="text-xs font-bold text-primary block mb-1">小提示</span>
+              <p class="text-sm text-base-content">AI 不是萬能的，但它是一個很好的思考夥伴。把它當成一個什麼都願意幫忙、永遠不會不耐煩的同事。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ch2: 註冊與開始 -->
+      <div id="ch2" class="scroll-mt-20 py-16 border-t border-base-300">
+        <div class="flex items-center gap-4 mb-6 fade-in">
+          <div class="w-12 h-12 rounded-full bg-primary text-primary-content flex items-center justify-center text-xl font-black shrink-0">2</div>
+          <div>
+            <h2 class="text-2xl font-black">註冊與開始</h2>
+            <span class="text-xs text-base-content/40">適合：完全新手</span>
+          </div>
+        </div>
+        <div class="md:pl-16 fade-in">
+          <p class="text-base-content/60 leading-relaxed mb-4"><strong class="text-base-content">只要 3 步就能開始：</strong></p>
+          <ul class="steps steps-vertical">
+            <li class="step step-primary">
+              <div class="text-left ml-4">打開 <strong class="text-primary">claude.ai</strong>（手機或電腦都可以）</div>
+            </li>
+            <li class="step step-primary">
+              <div class="text-left ml-4">用 Google 帳號或 Email 註冊（30 秒搞定）</div>
+            </li>
+            <li class="step step-primary">
+              <div class="text-left ml-4">在對話框裡打字就能開始聊了</div>
+            </li>
+          </ul>
+          <div class="alert bg-brand-glow border-l-4 border-primary rounded-none rounded-r-lg mt-4">
+            <div>
+              <span class="text-xs font-bold text-primary block mb-1">手機也能用</span>
+              <p class="text-sm text-base-content">Claude 有 iOS 和 Android App，在 App Store / Google Play 搜尋「Claude」就能下載。跟網頁版功能一樣。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ch3: 免費 vs 付費 -->
+      <div id="ch3" class="scroll-mt-20 py-16 border-t border-base-300">
+        <div class="flex items-center gap-4 mb-6 fade-in">
+          <div class="w-12 h-12 rounded-full bg-primary text-primary-content flex items-center justify-center text-xl font-black shrink-0">3</div>
+          <div>
+            <h2 class="text-2xl font-black">免費 vs 付費</h2>
+            <span class="text-xs text-base-content/40">適合：所有人</span>
+          </div>
+        </div>
+        <div class="md:pl-16 fade-in">
+          <p class="text-base-content/60 leading-relaxed mb-4">Claude 有免費版可以體驗，不用花錢就能試。差別在哪？看這張表：</p>
+          <div class="overflow-x-auto">
+            <table class="table table-zebra bg-base-200 rounded-lg">
+              <thead>
+                <tr class="text-xs uppercase tracking-wider">
+                  <th>方案</th>
+                  <th>價格</th>
+                  <th>適合誰</th>
+                  <th>限制</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="font-bold">Free 免費版</td>
+                  <td>$0</td>
+                  <td>偶爾用、試用</td>
+                  <td>每天有對話次數上限</td>
+                </tr>
+                <tr>
+                  <td class="font-bold text-primary">Pro 專業版 ★</td>
+                  <td>US$20/月</td>
+                  <td>每天都在用的人</td>
+                  <td>更多對話、更強模型</td>
+                </tr>
+                <tr>
+                  <td class="font-bold">Max 旗艦版</td>
+                  <td>US$100/月</td>
+                  <td>重度專業用戶</td>
+                  <td>幾乎無限制</td>
+                </tr>
+                <tr>
+                  <td class="font-bold">Team 團隊版</td>
+                  <td>US$30/人/月</td>
+                  <td>公司團隊使用</td>
+                  <td>團隊協作 + 管理功能</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="alert bg-brand-glow border-l-4 border-primary rounded-none rounded-r-lg mt-4">
+            <div>
+              <span class="text-xs font-bold text-primary block mb-1">建議</span>
+              <p class="text-sm text-base-content">先用免費版試一週。如果發現每天都想用、免費額度不夠，再升級 Pro 就好。不用一開始就花錢。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ch4: 第一次對話 -->
+      <div id="ch4" class="scroll-mt-20 py-16 border-t border-base-300">
+        <div class="flex items-center gap-4 mb-6 fade-in">
+          <div class="w-12 h-12 rounded-full bg-primary text-primary-content flex items-center justify-center text-xl font-black shrink-0">4</div>
+          <div>
+            <h2 class="text-2xl font-black">第一次對話</h2>
+            <span class="text-xs text-base-content/40">適合：入門者</span>
+          </div>
+        </div>
+        <div class="md:pl-16 fade-in">
+          <p class="text-base-content/60 leading-relaxed mb-4">不知道要聊什麼？試試這 3 個 Prompt（提示詞），直接複製貼上就能用：</p>
+
+          <div class="space-y-3 mb-4">
+            <div class="card bg-base-200 border border-base-300 p-5">
+              <div class="text-xs font-bold text-primary uppercase tracking-wider mb-2">場景：整理想法</div>
+              <div class="text-sm bg-base-100 rounded-lg p-4 border-l-4 border-secondary font-mono leading-relaxed">我正在考慮要不要換工作，目前的工作穩定但沒有成長空間。請幫我列出換工作的優缺點，用表格呈現，最後給我一個建議。</div>
+              <div class="text-xs text-base-content/40 mt-2">為什麼有效：給了背景 + 明確格式要求 + 期望的輸出</div>
+            </div>
+
+            <div class="card bg-base-200 border border-base-300 p-5">
+              <div class="text-xs font-bold text-primary uppercase tracking-wider mb-2">場景：寫工作信件</div>
+              <div class="text-sm bg-base-100 rounded-lg p-4 border-l-4 border-secondary font-mono leading-relaxed">幫我寫一封給客戶的信，告知專案進度延遲一週。語氣要專業但不冰冷，表達歉意但也說明延遲原因（等待第三方資料），控制在 200 字以內。</div>
+              <div class="text-xs text-base-content/40 mt-2">為什麼有效：具體情境 + 語氣要求 + 字數限制</div>
+            </div>
+
+            <div class="card bg-base-200 border border-base-300 p-5">
+              <div class="text-xs font-bold text-primary uppercase tracking-wider mb-2">場景：學習新東西</div>
+              <div class="text-sm bg-base-100 rounded-lg p-4 border-l-4 border-secondary font-mono leading-relaxed">我完全不懂什麼是 SEO，請用「說給高中生聽」的方式，5 分鐘內讓我理解 SEO 是什麼、為什麼重要、怎麼入門。</div>
+              <div class="text-xs text-base-content/40 mt-2">為什麼有效：明確知識程度 + 時間限制 + 三個具體問題</div>
+            </div>
+          </div>
+
+          <div class="alert bg-brand-glow border-l-4 border-primary rounded-none rounded-r-lg">
+            <div>
+              <span class="text-xs font-bold text-primary block mb-1">Prompt 黃金公式</span>
+              <p class="text-sm text-base-content">背景 + 任務 + 格式 + 限制 = 好結果。越具體，Claude 回答越精準。不用怕寫太多，Claude 喜歡詳細的指令。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ch5: 進階功能預覽 -->
+      <div id="ch5" class="scroll-mt-20 py-16 border-t border-base-300">
+        <div class="flex items-center gap-4 mb-6 fade-in">
+          <div class="w-12 h-12 rounded-full bg-primary text-primary-content flex items-center justify-center text-xl font-black shrink-0">5</div>
+          <div>
+            <h2 class="text-2xl font-black">進階功能預覽</h2>
+            <span class="text-xs text-base-content/40">適合：想了解更多的人</span>
+          </div>
+        </div>
+        <div class="md:pl-16 fade-in">
+          <p class="text-base-content/60 leading-relaxed mb-4">當你用熟了基本對話，Claude 還有這些進階玩法等你探索：</p>
+          <div class="grid md:grid-cols-3 gap-3 mb-4">
+            <div class="card bg-base-200 border border-base-300 p-6 text-center">
+              <div class="text-4xl mb-2">💻</div>
+              <h4 class="font-bold text-sm mb-1">Claude Code</h4>
+              <p class="text-xs text-base-content/50">讓 Claude 直接操作你的電腦，自動化工作流程</p>
+            </div>
+            <div class="card bg-base-200 border border-base-300 p-6 text-center">
+              <div class="text-4xl mb-2">🔌</div>
+              <h4 class="font-bold text-sm mb-1">MCP</h4>
+              <p class="text-xs text-base-content/50">讓 Claude 連接 Google Calendar、Notion 等工具</p>
+            </div>
+            <div class="card bg-base-200 border border-base-300 p-6 text-center">
+              <div class="text-4xl mb-2">📋</div>
+              <h4 class="font-bold text-sm mb-1">Skill</h4>
+              <p class="text-xs text-base-content/50">幫 Claude 寫「工作手冊」，讓它自動完成重複任務</p>
+            </div>
+          </div>
+          <div class="alert bg-brand-glow border-l-4 border-primary rounded-none rounded-r-lg">
+            <div>
+              <span class="text-xs font-bold text-primary block mb-1">不用急</span>
+              <p class="text-sm text-base-content">這些進階功能都會在後續的小聚活動中詳細介紹和現場 Demo。先把基本對話用熟，進階的慢慢來。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ch6: 下一步 -->
+      <div id="ch6" class="scroll-mt-20 py-16 border-t border-base-300">
+        <div class="flex items-center gap-4 mb-6 fade-in">
+          <div class="w-12 h-12 rounded-full bg-primary text-primary-content flex items-center justify-center text-xl font-black shrink-0">6</div>
+          <div>
+            <h2 class="text-2xl font-black">下一步</h2>
+            <span class="text-xs text-base-content/40">適合：所有人</span>
+          </div>
+        </div>
+        <div class="md:pl-16 fade-in">
+          <p class="text-base-content/60 leading-relaxed mb-4">恭喜你讀完了入門指南。接下來你可以：</p>
+          <div class="space-y-3">
+            <a href="/quiz/" class="card bg-base-200 border border-base-300 hover:border-primary hover:-translate-y-0.5 transition-all p-5 flex gap-4 items-center no-underline">
+              <span class="text-4xl">🎯</span>
+              <div>
+                <h3 class="font-bold">測測你的段位</h3>
+                <p class="text-sm text-base-content/60">用 7 段位系統看看你目前在哪個階段</p>
+              </div>
+            </a>
+            <a href="/events/" class="card bg-base-200 border border-base-300 hover:border-primary hover:-translate-y-0.5 transition-all p-5 flex gap-4 items-center no-underline">
+              <span class="text-4xl">🤝</span>
+              <div>
+                <h3 class="font-bold">來一場小聚</h3>
+                <p class="text-sm text-base-content/60">面對面看別人怎麼用、現場問問題，進步最快</p>
+              </div>
+            </a>
+            <a href="/faq/" class="card bg-base-200 border border-base-300 hover:border-primary hover:-translate-y-0.5 transition-all p-5 flex gap-4 items-center no-underline">
+              <span class="text-4xl">❓</span>
+              <div>
+                <h3 class="font-bold">常見問答</h3>
+                <p class="text-sm text-base-content/60">還有疑問？看看其他人都問了什麼</p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</BaseLayout>

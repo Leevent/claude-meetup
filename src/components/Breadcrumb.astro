@@ -1,0 +1,32 @@
+---
+interface Props {
+  items: Array<{ name: string; href?: string }>;
+}
+const { items } = Astro.props;
+const breadcrumbLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": items.map((item, i) => ({
+    "@type": "ListItem",
+    "position": i + 1,
+    "name": item.name,
+    ...(item.href ? { "item": `https://claudetc.leevent.xyz${item.href}` } : {})
+  }))
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
+<div class="max-w-5xl mx-auto px-6 pt-20">
+  <nav class="text-xs text-base-content/40 py-3" aria-label="breadcrumb">
+    {items.map((item, i) => (
+      <>
+        {i > 0 && <span class="mx-2" aria-hidden="true">/</span>}
+        {item.href ? (
+          <a href={item.href} class="text-base-content/60 hover:text-primary">{item.name}</a>
+        ) : (
+          <span aria-current="page">{item.name}</span>
+        )}
+      </>
+    ))}
+  </nav>
+</div>

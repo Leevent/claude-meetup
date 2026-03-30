@@ -1,0 +1,50 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  canonical: string;
+  ogType?: string;
+  ogImage?: string;
+  keywords?: string;
+  jsonLd?: object | object[];
+}
+
+const {
+  title,
+  description,
+  canonical,
+  ogType = 'website',
+  ogImage,
+  keywords = 'Claude,AI,台中,小聚,meetup,Claude Code,AI工作流,台中活動,線下社群',
+  jsonLd,
+} = Astro.props;
+
+const siteName = 'Claude 台中小聚';
+const jsonLdArray = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+---
+
+<!-- SEO: Primary Meta -->
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="keywords" content={keywords} />
+<meta name="author" content="Lee Vent" />
+<link rel="canonical" href={canonical} />
+
+<!-- SEO: Open Graph -->
+<meta property="og:type" content={ogType} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:site_name" content={siteName} />
+<meta property="og:locale" content="zh_TW" />
+{ogImage && <meta property="og:image" content={ogImage} />}
+
+<!-- SEO: Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+
+<!-- SEO: JSON-LD -->
+{jsonLdArray.map((ld) => (
+  <script type="application/ld+json" set:html={JSON.stringify(ld)} />
+))}

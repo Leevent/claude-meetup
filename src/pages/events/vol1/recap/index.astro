@@ -1,0 +1,92 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../../../components/Breadcrumb.astro';
+
+const articleLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Claude 台中小聚 vol.1 活動回顧",
+  "description": "2026/04/02 首場活動回顧。全景式入門｜角色：認識彼此。",
+  "datePublished": "2026-04-02",
+  "author": { "@type": "Person", "name": "Lee Vent", "url": "https://leevent.xyz" },
+  "publisher": { "@type": "Organization", "name": "Claude 台中小聚", "url": "https://claudetc.leevent.xyz" }
+};
+---
+
+<BaseLayout
+  title="vol.1 活動回顧｜Claude 台中小聚"
+  description="Claude 台中小聚 vol.1 活動回顧。2026/04/02 首場活動精彩回顧、參加者心得、現場照片。"
+  canonical="https://claudetc.leevent.xyz/events/vol1/recap/"
+  ogType="article"
+  active="events"
+  jsonLd={[articleLd]}
+>
+  <Breadcrumb items={[
+    { name: '首頁', href: '/' },
+    { name: '活動中心', href: '/events/' },
+    { name: 'vol.1', href: '/events/001-first-meetup/' },
+    { name: '活動回顧' }
+  ]} />
+
+  <!-- Coming Soon Placeholder -->
+  <section class="py-32 px-6">
+    <div class="max-w-3xl mx-auto">
+      <div class="card bg-base-200 border border-dashed border-base-300 p-16 text-center fade-in">
+        <span class="text-6xl block mb-6" aria-hidden="true">📸</span>
+        <h1 class="text-2xl font-black mb-3 text-base-content/60">活動回顧 — 即將更新</h1>
+        <p class="text-base-content/40 mb-8">4/2 首場活動結束後，這裡會更新為完整回顧：<br />現場照片、參加者心得、重點摘要。</p>
+        <div class="flex gap-3 justify-center flex-wrap">
+          <a href="/events/001-first-meetup/" class="btn btn-ghost btn-sm text-primary border-primary">← 回活動詳情</a>
+          <a href="/events/" class="btn btn-ghost btn-sm text-base-content/60 border-base-300">查看所有活動</a>
+        </div>
+      </div>
+
+      <!-- ═══════ POST-EVENT TEMPLATE (uncomment after 4/2) ═══════ -->
+      <!--
+      <div class="stats stats-vertical md:stats-horizontal w-full bg-base-200 border border-base-300 shadow mb-12">
+        <div class="stat place-items-center">
+          <div class="stat-title">參與人數</div>
+          <div class="stat-value text-primary">32</div>
+        </div>
+        <div class="stat place-items-center">
+          <div class="stat-title">活動時長</div>
+          <div class="stat-value text-primary">2.5hr</div>
+        </div>
+        <div class="stat place-items-center">
+          <div class="stat-title">職業分布</div>
+          <div class="stat-value text-primary">--</div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-12">
+        <div class="aspect-square bg-base-200 rounded-lg flex items-center justify-center text-4xl">📷</div>
+        <div class="aspect-square bg-base-200 rounded-lg flex items-center justify-center text-4xl">📷</div>
+        <div class="aspect-square bg-base-200 rounded-lg flex items-center justify-center text-4xl">📷</div>
+      </div>
+
+      <div class="space-y-4 mb-12">
+        <h2 class="text-2xl font-black">活動亮點</h2>
+        <div class="card bg-base-200 border border-base-300 p-5">
+          <h3 class="font-bold mb-2">亮點 1</h3>
+          <p class="text-base-content/60">描述...</p>
+        </div>
+      </div>
+
+      <div class="space-y-4 mb-12">
+        <h2 class="text-2xl font-black">參加者怎麼說</h2>
+        <div class="card bg-base-200 border border-base-300 p-5">
+          <p class="italic text-base-content/60">"引用..."</p>
+          <p class="text-xs text-base-content/40 mt-2">— 參加者</p>
+        </div>
+      </div>
+      -->
+
+      <!-- Next Event CTA -->
+      <div class="text-center py-16 fade-in">
+        <h2 class="text-2xl font-black mb-3">vol.2 籌備中</h2>
+        <p class="text-base-content/60 mb-6">辦公室即戰力：搞定 80% 的文書工作 — 2026/05/07</p>
+        <a href="/events/#register" class="btn btn-primary">登記候補 →</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

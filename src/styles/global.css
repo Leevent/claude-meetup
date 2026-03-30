@@ -1,0 +1,103 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: claude-tc --default;
+}
+
+/* ── Custom DaisyUI Theme: Claude TC ── */
+@plugin "daisyui/theme" {
+  name: "claude-tc";
+  default: true;
+  prefersdark: true;
+  color-scheme: dark;
+
+  /* Primary = Terracotta */
+  --color-base-100: #1A1614;
+  --color-base-200: #242019;
+  --color-base-300: #2E2921;
+  --color-base-content: #F5EDE5;
+
+  --color-primary: #D97757;
+  --color-primary-content: #1A1614;
+
+  --color-secondary: #A78BFA;
+  --color-secondary-content: #1A1614;
+
+  --color-accent: #C4956C;
+  --color-accent-content: #1A1614;
+
+  --color-neutral: #332E28;
+  --color-neutral-content: #B8AFA5;
+
+  --color-info: #7EB8DA;
+  --color-info-content: #1A1614;
+
+  --color-success: #7BC4A5;
+  --color-success-content: #1A1614;
+
+  --color-warning: #E8C468;
+  --color-warning-content: #1A1614;
+
+  --color-error: #E87C7C;
+  --color-error-content: #1A1614;
+
+  --rounded-box: 1rem;
+  --rounded-btn: 9999px;
+  --rounded-badge: 9999px;
+  --animation-btn: 0.25s;
+  --animation-input: 0.2s;
+  --btn-focus-scale: 0.98;
+  --tab-radius: 0.5rem;
+}
+
+/* ── Custom Tailwind theme extensions ── */
+@theme {
+  --font-family-sans: 'Noto Sans TC', 'Microsoft JhengHei', 'PingFang TC', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Brand colors as Tailwind utilities */
+  --color-brand: #D97757;
+  --color-brand-light: #E89B7A;
+  --color-brand-glow: rgba(217, 119, 87, 0.15);
+  --color-brand-warm: #C4956C;
+  --color-brand-purple: #A78BFA;
+  --color-brand-blue: #7EB8DA;
+  --color-brand-green: #7BC4A5;
+  --color-brand-red: #E87C7C;
+
+  --color-bg: #1A1614;
+  --color-bg-card: #242019;
+  --color-bg-card-hover: #2E2921;
+
+  --color-text-main: #F5EDE5;
+  --color-text-sec: #B8AFA5;
+  --color-text-muted: #7A7268;
+
+  --color-border-main: #332E28;
+  --color-border-light: #443D35;
+}
+
+/* ── Base Styles ── */
+html { scroll-behavior: smooth; }
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ── Fade-in animation ── */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.5); }
+}
+.animate-pulse-dot { animation: pulse-dot 2s infinite; }
+
+.fade-in {
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+/* ── Print ── */
+@media print {
+  .navbar, footer, .btn { display: none; }
+  body { background: white; color: black; }
+}
