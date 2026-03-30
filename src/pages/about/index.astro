@@ -124,10 +124,10 @@ const crossLinks = [
     </div>
 
     <div class="relative z-10 max-w-3xl mx-auto fade-in">
-      <h1 class="text-5xl md:text-6xl font-black leading-tight mb-5 bg-gradient-to-r from-brand-blue via-accent to-primary bg-clip-text text-transparent">
+      <h1 class="text-5xl md:text-6xl font-black leading-tight mb-5 text-base-content">
         關於我們
       </h1>
-      <p class="text-xl md:text-2xl text-base-content/60 leading-relaxed italic">
+      <p class="text-xl md:text-2xl text-base-content/70 leading-relaxed italic">
         一個人開始，一群人繼續。
       </p>
     </div>
@@ -153,7 +153,7 @@ const crossLinks = [
         <!-- Info -->
         <div>
           <h3 class="text-2xl font-black mb-1">Lee Vent</h3>
-          <p class="text-base-content/50 text-sm mb-4">vent's talk</p>
+          <p class="text-base-content/60 text-sm mb-4">vent's talk</p>
 
           <!-- Tagline -->
           <p class="italic text-base-content/70 border-l-4 border-accent pl-4 mb-6 leading-relaxed">
@@ -163,23 +163,23 @@ const crossLinks = [
           <!-- Details list -->
           <dl class="space-y-3 text-sm">
             <div class="flex gap-3">
-              <dt class="text-base-content/40 min-w-[4rem] shrink-0">定位</dt>
+              <dt class="text-base-content/50 min-w-[4rem] shrink-0">定位</dt>
               <dd class="text-base-content/80">SEO &times; HR &times; AI 三重交叉定位</dd>
             </div>
             <div class="flex gap-3">
-              <dt class="text-base-content/40 min-w-[4rem] shrink-0">Blog</dt>
+              <dt class="text-base-content/50 min-w-[4rem] shrink-0">Blog</dt>
               <dd>
                 <a href="https://leevent.xyz" target="_blank" rel="noopener noreferrer" class="link link-primary">leevent.xyz</a>
               </dd>
             </div>
             <div class="flex gap-3">
-              <dt class="text-base-content/40 min-w-[4rem] shrink-0">Email</dt>
+              <dt class="text-base-content/50 min-w-[4rem] shrink-0">Email</dt>
               <dd>
                 <a href="mailto:vent@leevent.co" class="link link-primary">vent@leevent.co</a>
               </dd>
             </div>
             <div class="flex gap-3">
-              <dt class="text-base-content/40 min-w-[4rem] shrink-0">風格</dt>
+              <dt class="text-base-content/50 min-w-[4rem] shrink-0">風格</dt>
               <dd class="text-base-content/80">實戰派。不講理論空話，直接打開螢幕給你看。</dd>
             </div>
           </dl>
@@ -204,7 +204,7 @@ const crossLinks = [
             <div class="card-body">
               <div class="text-3xl mb-2">{card.emoji}</div>
               <h3 class="card-title text-lg">{card.title}</h3>
-              <p class="text-base-content/60 leading-relaxed">{card.text}</p>
+              <p class="text-base-content/70 leading-relaxed">{card.text}</p>
             </div>
           </div>
         ))}
@@ -227,7 +227,7 @@ const crossLinks = [
           <div class="collapse collapse-arrow join-item border border-base-300 bg-base-100">
             <input type="radio" name="faq-accordion" checked={i === 0} />
             <div class="collapse-title font-bold text-base">{item.q}</div>
-            <div class="collapse-content text-base-content/60 leading-relaxed">
+            <div class="collapse-content text-base-content/70 leading-relaxed">
               <p>{item.a}</p>
             </div>
           </div>
@@ -243,7 +243,7 @@ const crossLinks = [
         <div class="card-body items-center py-12">
           <div class="text-5xl mb-4">✉️</div>
           <h2 class="card-title text-xl mb-2">有任何問題？</h2>
-          <p class="text-base-content/60 mb-6">歡迎來信，我們會盡快回覆。</p>
+          <p class="text-base-content/70 mb-6">歡迎來信，我們會盡快回覆。</p>
           <a href="mailto:vent@leevent.co" class="btn btn-primary btn-wide">
             vent@leevent.co
           </a>
@@ -267,7 +267,7 @@ const crossLinks = [
             <div class="card-body items-center py-8">
               <div class="text-4xl mb-3 group-hover:scale-110 transition-transform">{link.emoji}</div>
               <h3 class="font-bold text-sm">{link.title}</h3>
-              <p class="text-xs text-base-content/50">{link.desc}</p>
+              <p class="text-xs text-base-content/60">{link.desc}</p>
             </div>
           </a>
         ))}

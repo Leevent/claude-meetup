@@ -3,7 +3,7 @@ import SEO from '../../components/SEO.astro';
 import '../../styles/global.css';
 ---
 
-<html lang="zh-Hant" data-theme="claude-tc">
+<html lang="zh-TW" data-theme="claude-tc">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -25,14 +25,14 @@ import '../../styles/global.css';
     <div class="gate-card">
       <div class="text-6xl mb-4">🔑</div>
       <h1 class="text-2xl font-bold mb-2">Claude 台中小聚 核心圈後台</h1>
-      <p class="text-base-content/60 mb-6">此頁面僅供核心圈成員使用<br />請使用 Google 帳號登入</p>
+      <p class="text-base-content/70 mb-6">此頁面僅供核心圈成員使用<br />請使用 Google 帳號登入</p>
 
       <!-- Google Sign-In button -->
       <div id="google-signin-btn" class="flex justify-center mb-4"></div>
 
       <!-- Password fallback (hidden by default) -->
       <div id="password-fallback" style="display:none;">
-        <div class="divider text-sm text-base-content/40">或輸入通行碼</div>
+        <div class="divider text-sm text-base-content/50">或輸入通行碼</div>
         <div class="flex gap-2 justify-center">
           <input id="passcode-input" type="password" placeholder="通行碼" class="input input-bordered input-sm w-48" />
           <button id="passcode-btn" class="btn btn-sm btn-primary">進入</button>
@@ -83,19 +83,19 @@ import '../../styles/global.css';
     <section class="max-w-6xl mx-auto px-4 py-8">
       <div class="welcome-banner">
         <h2 class="text-3xl font-bold mb-2">歡迎回來，<span id="welcome-name">成員</span> 👋</h2>
-        <p class="text-base-content/60 mb-6">這裡是核心圈成員專屬空間</p>
+        <p class="text-base-content/70 mb-6">這裡是核心圈成員專屬空間</p>
         <div class="grid grid-cols-3 gap-4 max-w-md">
           <div class="text-center">
             <div class="text-2xl font-bold text-primary">1</div>
-            <div class="text-xs text-base-content/50">累計場次</div>
+            <div class="text-xs text-base-content/60">累計場次</div>
           </div>
           <div class="text-center">
             <div class="text-2xl font-bold text-primary">32</div>
-            <div class="text-xs text-base-content/50">累計參與</div>
+            <div class="text-xs text-base-content/60">累計參與</div>
           </div>
           <div class="text-center">
             <div class="text-2xl font-bold text-primary">&mdash;</div>
-            <div class="text-xs text-base-content/50">核心成員</div>
+            <div class="text-xs text-base-content/60">核心成員</div>
           </div>
         </div>
       </div>
@@ -109,7 +109,7 @@ import '../../styles/global.css';
         <div class="replay-card replay-card--active">
           <div class="replay-badge">vol.1</div>
           <h4 class="font-semibold mb-1">你的 Claude，跟我的一樣嗎？</h4>
-          <p class="text-sm text-base-content/60 mb-3">全景式入門。破冰自介、辦公室場景 Demo、生活場景 Demo、進階功能一瞥、分組交流。</p>
+          <p class="text-sm text-base-content/70 mb-3">全景式入門。破冰自介、辦公室場景 Demo、生活場景 Demo、進階功能一瞥、分組交流。</p>
           <span class="text-xs text-primary">查看精華 &rarr;</span>
         </div>
         <!-- vol.2 — dimmed -->
@@ -134,22 +134,22 @@ import '../../styles/global.css';
         <div class="resource-card">
           <div class="text-2xl mb-2">📊</div>
           <h4 class="font-semibold text-sm">簡報</h4>
-          <p class="text-xs text-base-content/50">活動簡報 PDF 下載</p>
+          <p class="text-xs text-base-content/60">活動簡報 PDF 下載</p>
         </div>
         <div class="resource-card">
           <div class="text-2xl mb-2">🧩</div>
           <h4 class="font-semibold text-sm">Skill 模板包</h4>
-          <p class="text-xs text-base-content/50">Claude Code Skill 範本</p>
+          <p class="text-xs text-base-content/60">Claude Code Skill 範本</p>
         </div>
         <div class="resource-card">
           <div class="text-2xl mb-2">💬</div>
           <h4 class="font-semibold text-sm">討論摘要</h4>
-          <p class="text-xs text-base-content/50">分組討論精華紀錄</p>
+          <p class="text-xs text-base-content/60">分組討論精華紀錄</p>
         </div>
         <div class="resource-card">
           <div class="text-2xl mb-2">🗺️</div>
           <h4 class="font-semibold text-sm">學習路徑</h4>
-          <p class="text-xs text-base-content/50">Claude 學習建議路線</p>
+          <p class="text-xs text-base-content/60">Claude 學習建議路線</p>
         </div>
       </div>
     </section>
@@ -163,7 +163,7 @@ import '../../styles/global.css';
             <span class="text-xl">📦</span>
             <span class="font-semibold">anthropics/financial-services-plugins</span>
           </div>
-          <p class="text-sm text-base-content/60 mb-2">Anthropic 官方金融服務插件範例。MCP server 實作參考。</p>
+          <p class="text-sm text-base-content/70 mb-2">Anthropic 官方金融服務插件範例。MCP server 實作參考。</p>
           <span class="text-xs text-warning">⭐ 6,900</span>
         </a>
         <a href="https://github.com/cjoke/conway-automaton" target="_blank" rel="noopener" class="github-card">
@@ -171,7 +171,7 @@ import '../../styles/global.css';
             <span class="text-xl">🤖</span>
             <span class="font-semibold">Conway Automaton</span>
           </div>
-          <p class="text-sm text-base-content/60 mb-2">五層記憶架構 AI Agent 系統。本社群系統設計參考來源。</p>
+          <p class="text-sm text-base-content/70 mb-2">五層記憶架構 AI Agent 系統。本社群系統設計參考來源。</p>
           <span class="text-xs text-warning">⭐ 3,100</span>
         </a>
       </div>
@@ -181,7 +181,7 @@ import '../../styles/global.css';
     <section class="max-w-6xl mx-auto px-4 py-6">
       <h3 class="text-xl font-bold mb-4">👥 成員目錄</h3>
       <div class="member-card">
-        <p class="text-base-content/40 text-center py-8">核心圈正在成形中</p>
+        <p class="text-base-content/50 text-center py-8">核心圈正在成形中</p>
       </div>
     </section>
 
@@ -191,8 +191,8 @@ import '../../styles/global.css';
       <div class="next-event-card">
         <div class="next-event-badge">2026/04/02</div>
         <h4 class="font-semibold text-lg mb-1">Claude 台中小聚 vol.1｜你的 Claude，跟我的一樣嗎？</h4>
-        <p class="text-sm text-base-content/60 mb-2">全景式入門。破冰自介、辦公室場景 Demo、生活場景 Demo、進階功能一瞥、分組交流。</p>
-        <div class="flex flex-wrap gap-3 text-xs text-base-content/50">
+        <p class="text-sm text-base-content/70 mb-2">全景式入門。破冰自介、辦公室場景 Demo、生活場景 Demo、進階功能一瞥、分組交流。</p>
+        <div class="flex flex-wrap gap-3 text-xs text-base-content/60">
           <span>📍 台中市西區</span>
           <span>🕖 19:00–21:30</span>
           <span>👥 30 人</span>
@@ -201,7 +201,7 @@ import '../../styles/global.css';
     </section>
 
     <!-- Footer -->
-    <footer class="border-t border-base-300 py-6 text-center text-sm text-base-content/40">
+    <footer class="border-t border-base-300 py-6 text-center text-sm text-base-content/50">
       <p>&copy; 2026 Claude 台中小聚 &mdash; 核心圈成員專屬頁面</p>
     </footer>
   </div>

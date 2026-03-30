@@ -26,7 +26,16 @@ const jsonLd = {
 
 <Breadcrumb items={[{ name: '首頁', href: '/' }, { name: '段位測驗' }]} />
 <div class="max-w-xl mx-auto px-4 pb-12">
-  <div id="app"></div>
+  <div id="app">
+    <noscript>
+      <div class="text-center py-20">
+        <p class="text-4xl mb-4">🎮</p>
+        <h1 class="text-2xl font-black mb-3">段位測驗需要 JavaScript</h1>
+        <p class="text-base-content/70 mb-6">請開啟瀏覽器的 JavaScript 功能後重新整理頁面。</p>
+        <a href="/guide/" class="btn btn-primary">先看新手指南 →</a>
+      </div>
+    </noscript>
+  </div>
 </div>
 
 <style is:inline>
