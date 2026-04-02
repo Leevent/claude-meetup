@@ -11,10 +11,10 @@
   prefersdark: false;
   color-scheme: light;
 
-  /* Base: 白底系 */
-  --color-base-100: #FFFFFF;
-  --color-base-200: #F7F5F2;
-  --color-base-300: #EDE9E3;
+  /* Base: 暖米白系 */
+  --color-base-100: #FAF8F5;
+  --color-base-200: #F2EDE6;
+  --color-base-300: #E6DDD3;
   --color-base-content: #1A1614;
 
   /* Primary = Claude 淺橘紅 */
