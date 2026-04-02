@@ -18,6 +18,7 @@ const { active = '' } = Astro.props;
         <li><a href="/events/" class:list={[{ 'text-primary': active === 'events' }]}>活動</a></li>
         <li><a href="/community/" class:list={[{ 'text-primary': active === 'community' }]}>社群</a></li>
         <li><a href="/quiz/" class="text-secondary">測段位</a></li>
+        <li><a href="/prompt-builder/" class:list={[{ 'text-primary': active === 'prompt-builder' }]}>提示詞</a></li>
         <li><a href="/members/" class:list={[{ 'text-primary': active === 'members' }]}>核心圈</a></li>
         <li><a href="/about/" class:list={[{ 'text-primary': active === 'about' }]}>關於</a></li>
         <li><a href="/events/#register" class="btn btn-primary btn-sm mt-2 text-primary-content">報名下一場</a></li>
@@ -31,6 +32,7 @@ const { active = '' } = Astro.props;
       <li><a href="/events/" class:list={['text-sm font-medium', { 'text-primary': active === 'events' }]}>活動</a></li>
       <li><a href="/community/" class:list={['text-sm font-medium', { 'text-primary': active === 'community' }]}>社群</a></li>
       <li><a href="/quiz/" class="text-sm font-medium text-secondary">測段位</a></li>
+      <li><a href="/prompt-builder/" class:list={['text-sm font-medium', { 'text-primary': active === 'prompt-builder' }]}>提示詞</a></li>
       <li><a href="/members/" class:list={['text-sm font-medium', { 'text-primary': active === 'members' }]}>核心圈</a></li>
       <li><a href="/about/" class:list={['text-sm font-medium', { 'text-primary': active === 'about' }]}>關於</a></li>
       <li><a href="/events/#register" class="btn btn-primary btn-sm text-primary-content">報名下一場</a></li>
