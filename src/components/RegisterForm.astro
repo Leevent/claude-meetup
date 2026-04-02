@@ -1,0 +1,91 @@
+---
+// RegisterForm.astro
+// Submits to n8n webhook → n8n sends confirmation email to user + notifies organizer
+interface Props {
+  eventLabel?: string; // e.g. "vol.2" — included in email subject
+  size?: 'default' | 'compact';
+}
+const { eventLabel = 'vol.2', size = 'default' } = Astro.props;
+const formId = `register-form-${Math.random().toString(36).slice(2, 7)}`;
+---
+
+<div id={`${formId}-wrap`}>
+  <form
+    id={formId}
+    class={size === 'compact' ? 'flex flex-col sm:flex-row gap-2 max-w-md mx-auto' : 'flex flex-col gap-3 max-w-sm mx-auto'}
+    novalidate
+  >
+    <input
+      type="text"
+      name="name"
+      placeholder="你的名字"
+      required
+      class={`input input-bordered w-full${size === 'compact' ? ' input-sm' : ''}`}
+      aria-label="姓名"
+    />
+    <input
+      type="email"
+      name="email"
+      placeholder="Email（收通知用）"
+      required
+      class={`input input-bordered w-full${size === 'compact' ? ' input-sm' : ''}`}
+      aria-label="Email"
+    />
+    <input type="hidden" name="event" value={eventLabel} />
+    <button
+      type="submit"
+      class={`btn btn-primary${size === 'compact' ? ' btn-sm' : ' btn-lg'} shadow-lg shadow-primary/30`}
+    >
+      登記候補 →
+    </button>
+  </form>
+
+  <!-- success state -->
+  <div id={`${formId}-success`} class="hidden text-center py-4">
+    <div class="text-2xl mb-2">✅</div>
+    <p class="font-bold text-base-content">已收到！確認信已寄出</p>
+    <p class="text-sm text-base-content/60 mt-1">請確認你的 Email 收件匣（含垃圾信件夾）</p>
+  </div>
+
+  <!-- error state -->
+  <div id={`${formId}-error`} class="hidden text-center py-4">
+    <p class="text-sm text-error">發送失敗，請直接寄信至 <a href="mailto:vent@leevent.co" class="underline">vent@leevent.co</a></p>
+  </div>
+</div>
+
+<script define:vars={{ formId }}>
+  const WEBHOOK_URL = 'https://ventn8n.zeabur.app/webhook/claude-tc-register';
+
+  const form = document.getElementById(formId);
+  const wrap = document.getElementById(`${formId}-wrap`);
+  const successEl = document.getElementById(`${formId}-success`);
+  const errorEl = document.getElementById(`${formId}-error`);
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = form.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.textContent = '送出中…';
+
+    const data = {
+      name: form.name.value.trim(),
+      email: form.email.value.trim(),
+      event: form.event.value,
+    };
+
+    try {
+      const res = await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      form.style.display = 'none';
+      successEl.classList.remove('hidden');
+    } catch {
+      btn.disabled = false;
+      btn.textContent = '登記候補 →';
+      errorEl.classList.remove('hidden');
+    }
+  });
+</script>

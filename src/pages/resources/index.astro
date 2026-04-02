@@ -1,0 +1,183 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+
+const channels = [
+  {
+    name: '李厂长来了',
+    handle: '@lichangzhanglaile',
+    url: 'https://www.youtube.com/@lichangzhanglaile',
+    desc: '深度解析 AI 工具實戰，從 Claude 到 Cursor，乾貨滿滿',
+    initials: '李',
+    color: 'bg-primary',
+  },
+  {
+    name: '三師爸 Sense Bar',
+    handle: '@sensebar',
+    url: 'https://www.youtube.com/@sensebar',
+    desc: 'AI 應用與生活感知，分享真實使用心得與工作流程',
+    initials: '三',
+    color: 'bg-secondary',
+  },
+  {
+    name: '孔老師 AI 研習社',
+    handle: '@Teacher_Kong',
+    url: 'https://www.youtube.com/@Teacher_Kong',
+    desc: '系統化 AI 學習路線，從基礎觀念到進階應用',
+    initials: '孔',
+    color: 'bg-accent',
+  },
+  {
+    name: '知川 Kinta',
+    handle: '@zhichuan-ai',
+    url: 'https://www.youtube.com/@zhichuan-ai',
+    desc: 'AI × 創業 × 知識變現，探索 AI 時代的新可能',
+    initials: '知',
+    color: 'bg-info',
+  },
+  {
+    name: "I'm 阿湯",
+    handle: '@s3clife',
+    url: 'https://www.youtube.com/@s3clife',
+    desc: '資安 × AI 跨界視角，提供獨特的技術思維框架',
+    initials: '阿',
+    color: 'bg-success',
+  },
+  {
+    name: '李哈利 Harry',
+    handle: '@HarryLee',
+    url: 'https://www.youtube.com/@HarryLee',
+    desc: '創業 × AI 心法，分享實戰經驗與創業者視角',
+    initials: '哈',
+    color: 'bg-warning',
+  },
+  {
+    name: 'DAOJIE',
+    handle: '@DAOJIE',
+    url: 'https://www.youtube.com/@DAOJIE',
+    desc: 'AI 工具深度測評與應用場景拆解，找到最適合你的工作流',
+    initials: '道',
+    color: 'bg-error',
+  },
+];
+
+// Build-time fetch: get og:image from each channel page
+async function fetchChannelThumb(url: string): Promise<string | null> {
+  try {
+    const res = await fetch(url, {
+      headers: {
+        'User-Agent':
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
+        'Accept-Language': 'zh-TW,zh;q=0.9,en;q=0.8',
+      },
+      signal: AbortSignal.timeout(8000),
+    });
+    const html = await res.text();
+    const match = html.match(/<meta\s+(?:property|name)="og:image"\s+content="([^"]+)"/i)
+      || html.match(/content="([^"]+)"\s+(?:property|name)="og:image"/i);
+    return match ? match[1] : null;
+  } catch {
+    return null;
+  }
+}
+
+const channelsWithThumbs = await Promise.all(
+  channels.map(async (ch) => ({
+    ...ch,
+    thumb: await fetchChannelThumb(ch.url),
+  }))
+);
+---
+
+<BaseLayout
+  title="推薦資源 — Claude 台中小聚"
+  description="精選 Claude 與 AI 學習 YouTube 頻道，幫你快速掌握 AI 實戰技能。"
+  canonical="https://claudetc.leevent.xyz/resources/"
+  active="resources"
+>
+  <!-- Hero -->
+  <section class="pt-28 pb-12 px-6">
+    <div class="max-w-3xl mx-auto text-center">
+      <div class="badge badge-primary badge-outline mb-4 text-xs tracking-widest uppercase">Resources</div>
+      <h1 class="text-4xl md:text-5xl font-black mb-4 leading-tight">推薦學習資源</h1>
+      <p class="text-base-content/60 text-lg leading-relaxed">
+        精選 Claude 與 AI 實戰 YouTube 頻道，由台中小聚社群成員推薦。
+      </p>
+    </div>
+  </section>
+
+  <!-- YouTube Channels -->
+  <section class="py-12 px-6">
+    <div class="max-w-5xl mx-auto">
+      <SectionHeader
+        overline="YouTube"
+        title="AI 學習頻道"
+        subtitle="選這些頻道的原因：內容扎實、更新穩定、適合正在探索 Claude 與 AI 工作流的你"
+      />
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
+        {channelsWithThumbs.map((ch) => (
+          <a
+            href={ch.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="card bg-base-200 border border-base-300 hover:border-primary hover:shadow-lg hover:shadow-primary/10 transition-all duration-200 group"
+            aria-label={`前往 ${ch.name} 的 YouTube 頻道`}
+          >
+            <div class="card-body p-5 flex flex-col gap-4">
+              <!-- Avatar + Name row -->
+              <div class="flex items-center gap-3">
+                {ch.thumb ? (
+                  <img
+                    src={ch.thumb}
+                    alt={`${ch.name} 頻道圖`}
+                    width="56"
+                    height="56"
+                    class="w-14 h-14 rounded-full object-cover ring-2 ring-base-300 group-hover:ring-primary transition-all"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div class={`w-14 h-14 rounded-full ${ch.color} flex items-center justify-center text-white font-black text-xl ring-2 ring-base-300 group-hover:ring-primary transition-all`}>
+                    {ch.initials}
+                  </div>
+                )}
+                <div class="flex-1 min-w-0">
+                  <p class="font-bold text-base-content leading-snug truncate">{ch.name}</p>
+                  <p class="text-xs text-base-content/50 mt-0.5">{ch.handle}</p>
+                </div>
+              </div>
+
+              <!-- Description -->
+              <p class="text-sm text-base-content/65 leading-relaxed flex-1">{ch.desc}</p>
+
+              <!-- CTA -->
+              <div class="flex items-center justify-between mt-auto pt-2 border-t border-base-300">
+                <span class="flex items-center gap-1 text-xs text-base-content/40">
+                  <!-- YT icon -->
+                  <svg class="w-4 h-4 fill-current text-[#FF0000]" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.7 15.5V8.5l6.3 3.5-6.3 3.5z"/>
+                  </svg>
+                  YouTube
+                </span>
+                <span class="text-primary text-xs font-bold group-hover:translate-x-1 transition-transform inline-block">
+                  前往頻道 →
+                </span>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- More coming -->
+  <section class="py-16 px-6 text-center">
+    <div class="max-w-xl mx-auto">
+      <p class="text-base-content/40 text-sm">更多推薦資源（文章、工具、Podcast）持續整理中</p>
+      <p class="text-base-content/30 text-xs mt-2">
+        有好的資源想推薦？歡迎在活動現場告訴 Vent，或寄信至
+        <a href="mailto:vent@leevent.co" class="text-primary hover:underline">vent@leevent.co</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>

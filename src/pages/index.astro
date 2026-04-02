@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import RegisterForm from '../components/RegisterForm.astro';
 
 const organizationLd = {
   "@context": "https://schema.org",
@@ -128,7 +129,7 @@ const eventLd = {
           <div class="card-body p-5">
             <h3 class="card-title text-base">vol.2｜辦公室即戰力：搞定 80% 的文書工作</h3>
             <div class="flex gap-3 text-xs text-base-content/60">
-              <span>2026/05/07（三）</span>
+              <span>2026/05/14（三）</span>
               <span>$600/人</span>
             </div>
           </div>
@@ -203,12 +204,9 @@ const eventLd = {
     <div class="max-w-5xl mx-auto px-6 relative z-10">
       <h2 id="cta-heading" class="text-3xl md:text-4xl font-black mb-4">vol.1 已完售 — vol.2 籌備中</h2>
       <p class="text-lg text-base-content/70 mb-9">每月一場，台中固定聚會。留下資料，第一時間通知你。</p>
-      <a href="mailto:vent@leevent.co?subject=Claude%20台中小聚%20-%20我想報名下一場&body=Hi%20Vent，我想參加下一場%20Claude%20台中小聚，請通知我報名資訊！"
-         class="btn btn-primary btn-lg text-lg shadow-lg shadow-primary/30">
-        登記候補 / 通知我 →
-      </a>
+      <RegisterForm eventLabel="vol.2" />
       <p class="mt-5 text-sm text-base-content/50">
-        <a href="mailto:vent@leevent.co" class="text-primary hover:underline">vent@leevent.co</a>
+        或直接聯繫 <a href="mailto:vent@leevent.co" class="text-primary hover:underline">vent@leevent.co</a>
       </p>
     </div>
   </section>

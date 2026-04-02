@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
+import RegisterForm from '../../components/RegisterForm.astro';
 
 const itemListLd = {
   "@context": "https://schema.org",
@@ -93,7 +94,7 @@ const breadcrumbLd = {
           </div>
           <div class="flex flex-wrap gap-3 pt-2">
             <a href="/events/001-first-meetup/" class="btn btn-primary">查看活動詳情 →</a>
-            <a href="mailto:hi@leevent.xyz?subject=候補登記｜Claude 台中小聚 vol.2" class="btn btn-ghost">登記下一場候補</a>
+            <a href="#waitlist" class="btn btn-ghost">登記下一場候補 ↓</a>
           </div>
         </div>
 
@@ -165,7 +166,7 @@ const breadcrumbLd = {
           <h3 class="card-title text-base font-bold leading-snug">vol.2｜辦公室即戰力：搞定 80% 的文書工作</h3>
           <!-- Meta -->
           <div class="text-sm text-base-content/70 space-y-0.5 mt-1">
-            <p>📅 2026/05/07（三）</p>
+            <p>📅 2026/05/14（三）</p>
             <p>📍 台中（地點待定）</p>
           </div>
           <!-- Desc -->
@@ -227,7 +228,7 @@ const breadcrumbLd = {
   </section>
 
   <!-- ====== Section 4: Waitlist CTA ====== -->
-  <section class="relative py-24 overflow-hidden">
+  <section id="waitlist" class="relative py-24 overflow-hidden">
     <!-- Radial glow -->
     <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
       <div class="absolute w-[500px] h-[500px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-primary/10 rounded-full blur-3xl"></div>
@@ -235,9 +236,7 @@ const breadcrumbLd = {
     <div class="relative max-w-2xl mx-auto px-6 text-center fade-in">
       <h2 class="text-3xl font-black mb-4">不想錯過下一場？</h2>
       <p class="text-base-content/70 mb-8 leading-relaxed">每月一場，台中固定聚會。留下資料，第一時間通知你。</p>
-      <a href="mailto:hi@leevent.xyz?subject=我想參加下一場 Claude 台中小聚&body=Hi，我想登記候補，請通知我下一場活動資訊！" class="btn btn-primary btn-lg">
-        登記候補通知
-      </a>
+      <RegisterForm eventLabel="vol.2" />
       <p class="text-xs text-base-content/50 mt-4">📬 hi@leevent.xyz</p>
     </div>
   </section>
